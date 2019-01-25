@@ -13,7 +13,7 @@ namespace Bing.Samples.Api.Controllers
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
-    public class SwaggerTestControllercs: Controller
+    public class SwaggerTestController: Controller
     {
         /// <summary>
         /// 获取所有信息

@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
+using Bing.Extensions.Swashbuckle.Extensions;
 using Bing.Extensions.Swashbuckle.Filters.Operations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Bing.Samples.Api
 {
@@ -28,7 +31,7 @@ namespace Bing.Samples.Api
                 config.SwaggerDoc("v1", new Info() {Title = "Bing.Samples.Api", Version = "v1"});
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "Bing.Samples.Api.xml");
-                config.IncludeXmlComments(xmlPath);
+                config.IncludeXmlComments(xmlPath, true);
 
                 config.OperationFilter<AddRequestHeaderOperationFilter>();
                 config.OperationFilter<AddResponseHeadersOperationFilter>();
@@ -37,6 +40,10 @@ namespace Bing.Samples.Api
                 // 授权组合
                 config.OperationFilter<AddSecurityRequirementsOperationFilter>();
                 config.OperationFilter<AddAppendAuthorizeToSummaryOperationFilter>();
+
+                config.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>()
+                    {{"oauth2", new string[] { }}});
+
                 config.AddSecurityDefinition("oauth2", new ApiKeyScheme()
                 {
                     Description = "Token令牌",
@@ -60,8 +67,15 @@ namespace Bing.Samples.Api
             {
                 config.IndexStream = () =>
                     GetType().GetTypeInfo().Assembly.GetManifestResourceStream("Bing.Samples.Api.Swagger.index.html");
-                config.ShowExtensions();
                 config.SwaggerEndpoint("/swagger/v1/swagger.json", "Bing.Samples.Api v1");
+                config.InjectJavascript("/swagger/resources/jquery");
+                //config.InjectJavascript("/swagger/resources/translator");
+                config.InjectJavascript("/swagger/resources/export");
+                config.InjectStylesheet("/swagger/resources/swagger-common");
+
+                config.UseDefaultSwaggerUI();
+                // 其他配置
+                config.DocumentTitle = "Bing.Sample.Api 在线文档调试";
             });
             app.UseMvc(routes =>
             {

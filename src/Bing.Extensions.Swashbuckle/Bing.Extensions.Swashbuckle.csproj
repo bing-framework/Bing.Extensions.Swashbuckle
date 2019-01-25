@@ -16,12 +16,29 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Filters\Documents\" />
-    <Folder Include="Filters\Parameters\" />
-    <Folder Include="Filters\Schemas\" />
+    <None Remove="Resources\export.js" />
+    <None Remove="Resources\jquery.min.js" />
+    <None Remove="Resources\swagger-common.css" />
+    <None Remove="Resources\translator.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\export.js" />
+    <EmbeddedResource Include="Resources\jquery.min.js" />
+    <EmbeddedResource Include="Resources\swagger-common.css" />
+    <EmbeddedResource Include="Resources\translator.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Configs\" />
+    <Folder Include="Filters\Documents\" />
+    <Folder Include="Filters\Parameters\" />
+    <Folder Include="Filters\Schemas\" />
+    <Folder Include="Core\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
 
