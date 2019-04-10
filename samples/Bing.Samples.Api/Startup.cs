@@ -51,6 +51,9 @@ namespace Bing.Samples.Api
                     Name = "Authorization",
                     Type = "apiKey",
                 });
+
+                // 使用区域描述
+                //config.TagActionsBy(apiDesc=>apiDesc.GetAreaName());
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
