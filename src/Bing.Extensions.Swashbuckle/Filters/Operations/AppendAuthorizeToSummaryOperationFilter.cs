@@ -12,17 +12,17 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
     /// <summary>
     /// 添加 追加授权信息到注释 操作过滤器
     /// </summary>
-    public class AddAppendAuthorizeToSummaryOperationFilter : IOperationFilter
+    public class AppendAuthorizeToSummaryOperationFilter : IOperationFilter
     {
         /// <summary>
         /// 过滤器
         /// </summary>
-        private readonly AddAppendAuthorizeToSummaryOperationFilter<AuthorizeAttribute> _filter;
+        private readonly AppendAuthorizeToSummaryOperationFilter<AuthorizeAttribute> _filter;
 
         /// <summary>
-        /// 初始化一个<see cref="AddAppendAuthorizeToSummaryOperationFilter"/>类型的实例
+        /// 初始化一个<see cref="AppendAuthorizeToSummaryOperationFilter"/>类型的实例
         /// </summary>
-        public AddAppendAuthorizeToSummaryOperationFilter()
+        public AppendAuthorizeToSummaryOperationFilter()
         {
             var policySelector = new PolicySelectorWithLabel<AuthorizeAttribute>()
             {
@@ -37,7 +37,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
                 Selector = authAttributes =>
                     authAttributes.Where(x => !string.IsNullOrWhiteSpace(x.Roles)).Select(x => x.Roles)
             };
-            _filter = new AddAppendAuthorizeToSummaryOperationFilter<AuthorizeAttribute>(
+            _filter = new AppendAuthorizeToSummaryOperationFilter<AuthorizeAttribute>(
                 new[] {policySelector, rolesSelector}.AsEnumerable());
         }
 
@@ -56,7 +56,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
     /// 添加 追加授权信息到注释 操作过滤器
     /// </summary>
     /// <typeparam name="TAttribute">特性类型</typeparam>
-    public class AddAppendAuthorizeToSummaryOperationFilter<TAttribute> : IOperationFilter where TAttribute : Attribute
+    public class AppendAuthorizeToSummaryOperationFilter<TAttribute> : IOperationFilter where TAttribute : Attribute
     {
         /// <summary>
         /// 授权选择器标签列表
@@ -64,10 +64,10 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         private readonly IEnumerable<PolicySelectorWithLabel<TAttribute>> _policySelectors;
 
         /// <summary>
-        /// 初始化一个<see cref="AddAppendAuthorizeToSummaryOperationFilter{TAttribute}"/>类型的实例
+        /// 初始化一个<see cref="AppendAuthorizeToSummaryOperationFilter{TAttribute}"/>类型的实例
         /// </summary>
         /// <param name="policySelectors">授权选择器标签列表</param>
-        public AddAppendAuthorizeToSummaryOperationFilter(
+        public AppendAuthorizeToSummaryOperationFilter(
             IEnumerable<PolicySelectorWithLabel<TAttribute>> policySelectors)
         {
             _policySelectors = policySelectors;

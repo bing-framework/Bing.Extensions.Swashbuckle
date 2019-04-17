@@ -11,22 +11,22 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
     /// <summary>
     /// 添加安全请求 操作过滤器
     /// </summary>
-    public class AddSecurityRequirementsOperationFilter : IOperationFilter
+    public class SecurityRequirementsOperationFilter : IOperationFilter
     {
         /// <summary>
         /// 过滤器
         /// </summary>
-        private readonly AddSecurityRequirementsOperationFilter<AuthorizeAttribute> _filter;
+        private readonly SecurityRequirementsOperationFilter<AuthorizeAttribute> _filter;
 
         /// <summary>
-        /// 初始化一个<see cref="AddSecurityRequirementsOperationFilter"/>类型的实例
+        /// 初始化一个<see cref="SecurityRequirementsOperationFilter"/>类型的实例
         /// </summary>
         /// <param name="includeUnauthorizedAndForbiddenResponses">是否包含未授权或被禁止的响应，如果为true,则将为每个操作添加401、403响应</param>
-        public AddSecurityRequirementsOperationFilter(bool includeUnauthorizedAndForbiddenResponses = true)
+        public SecurityRequirementsOperationFilter(bool includeUnauthorizedAndForbiddenResponses = true)
         {
             IEnumerable<string> PolicySelector(IEnumerable<AuthorizeAttribute> authAttributes) =>
                 authAttributes.Where(x => !string.IsNullOrWhiteSpace(x.Policy)).Select(x => x.Policy);
-            _filter = new AddSecurityRequirementsOperationFilter<AuthorizeAttribute>(PolicySelector,
+            _filter = new SecurityRequirementsOperationFilter<AuthorizeAttribute>(PolicySelector,
                 includeUnauthorizedAndForbiddenResponses);
         }
 
@@ -45,7 +45,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
     /// 添加安全请求 操作过滤器
     /// </summary>
     /// <typeparam name="TAttribute">特性类型</typeparam>
-    public class AddSecurityRequirementsOperationFilter<TAttribute> :IOperationFilter where TAttribute : Attribute
+    public class SecurityRequirementsOperationFilter<TAttribute> :IOperationFilter where TAttribute : Attribute
     {
         /// <summary>
         /// 是否包含未授权或被禁止的响应
@@ -58,11 +58,11 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         private readonly Func<IEnumerable<TAttribute>, IEnumerable<string>> _policySelector;
 
         /// <summary>
-        /// 初始化一个<see cref="AddSecurityRequirementsOperationFilter{TAttribute}"/>类型的实例
+        /// 初始化一个<see cref="SecurityRequirementsOperationFilter{TAttribute}"/>类型的实例
         /// </summary>
         /// <param name="policySelector">授权策略选择器，从授权特性中选择授权策略。范例：(t => t.Policy)</param>
         /// <param name="includeUnauthorizedAndForbiddenResponses">是否包含未授权或被禁止的响应，如果为true,则将为每个操作添加401、403响应</param>
-        public AddSecurityRequirementsOperationFilter(Func<IEnumerable<TAttribute>, IEnumerable<string>> policySelector,
+        public SecurityRequirementsOperationFilter(Func<IEnumerable<TAttribute>, IEnumerable<string>> policySelector,
             bool includeUnauthorizedAndForbiddenResponses = true)
         {
             this._policySelector = policySelector;

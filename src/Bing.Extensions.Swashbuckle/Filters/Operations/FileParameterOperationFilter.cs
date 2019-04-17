@@ -12,7 +12,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
     /// <summary>
     /// 添加文件参数 操作过滤器。支持<see cref="SwaggerUploadAttribute"/>特性
     /// </summary>
-    public class AddFileParameterOperationFilter:IOperationFilter
+    public class FileParameterOperationFilter:IOperationFilter
     {
         /// <summary>
         /// 文件参数

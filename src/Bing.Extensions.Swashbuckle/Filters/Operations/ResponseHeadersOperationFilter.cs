@@ -11,7 +11,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
     /// <summary>
     /// 添加响应请求头 操作过滤器
     /// </summary>
-    public class AddResponseHeadersOperationFilter:IOperationFilter
+    public class ResponseHeadersOperationFilter:IOperationFilter
     {
         /// <summary>
         /// 重写操作处理
