@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using Bing.Extensions.Swashbuckle.Configs;
 using Bing.Extensions.Swashbuckle.Core;
 using Bing.Extensions.Swashbuckle.Extensions;
@@ -11,8 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
+using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Bing.Samples.Api
 {
@@ -29,7 +28,10 @@ namespace Bing.Samples.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSwaggerCustom(CurrentSwaggerOptions);
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(o =>
+            {
+                o.SerializerSettings.ContractResolver=new DefaultContractResolver();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,7 +93,9 @@ namespace Bing.Samples.Api
                 // 使用区域描述
                 //config.TagActionsBy(apiDesc=>apiDesc.GetAreaName());
             },
-            UseSwaggerAction = config => { },
+            UseSwaggerAction = config =>
+            {
+            },
             UseSwaggerUIAction = config =>
             {
                 //config.IndexStream = () =>
