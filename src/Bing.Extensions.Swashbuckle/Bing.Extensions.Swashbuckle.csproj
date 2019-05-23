@@ -36,7 +36,6 @@
   <ItemGroup>
     <Folder Include="Filters\Documents\" />
     <Folder Include="Filters\Parameters\" />
-    <Folder Include="Filters\Schemas\" />
   </ItemGroup>
 
   <ItemGroup>

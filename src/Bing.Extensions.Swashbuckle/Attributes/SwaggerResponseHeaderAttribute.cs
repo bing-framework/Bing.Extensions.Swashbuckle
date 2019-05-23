@@ -3,7 +3,7 @@
 namespace Bing.Extensions.Swashbuckle.Attributes
 {
     /// <summary>
-    /// Swagger响应请求头，用于标识接口响应请求头参数信息
+    /// Swagger: 响应请求头，用于标识接口响应请求头参数信息
     /// </summary>
     [AttributeUsage(AttributeTargets.Method,AllowMultiple = true)]
     public class SwaggerResponseHeaderAttribute:Attribute
