@@ -20,7 +20,7 @@ namespace Bing.Samples.Api.Models
         /// <summary>
         /// 名称
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = "666";
 
         /// <summary>
         /// 尺寸大小

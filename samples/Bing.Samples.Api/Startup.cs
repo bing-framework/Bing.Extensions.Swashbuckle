@@ -68,10 +68,10 @@ namespace Bing.Samples.Api
                 config.IndexStream = () =>
                     GetType().GetTypeInfo().Assembly.GetManifestResourceStream("Bing.Samples.Api.Swagger.index.html");
                 config.SwaggerEndpoint("/swagger/v1/swagger.json", "Bing.Samples.Api v1");
-                config.InjectJavascript("/swagger/resources/jquery");
+                //config.InjectJavascript("/swagger/resources/jquery");
                 //config.InjectJavascript("/swagger/resources/translator");
-                config.InjectJavascript("/swagger/resources/export");
-                config.InjectStylesheet("/swagger/resources/swagger-common");
+                //config.InjectJavascript("/swagger/resources/export");
+                //config.InjectStylesheet("/swagger/resources/swagger-common");
 
                 config.UseDefaultSwaggerUI();
                 // 其他配置
