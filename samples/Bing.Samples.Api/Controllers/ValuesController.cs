@@ -41,5 +41,11 @@ namespace Bing.Samples.Api.Controllers
         public void Delete(int id)
         {
         }
+
+        [HttpGet("{id}/{name}/demo")]
+        public string GetName(string id, string name, [FromQuery] SampleNameValue value)
+        {
+            return name;
+        }
     }
 }

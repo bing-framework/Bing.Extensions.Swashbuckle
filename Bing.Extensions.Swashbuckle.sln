@@ -4,14 +4,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00-document", "00-document", "{B40C34AE-0520-4EAE-97C8-CE45A0F1E1F8}"
+	ProjectSection(SolutionItems) = preProject
+		build\pack.bat = build\pack.bat
+		README.md = README.md
+		build\version.props = build\version.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-src", "01-src", "{B2B65EE3-5CB3-48AC-B316-33E4E7AAF942}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-samples", "02-samples", "{FB32239E-3E8D-4345-B0FA-E0041E2F9A29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bing.Extensions.Swashbuckle", "src\Bing.Extensions.Swashbuckle\Bing.Extensions.Swashbuckle.csproj", "{5C58B759-7E92-43B3-82DD-70B4198C1F08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bing.Extensions.Swashbuckle", "src\Bing.Extensions.Swashbuckle\Bing.Extensions.Swashbuckle.csproj", "{5C58B759-7E92-43B3-82DD-70B4198C1F08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bing.Samples.Api", "samples\Bing.Samples.Api\Bing.Samples.Api.csproj", "{11C17E3C-9BBC-44EA-A54D-1A0B9C423656}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bing.Samples.Api", "samples\Bing.Samples.Api\Bing.Samples.Api.csproj", "{11C17E3C-9BBC-44EA-A54D-1A0B9C423656}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

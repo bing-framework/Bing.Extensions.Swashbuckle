@@ -148,6 +148,6 @@ namespace Bing.Samples.Api.Controllers
         /// <summary>
         /// 值
         /// </summary>
-        public string Value { get; set; }
+        public string Value { get; set; } = "100";
     }
 }
