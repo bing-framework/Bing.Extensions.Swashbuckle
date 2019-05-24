@@ -34,7 +34,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Filters\Documents\" />
     <Folder Include="Filters\Parameters\" />
   </ItemGroup>
 

@@ -20,5 +20,27 @@ namespace Bing.Samples.Api.Controllers
         {
             return Result.Success(sample.Name);
         }
+
+        /// <summary>
+        /// 查询
+        /// </summary>
+        /// <param name="sample">查询</param>
+        /// <returns></returns>
+        [HttpGet]
+        public Result Query([FromQuery] QuerySample sample)
+        {
+            return Result.Success(sample);
+        }
+
+        /// <summary>
+        /// 提交
+        /// </summary>
+        /// <param name="sample"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public Result Post([FromBody] QuerySample sample)
+        {
+            return Result.Success(sample);
+        }
     }
 }

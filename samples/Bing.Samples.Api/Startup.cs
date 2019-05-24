@@ -3,7 +3,9 @@ using System.IO;
 using Bing.Extensions.Swashbuckle.Configs;
 using Bing.Extensions.Swashbuckle.Core;
 using Bing.Extensions.Swashbuckle.Extensions;
+using Bing.Extensions.Swashbuckle.Filters.Documents;
 using Bing.Extensions.Swashbuckle.Filters.Operations;
+using Bing.Extensions.Swashbuckle.Filters.Schemas;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -92,6 +94,9 @@ namespace Bing.Samples.Api
                 //config.OperationFilter<ApiVersionDefaultValueOperationFilter>();
                 // 使用区域描述
                 //config.TagActionsBy(apiDesc=>apiDesc.GetAreaName());
+                config.DocumentFilter<AddEnumDescriptionsDocumentFilter>();
+                // 隐藏属性
+                config.SchemaFilter<IgnorePropertySchemaFilter>();
             },
             UseSwaggerAction = config =>
             {
