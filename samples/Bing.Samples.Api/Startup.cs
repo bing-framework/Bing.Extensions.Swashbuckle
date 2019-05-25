@@ -95,8 +95,10 @@ namespace Bing.Samples.Api
                 // 使用区域描述
                 //config.TagActionsBy(apiDesc=>apiDesc.GetAreaName());
                 config.DocumentFilter<AddEnumDescriptionsDocumentFilter>();
+                config.DocumentFilter<FirstLowerUrlDocumentFilter>();
                 // 隐藏属性
                 config.SchemaFilter<IgnorePropertySchemaFilter>();
+                
             },
             UseSwaggerAction = config =>
             {
