@@ -16,15 +16,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\export.js" />
-    <None Remove="Resources\index.html" />
-    <None Remove="Resources\jquery.min.js" />
-    <None Remove="Resources\login.html" />
-    <None Remove="Resources\swagger-common.css" />
-    <None Remove="Resources\translator.js" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="Resources\export.js" />
     <EmbeddedResource Include="Resources\index.html" />
     <EmbeddedResource Include="Resources\jquery.min.js" />
