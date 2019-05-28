@@ -20,7 +20,7 @@ namespace Bing.Extensions.Swashbuckle.Configs
         /// <summary>
         /// Api版本列表
         /// </summary>
-        public List<string> ApiVersions { get; set; }
+        public List<ApiVersion> ApiVersions { get; set; }
 
         /// <summary>
         /// 接口文档访问路由前缀
@@ -64,10 +64,26 @@ namespace Bing.Extensions.Swashbuckle.Configs
         /// </summary>
         /// <param name="projectName">项目名称</param>
         /// <param name="apiVersions">Api版本列表</param>
-        public CustomSwaggerOptions(string projectName, List<string> apiVersions)
+        public CustomSwaggerOptions(string projectName, List<ApiVersion> apiVersions)
         {
             ProjectName = projectName;
             ApiVersions = apiVersions;
         }
+    }
+
+    /// <summary>
+    /// Api版本
+    /// </summary>
+    public class ApiVersion
+    {
+        /// <summary>
+        /// 版本号
+        /// </summary>
+        public string Version { get; set; }
+
+        /// <summary>
+        /// 描述
+        /// </summary>
+        public string Description { get; set; }
     }
 }

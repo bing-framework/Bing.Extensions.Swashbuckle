@@ -28,7 +28,7 @@ namespace Bing.Extensions.Swashbuckle.Extensions
 
                 foreach (var version in options.ApiVersions)
                 {
-                    o.SwaggerDoc(version, new Info() {Title = options.ProjectName, Version = version});
+                    o.SwaggerDoc(version.Version, new Info() {Title = options.ProjectName, Version = version.Version});
                 }
 
                 o.OperationFilter<ApiVersionDefaultValueOperationFilter>();

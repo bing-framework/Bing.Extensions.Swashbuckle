@@ -45,7 +45,8 @@ namespace Bing.Extensions.Swashbuckle.Extensions
 
                     foreach (var item in options.ApiVersions)
                     {
-                        o.SwaggerEndpoint($"/swagger/{item}/swagger.json", $"{item}");
+                        o.SwaggerEndpoint($"/swagger/{item.Version}/swagger.json",
+                            $"{(string.IsNullOrWhiteSpace(item.Description) ? item.Version : item.Description)}");
                     }
 
                     options.UseSwaggerUIAction?.Invoke(o);
