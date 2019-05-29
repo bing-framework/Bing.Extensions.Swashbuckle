@@ -6,8 +6,8 @@ namespace Bing.Extensions.Swashbuckle.Attributes
     /// <summary>
     /// Swagger：Api分组
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class|AttributeTargets.Method)]
-    public class SwaggerApiGroupAttribute:Attribute,IApiDescriptionGroupNameProvider
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
+    public class SwaggerApiGroupAttribute : Attribute, IApiDescriptionGroupNameProvider
     {
         /// <summary>
         /// 分组名

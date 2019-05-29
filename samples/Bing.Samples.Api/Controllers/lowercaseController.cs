@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Bing.Extensions.Swashbuckle.Attributes;
+using Bing.Samples.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bing.Samples.Api.Controllers
@@ -8,6 +10,8 @@ namespace Bing.Samples.Api.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [SwaggerApiGroup(GroupSample.Demo)]
+    [SwaggerApiGroup(GroupSample.Test)]
     public class lowercaseController : ControllerBase
     {
         // GET api/values
@@ -38,6 +42,7 @@ namespace Bing.Samples.Api.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
+        [SwaggerApiGroup(GroupSample.Login)]
         public void Delete(int id)
         {
         }

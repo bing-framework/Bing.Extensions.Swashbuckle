@@ -57,7 +57,18 @@ namespace Bing.Extensions.Swashbuckle.Extensions
                 }
                 else
                 {
-                    return apiDescription.GroupName == docName;
+                    foreach (var obj in apiDescription.ActionDescriptor.EndpointMetadata)
+                    {
+                        if (obj is SwaggerApiGroupAttribute swaggerApiGroup)
+                        {
+                            if (docName == swaggerApiGroup.GroupName)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+
+                    return false;
                 }
             });
         }
