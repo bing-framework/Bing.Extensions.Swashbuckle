@@ -1,4 +1,5 @@
 ﻿using Bing.Extensions.Swashbuckle.Internal;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bing.Extensions.Swashbuckle.Controllers
@@ -6,6 +7,7 @@ namespace Bing.Extensions.Swashbuckle.Controllers
     /// <summary>
     /// 资源 控制器
     /// </summary>
+    [AllowAnonymous]
     [Route("swagger/resources")]
     public class ResourcesController: Controller
     {

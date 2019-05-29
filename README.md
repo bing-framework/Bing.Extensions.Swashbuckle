@@ -9,16 +9,17 @@ Bing.Extensions.Swashbuckle是扩展Swashbuckle.AspNetCore一些常用操作，�
 |Bing.Extensions.Swashbuckle|[![NuGet Badge](https://buildstats.info/nuget/Bing.Extensions.Swashbuckle?includePreReleases=true)](https://www.nuget.org/packages/Bing.Extensions.Swashbuckle)|
 
 ## 功能
-- 添加文件参数`FileParameterOperationFilter`
-- 添加请求头`RequestHeaderOperationFilter`
-- 添加响应头`ResponseHeaderOperationFilter`
-- 添加安全请求`SecurityRequirementsOperationFilter`
-- 添加通用参数`CommonParametersOperationFilter`
-- 添加追加授权信息到注释`AppendAuthorizeToSummaryOperationFilter`
+- 支持API分组功能
+- 支持文件上传参数
+- 支持添加通用参数
+- 支持自定义请求头
+- 支持自定义响应头
+- 支持安全请求
+- 支持显示授权信息
+- 支持自定义Url显示模式。首字母小写、首字母大写、全小写、全大写
+- 支持显示枚举描述
 - 添加Api接口版本默认值`ApiVersionDefaultValueOperationFilter`
-- Url首字母小写`FirstLowerUrlDocumentFilter`
-- Url小写`LowerCaseUrlDocumentFilter`
-- 显示枚举注释`AddEnumDescriptionsDocumentFilter`
+
 
 ## 依赖类库
 - [Swashbuckle.AspNetCore](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)

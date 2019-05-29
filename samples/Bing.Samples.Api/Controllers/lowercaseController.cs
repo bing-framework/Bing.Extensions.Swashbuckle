@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Bing.Extensions.Swashbuckle.Attributes;
-using Bing.Samples.Api.Models;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace Bing.Samples.Api.Controllers
 {
+    /// <summary>
+    /// 小写控制器
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class lowercaseController : ControllerBase
     {
         // GET api/values
         [HttpGet]
@@ -43,12 +40,6 @@ namespace Bing.Samples.Api.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-        }
-
-        [HttpGet("{id}/{name}/demo")]
-        public string GetName(string id, string name, [FromQuery] SampleNameValue value)
-        {
-            return name;
         }
     }
 }

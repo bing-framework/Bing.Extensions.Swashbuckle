@@ -3,9 +3,10 @@ using System.IO;
 using Bing.Extensions.Swashbuckle.Configs;
 using Bing.Extensions.Swashbuckle.Core;
 using Bing.Extensions.Swashbuckle.Extensions;
-using Bing.Extensions.Swashbuckle.Filters.Documents;
 using Bing.Extensions.Swashbuckle.Filters.Operations;
 using Bing.Extensions.Swashbuckle.Filters.Schemas;
+using Bing.Samples.Api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -31,10 +32,11 @@ namespace Bing.Samples.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSwaggerCustom(CurrentSwaggerOptions);
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(o =>
-            {
-                o.SerializerSettings.ContractResolver=new DefaultContractResolver();
-            });
+            services
+                .AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(o => { o.SerializerSettings.ContractResolver = new DefaultContractResolver(); });
+            services.AddAuthorization(o => { o.AddPolicy("Admin", policy => policy.RequireClaim("Admin")); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,7 +64,7 @@ namespace Bing.Samples.Api
             ProjectName = "Bing.Sample.Api 在线文档调试",
             UseCustomIndex = true,
             RoutePrefix = "swagger",
-            ApiVersions = new List<ApiVersion>() {new ApiVersion(){Description = "通用接口",Version = "v1"},new ApiVersion(){Description = "测试接口",Version = "v2"}},
+            //ApiVersions = new List<ApiVersion>() {new ApiVersion(){Description = "通用接口",Version = "v1"},new ApiVersion(){Description = "测试接口",Version = "v2"}},
             SwaggerAuthorizations = new List<CustomSwaggerAuthorization>()
             {
                 new CustomSwaggerAuthorization("admin","123456")
@@ -73,14 +75,6 @@ namespace Bing.Samples.Api
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "Bing.Samples.Api.xml");
                 config.IncludeXmlComments(xmlPath, true);
-
-                config.OperationFilter<RequestHeaderOperationFilter>();
-                config.OperationFilter<ResponseHeadersOperationFilter>();
-                config.OperationFilter<FileParameterOperationFilter>();
-
-                // 授权组合
-                //config.OperationFilter<AddSecurityRequirementsOperationFilter>();
-                config.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
 
                 //config.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>()
                 //    {{"oauth2", new string[] { }}});
@@ -94,12 +88,42 @@ namespace Bing.Samples.Api
                 });
 
                 //config.OperationFilter<ApiVersionDefaultValueOperationFilter>();
-                // 使用区域描述
-                //config.TagActionsBy(apiDesc=>apiDesc.GetAreaName());
-                config.DocumentFilter<AddEnumDescriptionsDocumentFilter>();
-                config.DocumentFilter<FirstLowerUrlDocumentFilter>();
+
+                // 启用请求头过滤器。显示Swagger自定义请求头
+                config.EnableRequestHeader();
+
+                // 启用响应由过滤器。显示Swagger自定义响应头
+                config.EnableResponseHeader();
+
+                // 显示文件参数
+                config.ShowFileParameter();
+
+                //// 显示授权信息
+                config.ShowAuthorizeInfo();
+
+                // 显示枚举描述
+                config.ShowEnumDescription();
+
+                // 显示Url模式：首字母小写、首字母大写、全小写、全大写、默认
+                config.ShowUrlMode();
+
                 // 隐藏属性
                 config.SchemaFilter<IgnorePropertySchemaFilter>();
+
+                // 使用API分组
+                config.ApiGroup<GroupSample>();
+
+                // 添加通用参数
+                config.AddCommonParameter(new List<IParameter>()
+                {
+                    new NonBodyParameter()
+                    {
+                        Name = "Test",
+                        In = "header",
+                        Default = "",
+                        Type = "string"
+                    }
+                });
             },
             UseSwaggerAction = config =>
             {
@@ -114,9 +138,11 @@ namespace Bing.Samples.Api
                 //config.InjectJavascript("/swagger/resources/export");
                 config.InjectStylesheet("/swagger/resources/swagger-common");
 
+                // 使用默认SwaggerUI
                 config.UseDefaultSwaggerUI();
-                // 其他配置
-                //config.DocumentTitle = "Bing.Sample.Api 在线文档调试";
+
+                // 使用API分组
+                config.EnableApiGroup<GroupSample>();
             }
         };
     }

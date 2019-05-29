@@ -5,9 +5,9 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 namespace Bing.Extensions.Swashbuckle.Filters.Documents
 {
     /// <summary>
-    /// 小写Url 文档过滤器
+    /// 全大写Url 文档过滤器
     /// </summary>
-    public class LowerCaseUrlDocumentFilter : IDocumentFilter
+    public class AllUppercaseUrlDocumentFilter : IDocumentFilter
     {
         /// <summary>
         /// 重写操作处理
@@ -18,11 +18,11 @@ namespace Bing.Extensions.Swashbuckle.Filters.Documents
         }
 
         /// <summary>
-        /// 小写
+        /// 大写
         /// </summary>
         private static string LowercaseEverythingButParameters(string key)
         {
-            return string.Join("/", key.Split('/').Select(x => x.Contains("{") ? x : x.ToLower()));
+            return string.Join("/", key.Split('/').Select(x => x.Contains("{") ? x : x.ToUpper()));
         }
     }
 }

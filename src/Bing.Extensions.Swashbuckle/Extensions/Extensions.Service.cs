@@ -23,11 +23,16 @@ namespace Bing.Extensions.Swashbuckle.Extensions
             {
                 if (options.ApiVersions == null)
                 {
+                    options.AddSwaggerGenAction?.Invoke(o);
                     return;
                 }
 
                 foreach (var version in options.ApiVersions)
                 {
+                    if (o.SwaggerGeneratorOptions.SwaggerDocs.ContainsKey(version.Version))
+                    {
+                        continue;
+                    }
                     o.SwaggerDoc(version.Version, new Info() {Title = options.ProjectName, Version = version.Version});
                 }
 

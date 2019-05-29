@@ -39,7 +39,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         /// 初始化一个<see cref="CommonParametersOperationFilter"/>类型的实例
         /// </summary>
         /// <param name="parameters">追加参数列表</param>
-        public CommonParametersOperationFilter(List<IParameter> parameters)
+        public CommonParametersOperationFilter(IEnumerable<IParameter> parameters)
         {
             _defaultParameters.AddRange(parameters);
         }

@@ -7,7 +7,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Documents
     /// <summary>
     /// 首字母小写Url 文档过滤器
     /// </summary>
-    public class FirstLowerUrlDocumentFilter : IDocumentFilter
+    public class FirstLowercaseUrlDocumentFilter : IDocumentFilter
     {
         /// <summary>
         /// 重写操作处理

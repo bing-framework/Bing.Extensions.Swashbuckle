@@ -40,13 +40,20 @@ namespace Bing.Extensions.Swashbuckle.Extensions
 
                     if (options.ApiVersions == null)
                     {
+                        options.UseSwaggerUIAction?.Invoke(o);
                         return;
                     }
 
                     foreach (var item in options.ApiVersions)
                     {
-                        o.SwaggerEndpoint($"/swagger/{item.Version}/swagger.json",
-                            $"{(string.IsNullOrWhiteSpace(item.Description) ? item.Version : item.Description)}");
+                        var url = $"/swagger/{item.Version}/swagger.json";
+                        var name = $"{(string.IsNullOrWhiteSpace(item.Description) ? item.Version : item.Description)}";
+                        if (o.ExistsApiVersion(name, url))
+                        {
+                            continue;
+                        }
+
+                        o.SwaggerEndpoint(url, name);
                     }
 
                     options.UseSwaggerUIAction?.Invoke(o);

@@ -1,4 +1,5 @@
-﻿using Bing.Samples.Api.Models;
+﻿using Bing.Extensions.Swashbuckle.Attributes;
+using Bing.Samples.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bing.Samples.Api.Controllers
@@ -7,6 +8,7 @@ namespace Bing.Samples.Api.Controllers
     /// 案例 控制器
     /// </summary>
     [ApiController]
+    [SwaggerApiGroup(GroupSample.Demo)]
     [Route("api/[controller]/[action]")]
     public class DemoController:Controller
     {
