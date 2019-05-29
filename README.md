@@ -18,7 +18,7 @@ Bing.Extensions.Swashbuckle是扩展Swashbuckle.AspNetCore一些常用操作，�
 - 支持显示授权信息
 - 支持自定义Url显示模式。首字母小写、首字母大写、全小写、全大写
 - 支持显示枚举描述
-- 添加Api接口版本默认值`ApiVersionDefaultValueOperationFilter`
+- 支持Swagger文档授权登录功能
 
 
 ## 依赖类库

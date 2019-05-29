@@ -22,5 +22,23 @@ namespace Bing.Extensions.Swashbuckle.Attributes
         /// 描述
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// 初始化一个<see cref="SwaggerApiGroupInfoAttribute"/>类型的实例
+        /// </summary>
+        public SwaggerApiGroupInfoAttribute()
+        {
+        }
+
+        /// <summary>
+        /// 初始化一个<see cref="SwaggerApiGroupInfoAttribute"/>类型的实例
+        /// </summary>
+        /// <param name="title">标题</param>
+        /// <param name="description">描述</param>
+        public SwaggerApiGroupInfoAttribute(string title, string description)
+        {
+            Title = title;
+            Description = description;
+        }
     }
 }
