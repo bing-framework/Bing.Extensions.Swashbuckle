@@ -31,12 +31,14 @@ namespace Bing.Samples.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // 配置跨域
+            services.AddCors();
             services.AddSwaggerCustom(CurrentSwaggerOptions);
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(o => { o.SerializerSettings.ContractResolver = new DefaultContractResolver(); });
-            services.AddAuthorization(o => { o.AddPolicy("Admin", policy => policy.RequireClaim("Admin")); });
+            //services.AddAuthorization(o => { o.AddPolicy("Admin", policy => policy.RequireClaim("Admin")); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,14 +48,21 @@ namespace Bing.Samples.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors(builder =>
+            {
+                builder
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
             app.UseSwaggerCustom(CurrentSwaggerOptions);
             app.UseMvc(routes =>
             {
                 routes.MapRoute("areaRoute", "{area:exists}/{controller}/{action=Index}/{id?}");
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
-            app.UseApiVersioning();
+            //app.UseApiVersioning();
         }
 
         /// <summary>
@@ -65,10 +74,10 @@ namespace Bing.Samples.Api
             UseCustomIndex = true,
             RoutePrefix = "swagger",
             //ApiVersions = new List<ApiVersion>() {new ApiVersion(){Description = "通用接口",Version = "v1"},new ApiVersion(){Description = "测试接口",Version = "v2"}},
-            SwaggerAuthorizations = new List<CustomSwaggerAuthorization>()
-            {
-                new CustomSwaggerAuthorization("admin","123456")
-            },
+            //SwaggerAuthorizations = new List<CustomSwaggerAuthorization>()
+            //{
+            //    new CustomSwaggerAuthorization("admin","123456")
+            //},
             AddSwaggerGenAction = config =>
             {
                 //config.SwaggerDoc("v1", new Info() { Title = "Bing.Samples.Api", Version = "v1" });
@@ -99,7 +108,7 @@ namespace Bing.Samples.Api
                 config.ShowFileParameter();
 
                 //// 显示授权信息
-                config.ShowAuthorizeInfo();
+                //config.ShowAuthorizeInfo();
 
                 // 显示枚举描述
                 config.ShowEnumDescription();
@@ -134,7 +143,7 @@ namespace Bing.Samples.Api
                 //    GetType().GetTypeInfo().Assembly.GetManifestResourceStream("Bing.Samples.Api.Swagger.index.html");
                 //config.SwaggerEndpoint("/swagger/v1/swagger.json", "Bing.Samples.Api v1");
                 config.InjectJavascript("/swagger/resources/jquery");
-                //config.InjectJavascript("/swagger/resources/translator");
+                config.InjectJavascript("/swagger/resources/translator");
                 //config.InjectJavascript("/swagger/resources/export");
                 config.InjectStylesheet("/swagger/resources/swagger-common");
 

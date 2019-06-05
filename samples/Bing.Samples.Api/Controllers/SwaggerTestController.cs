@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 using Bing.Extensions.Swashbuckle.Attributes;
 using Bing.Samples.Api.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bing.Samples.Api.Controllers
@@ -13,7 +10,7 @@ namespace Bing.Samples.Api.Controllers
     /// <summary>
     /// Swagger测试信息
     /// </summary>
-    [ApiController]
+    [ApiController]    
     [SwaggerApiGroup(GroupSample.Test)]
     [Route("api/[controller]")]
     public class SwaggerTestController: Controller
@@ -107,7 +104,7 @@ namespace Bing.Samples.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("testAuthorizeInfo")]
-        [Authorize("Admin")]
+        //[Authorize("Admin")]
         public async Task<IActionResult> TestAuthorizeInfo()
         {
             return new JsonResult("成功操作");

@@ -34,7 +34,7 @@ window.SwaggerTranslator = {
         this._words = wordsMap;
         console.log('learn', this._words);
     }
-}
+};
 
 // 执行操作
 window.SwaggerTranslator.learn({
