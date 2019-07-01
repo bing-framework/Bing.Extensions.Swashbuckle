@@ -1,5 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using AspectCore.DynamicProxy;
+using AspectCore.DynamicProxy.Parameters;
+using AspectCore.Extensions.AspectScope;
+using AspectCore.Extensions.Autofac;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Bing.Extensions.Swashbuckle.Configs;
 using Bing.Extensions.Swashbuckle.Core;
 using Bing.Extensions.Swashbuckle.Extensions;
@@ -15,7 +22,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
-using ApiVersion = Bing.Extensions.Swashbuckle.Configs.ApiVersion;
 
 namespace Bing.Samples.Api
 {
@@ -29,7 +35,7 @@ namespace Bing.Samples.Api
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             // 配置跨域
             services.AddCors();
@@ -37,8 +43,23 @@ namespace Bing.Samples.Api
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddJsonOptions(o => { o.SerializerSettings.ContractResolver = new DefaultContractResolver(); });
+                .AddJsonOptions(o => { o.SerializerSettings.ContractResolver = new DefaultContractResolver(); })
+                .AddControllersAsServices();
             //services.AddAuthorization(o => { o.AddPolicy("Admin", policy => policy.RequireClaim("Admin")); });
+            var builder = new ContainerBuilder();
+            builder.RegisterDynamicProxy(config =>
+            {
+                config.EnableParameterAspect();
+                
+            });
+            builder.RegisterType<ScopeAspectScheduler>().As<IAspectScheduler>().InstancePerLifetimeScope();
+            builder.RegisterType<ScopeAspectBuilderFactory>().As<IAspectBuilderFactory>()
+                .InstancePerLifetimeScope();
+            builder.RegisterType<ScopeAspectContextFactory>().As<IAspectContextFactory>()
+                .InstancePerLifetimeScope();
+            builder.Populate(services);
+            var container = builder.Build();
+            return new AutofacServiceProvider(container);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

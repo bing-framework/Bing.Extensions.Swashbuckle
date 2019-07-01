@@ -29,7 +29,7 @@ namespace Bing.Samples.Api.Controllers
         /// <param name="sample">查询</param>
         /// <returns></returns>
         [HttpGet]
-        public Result Query([FromQuery] QuerySample sample)
+        public virtual Result Query([FromQuery] QuerySample sample)
         {
             return Result.Success(sample);
         }

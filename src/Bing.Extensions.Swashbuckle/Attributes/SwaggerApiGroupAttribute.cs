@@ -18,30 +18,12 @@ namespace Bing.Extensions.Swashbuckle.Attributes
         /// 初始化一个<see cref="SwaggerApiGroupAttribute"/>类型的实例
         /// </summary>
         /// <param name="groupName">分组名</param>
-        public SwaggerApiGroupAttribute(string groupName)
-        {
-            GroupName = groupName;
-        }
+        public SwaggerApiGroupAttribute(string groupName) => GroupName = groupName;
 
         /// <summary>
         /// 初始化一个<see cref="SwaggerApiGroupAttribute"/>类型的实例
         /// </summary>
         /// <param name="group">分组</param>
-        public SwaggerApiGroupAttribute(object group)
-        {
-            if (group is Enum groupEnum)
-            {
-                GroupName = groupEnum.ToString();
-                return;
-            }
-
-            if (group is string groupStr)
-            {
-                GroupName = groupStr;
-                return;
-            }
-
-            GroupName = group.ToString();
-        }
+        public SwaggerApiGroupAttribute(object group) => GroupName = string.Concat(@group);
     }
 }
