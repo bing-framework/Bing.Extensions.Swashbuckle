@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 namespace Bing.Extensions.Swashbuckle.Filters.Schemas
 {
     /// <summary>
-    /// 忽略属性架构过滤
+    /// 忽略属性架构过滤器
     /// </summary>
     public class IgnorePropertySchemaFilter : ISchemaFilter
     {

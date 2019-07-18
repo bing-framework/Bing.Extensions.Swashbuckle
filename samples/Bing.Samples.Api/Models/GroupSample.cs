@@ -1,4 +1,5 @@
-﻿using Bing.Extensions.Swashbuckle.Attributes;
+﻿using System;
+using Bing.Extensions.Swashbuckle.Attributes;
 
 namespace Bing.Samples.Api.Models
 {

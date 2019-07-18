@@ -17,7 +17,8 @@ namespace Bing.Samples.Api.Models
         /// <summary>
         /// 名称
         /// </summary>
-        public string Name { get; set; }
+        [DefaultValue("隔壁老黑")]
+        public string Name { get; set; } = "隔壁老王";
 
         /// <summary>
         /// 密码
@@ -28,7 +29,8 @@ namespace Bing.Samples.Api.Models
         /// <summary>
         /// 性别
         /// </summary>
-        public int Gender { get; set; }
+        [DefaultValue(1)]
+        public int Gender { get; set; } = 2;
 
         /// <summary>
         /// 创建时间

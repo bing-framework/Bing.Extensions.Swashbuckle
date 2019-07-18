@@ -26,6 +26,11 @@ namespace Bing.Extensions.Swashbuckle.Filters.Documents
                     if (propertyEnums != null && propertyEnums.Count > 0)
                     {
                         property.Description += GetEnumDescription(propertyEnums);
+                        if (property.Extensions.ContainsKey("x-enumNames"))
+                        {
+                            property.Extensions["x-enumNames"] = GetStringMapping(propertyEnums);
+                            continue;
+                        }
                         property.Extensions.Add("x-enumNames", GetStringMapping(propertyEnums));
                     }
                 }

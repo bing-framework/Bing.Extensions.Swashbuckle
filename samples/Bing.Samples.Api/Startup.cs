@@ -154,6 +154,7 @@ namespace Bing.Samples.Api
                         Type = "string"
                     }
                 });
+                config.OperationFilter<DefaultValueOperationFilter>();
             },
             UseSwaggerAction = config =>
             {

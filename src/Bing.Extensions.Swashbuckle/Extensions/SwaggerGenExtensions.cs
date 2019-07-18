@@ -55,21 +55,19 @@ namespace Bing.Extensions.Swashbuckle.Extensions
                     // 当分组为NoGroup时，只要没加特性的都属于这个组
                     return string.IsNullOrWhiteSpace(apiDescription.GroupName);
                 }
-                else
+
+                foreach (var obj in apiDescription.ActionDescriptor.EndpointMetadata)
                 {
-                    foreach (var obj in apiDescription.ActionDescriptor.EndpointMetadata)
+                    if (obj is SwaggerApiGroupAttribute swaggerApiGroup)
                     {
-                        if (obj is SwaggerApiGroupAttribute swaggerApiGroup)
+                        if (docName == swaggerApiGroup.GroupName)
                         {
-                            if (docName == swaggerApiGroup.GroupName)
-                            {
-                                return true;
-                            }
+                            return true;
                         }
                     }
-
-                    return false;
                 }
+
+                return false;
             });
         }
 

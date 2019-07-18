@@ -10,24 +10,22 @@ namespace Bing.Samples.Api.Controllers
     [ApiController]
     [SwaggerApiGroup(GroupSample.Demo)]
     [Route("api/[controller]/[action]")]
-    public class DemoController:Controller
+    public class DemoController : Controller
     {
-        /// <summary>
-        /// 上传文件
-        /// </summary>
-        /// <param name="sample">上传信息</param>
-        /// <returns></returns>
-        [HttpPost]
-        public Result Upload([FromForm]UploadSample sample)
-        {
-            return Result.Success(sample.Name);
-        }
+        ///// <summary>
+        ///// 上传文件
+        ///// </summary>
+        ///// <param name="sample">上传信息</param>
+        //[HttpPost]
+        //public Result Upload([FromForm]UploadSample sample)
+        //{
+        //    return Result.Success(sample.Name);
+        //}
 
         /// <summary>
         /// 查询
         /// </summary>
         /// <param name="sample">查询</param>
-        /// <returns></returns>
         [HttpGet]
         public virtual Result Query([FromQuery] QuerySample sample)
         {
@@ -35,14 +33,34 @@ namespace Bing.Samples.Api.Controllers
         }
 
         /// <summary>
-        /// 提交
+        /// 获取默认值
         /// </summary>
-        /// <param name="sample"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public Result Post([FromBody] QuerySample sample)
+        /// <param name="q">字符串</param>
+        /// <param name="page">页索引</param>
+        /// <param name="pageSize">每页记录数</param>
+        /// <param name="enumSample">枚举例子</param>
+        [HttpGet]
+        public virtual Result GetDefaultValue([FromQuery] string q, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
         {
-            return Result.Success(sample);
+            return Result.Success(new
+            {
+                q,
+                page,
+                pageSize
+            });
         }
+
+
+        ///// <summary>
+        ///// 提交
+        ///// </summary>
+        ///// <param name="sample">查询例子</param>
+        //[HttpPost]
+        //public Result Post([FromBody] QuerySample sample)
+        //{
+        //    return Result.Success(sample);
+        //}
+
+
     }
 }

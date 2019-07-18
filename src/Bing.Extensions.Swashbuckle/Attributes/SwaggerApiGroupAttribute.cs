@@ -24,6 +24,12 @@ namespace Bing.Extensions.Swashbuckle.Attributes
         /// 初始化一个<see cref="SwaggerApiGroupAttribute"/>类型的实例
         /// </summary>
         /// <param name="group">分组</param>
-        public SwaggerApiGroupAttribute(object group) => GroupName = string.Concat(@group);
+        public SwaggerApiGroupAttribute(object group)
+        {
+            if (group == null)
+                return;
+            GroupName = string.Concat(@group);
+        }
     }
+
 }
