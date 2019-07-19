@@ -12,7 +12,6 @@ namespace Bing.Extensions.Swashbuckle.Extensions
         /// 获取区域名称列表
         /// </summary>
         /// <param name="description">Api描述器</param>
-        /// <returns></returns>
         public static List<string> GetAreaName(this ApiDescription description)
         {
             var areaName = description.ActionDescriptor.RouteValues["area"];

@@ -7,12 +7,12 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
     /// <summary>
     /// 添加 生成通用参数(query/form/header) 操作过滤器
     /// </summary>
-    public class CommonParametersOperationFilter:IOperationFilter
+    public class CommonParametersOperationFilter : IOperationFilter
     {
         /// <summary>
         /// 默认通用参数列表
         /// </summary>
-        private readonly List<IParameter> _defaultParameters=new List<IParameter>()
+        private readonly List<IParameter> _defaultParameters = new List<IParameter>()
         {
             new NonBodyParameter()
             {
@@ -52,19 +52,11 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         public void Apply(Operation operation, OperationFilterContext context)
         {
             if (operation == null || context == null)
-            {
                 return;
-            }
-
             if (operation.Parameters == null)
-            {
                 operation.Parameters = new List<IParameter>();
-            }
-
             foreach (var item in _defaultParameters)
-            {
                 operation.Parameters.Add(item);
-            }
         }
     }
 }

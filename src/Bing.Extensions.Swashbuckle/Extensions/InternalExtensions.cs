@@ -13,7 +13,6 @@ namespace Bing.Extensions.Swashbuckle.Extensions
         /// 获取枚举描述，使用<see cref="DescriptionAttribute"/>特性设置描述
         /// </summary>
         /// <param name="instance">枚举实例</param>
-        /// <returns></returns>
         public static string Description(this System.Enum instance)
         {
             return Internal.Enum.GetDescription(instance.GetType(), instance);

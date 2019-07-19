@@ -17,7 +17,6 @@ namespace Bing.Extensions.Swashbuckle.Extensions
         /// </summary>
         /// <param name="app">应用构建器</param>
         /// <param name="options">自定义Swagger选项</param>
-        /// <returns></returns>
         public static IApplicationBuilder UseSwaggerCustom(this IApplicationBuilder app, CustomSwaggerOptions options)
         {
             app.UseSwaggerCustomAuthorization(options)

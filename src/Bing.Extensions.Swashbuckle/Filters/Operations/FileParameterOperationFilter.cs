@@ -12,7 +12,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
     /// <summary>
     /// 添加文件参数 操作过滤器。支持<see cref="SwaggerUploadAttribute"/>特性
     /// </summary>
-    public class FileParameterOperationFilter:IOperationFilter
+    public class FileParameterOperationFilter : IOperationFilter
     {
         /// <summary>
         /// 文件参数
@@ -29,10 +29,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         {
             if (!context.ApiDescription.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase) &&
                 !context.ApiDescription.HttpMethod.Equals("PUT", StringComparison.OrdinalIgnoreCase))
-            {
                 return;
-            }
-
             UploadByAttribute(operation, context);
             UploadByFile<IFormFile>(operation, context);
             UploadByFile<List<IFormFile>>(operation, context);
@@ -47,10 +44,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         {
             var swaggerUpload = context.MethodInfo.GetCustomAttributes<SwaggerUploadAttribute>().FirstOrDefault();
             if (swaggerUpload == null)
-            {
                 return;
-            }
-
             AddMime(operation);
             RemoveExistingFileParameters(operation.Parameters);
             operation.Parameters.Add(new NonBodyParameter()
@@ -70,9 +64,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         private void AddMime(Operation operation)
         {
             if (!operation.Consumes.Contains("multipart/form-data"))
-            {
                 operation.Consumes.Add("multipart/form-data");
-            }
         }
 
         /// <summary>
@@ -83,9 +75,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         {
             foreach (var parameter in operationParameters
                 .Where(x => x.In == "query" && FileParameters.Contains(x.Name)).ToList())
-            {
                 operationParameters.Remove(parameter);
-            }
         }
 
         /// <summary>
@@ -98,9 +88,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
             var files = context.ApiDescription.ActionDescriptor.Parameters
                 .Where(x => x.ParameterType == typeof(T)).ToList();
             if (files.Count == 0)
-            {
                 return;
-            }
             AddMime(operation);
             foreach (var file in files)
             {
@@ -115,6 +103,6 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
                     Default = parameter.Description
                 });
             }
-        }        
+        }
     }
 }

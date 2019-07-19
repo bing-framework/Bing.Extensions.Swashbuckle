@@ -17,10 +17,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Schemas
         public void Apply(Schema schema, SchemaFilterContext context)
         {
             if (schema?.Properties == null)
-            {
                 return;
-            }
-
             var ignoreProperties = context.SystemType.GetProperties()
                 .Where(t => t.GetCustomAttribute<SwaggerIgnorePropertyAttribute>() != null);
             foreach (var ignoreProperty in ignoreProperties)

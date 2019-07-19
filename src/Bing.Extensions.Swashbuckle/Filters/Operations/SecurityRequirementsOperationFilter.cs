@@ -45,7 +45,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
     /// 添加安全请求 操作过滤器
     /// </summary>
     /// <typeparam name="TAttribute">特性类型</typeparam>
-    public class SecurityRequirementsOperationFilter<TAttribute> :IOperationFilter where TAttribute : Attribute
+    public class SecurityRequirementsOperationFilter<TAttribute> : IOperationFilter where TAttribute : Attribute
     {
         /// <summary>
         /// 是否包含未授权或被禁止的响应
@@ -77,18 +77,13 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         public void Apply(Operation operation, OperationFilterContext context)
         {
             if (context.GetControllerAndActionAttributes<AllowAnonymousAttribute>().Any())
-            {
                 return;
-            }
             var actionAttributes = context.GetControllerAndActionAttributes<TAttribute>().ToList();
             if (!actionAttributes.Any())
-            {
                 return;
-            }
-
             if (_includeUnauthorizedAndForbiddenResponses)
             {
-                operation.Responses.Add("401", new Response() {Description = "Unauthorized"});
+                operation.Responses.Add("401", new Response() { Description = "Unauthorized" });
                 operation.Responses.Add("403", new Response() { Description = "Forbidden" });
             }
 

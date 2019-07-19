@@ -37,9 +37,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Documents
             }
 
             if (swaggerDoc.Paths.Count <= 0)
-            {
                 return;
-            }
 
             // 添加枚举描述到输入参数
             foreach (var pathItem in swaggerDoc.Paths.Values)
@@ -77,10 +75,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Documents
         private static void DescribeEnumParameters(IList<IParameter> parameters)
         {
             if (parameters == null)
-            {
                 return;
-            }
-
             foreach (var param in parameters)
             {
                 if (param is NonBodyParameter nonBodyParameter)
@@ -105,9 +100,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Documents
             foreach (var enumOption in enums)
             {
                 if (type == null)
-                {
                     type = enumOption.GetType();
-                }
                 enumDescriptions.Add(
                     $"{Convert.ChangeType(enumOption, type.GetEnumUnderlyingType())} = {Internal.Enum.GetDescription(type, enumOption)}");
             }

@@ -15,7 +15,6 @@ namespace Bing.Extensions.Swashbuckle.Extensions
         /// </summary>
         /// <param name="services">服务集合</param>
         /// <param name="options">自定义Swagger选项</param>
-        /// <returns></returns>
         public static IServiceCollection AddSwaggerCustom(this IServiceCollection services,
             CustomSwaggerOptions options)
         {

@@ -20,9 +20,6 @@ namespace Bing.Extensions.Swashbuckle.Filters.Documents
         /// <summary>
         /// 大写
         /// </summary>
-        private static string LowercaseEverythingButParameters(string key)
-        {
-            return string.Join("/", key.Split('/').Select(x => x.Contains("{") ? x : x.ToUpper()));
-        }
+        private static string LowercaseEverythingButParameters(string key) => string.Join("/", key.Split('/').Select(x => x.Contains("{") ? x : x.ToUpper()));
     }
 }

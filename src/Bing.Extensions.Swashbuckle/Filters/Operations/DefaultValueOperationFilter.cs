@@ -64,11 +64,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         {
             var parameterInfo = GetParameterInfo(parameter);
             if (parameterInfo.HasDefaultValue)
-            {
-                if (parameter.Type.IsEnum)
-                    return null;
-                return parameterInfo.DefaultValue;
-            }
+                return parameter.Type.IsEnum ? null : parameterInfo.DefaultValue;
             var defaultValueAttribute = GetDefaultValueAttribute(parameter);
             return defaultValueAttribute.Value;
         }

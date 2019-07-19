@@ -31,14 +31,14 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
                     authAttributes.Where(x => !string.IsNullOrWhiteSpace(x.Policy)).Select(x => x.Policy)
             };
 
-            var rolesSelector=new PolicySelectorWithLabel<AuthorizeAttribute>()
+            var rolesSelector = new PolicySelectorWithLabel<AuthorizeAttribute>()
             {
                 Label = "roles",
                 Selector = authAttributes =>
                     authAttributes.Where(x => !string.IsNullOrWhiteSpace(x.Roles)).Select(x => x.Roles)
             };
             _filter = new AppendAuthorizeToSummaryOperationFilter<AuthorizeAttribute>(
-                new[] {policySelector, rolesSelector}.AsEnumerable());
+                new[] { policySelector, rolesSelector }.AsEnumerable());
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         /// <param name="context">操作过滤器上下文</param>
         public void Apply(Operation operation, OperationFilterContext context)
         {
-            _filter.Apply(operation,context);
+            _filter.Apply(operation, context);
         }
     }
 
@@ -81,21 +81,14 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         public void Apply(Operation operation, OperationFilterContext context)
         {
             if (context.GetControllerAndActionAttributes<AllowAnonymousAttribute>().Any())
-            {
                 return;
-            }
-
             var authorizeAttributes = context.GetControllerAndActionAttributes<TAttribute>().ToList();
-            if (authorizeAttributes.Any())
-            {
-                var authorizationDescription=new StringBuilder(" (Auth");
-                foreach (var policySelector in _policySelectors)
-                {
-                    AppendPolicies(authorizeAttributes, authorizationDescription, policySelector);
-                }
-
-                operation.Summary += authorizationDescription.ToString().TrimEnd(';') + ")";
-            }
+            if (!authorizeAttributes.Any())
+                return;
+            var authorizationDescription = new StringBuilder(" (Auth");
+            foreach (var policySelector in _policySelectors)
+                AppendPolicies(authorizeAttributes, authorizationDescription, policySelector);
+            operation.Summary += authorizationDescription.ToString().TrimEnd(';') + ")";
         }
 
         /// <summary>
@@ -109,9 +102,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         {
             var policies = policySelector.Selector(authorizeAttributes).OrderBy(policy => policy).ToList();
             if (policies.Any())
-            {
                 authorizationDescription.Append($" {policySelector.Label}: {string.Join(", ", policies)};");
-            }
         }
     }
 }
