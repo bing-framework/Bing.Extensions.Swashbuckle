@@ -14,6 +14,9 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
     /// </summary>
     public class DefaultValueOperationFilter : IOperationFilter
     {
+        /// <summary>
+        /// 重写操作处理
+        /// </summary>
         public void Apply(Operation operation, OperationFilterContext context)
         {
             if (operation?.Parameters == null || !operation.Parameters.Any())
@@ -23,16 +26,15 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
                 .ToDictionary(parameter => parameter.Name, GetDefaultValue);
             foreach (var parameter in operation.Parameters)
             {
-                
                 if (parameterValuePairs.TryGetValue(parameter.Name, out var defaultValue))
                 {
+                    if (defaultValue == null)
+                        continue;
                     if (parameter is NonBodyParameter nonBodyParameter)
                     {
                         nonBodyParameter.Default = defaultValue;
                         nonBodyParameter.Required = false;
                     }
-                    //parameter.Extensions["default"] = defaultValue;
-                    //parameter.Required = false;
                 }
             }
         }
@@ -70,11 +72,5 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
             var defaultValueAttribute = GetDefaultValueAttribute(parameter);
             return defaultValueAttribute.Value;
         }
-
-        /// <summary>
-        /// 转换为首字母驼峰式字符串
-        /// </summary>
-        /// <param name="name">名称</param>
-        private string ToCamelCase(string name) => char.ToLowerInvariant(name[0]) + name.Substring(1);
     }
 }

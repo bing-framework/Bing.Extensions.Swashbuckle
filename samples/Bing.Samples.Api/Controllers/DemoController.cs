@@ -12,15 +12,15 @@ namespace Bing.Samples.Api.Controllers
     [Route("api/[controller]/[action]")]
     public class DemoController : Controller
     {
-        ///// <summary>
-        ///// 上传文件
-        ///// </summary>
-        ///// <param name="sample">上传信息</param>
-        //[HttpPost]
-        //public Result Upload([FromForm]UploadSample sample)
-        //{
-        //    return Result.Success(sample.Name);
-        //}
+        /// <summary>
+        /// 上传文件
+        /// </summary>
+        /// <param name="sample">上传信息</param>
+        [HttpPost]
+        public Result Upload([FromForm]UploadSample sample)
+        {
+            return Result.Success(sample.Name);
+        }
 
         /// <summary>
         /// 查询
@@ -40,7 +40,7 @@ namespace Bing.Samples.Api.Controllers
         /// <param name="pageSize">每页记录数</param>
         /// <param name="enumSample">枚举例子</param>
         [HttpGet]
-        public virtual Result GetDefaultValue([FromQuery] string q, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
+        public virtual Result GetDefaultValue([FromQuery] string q, [FromQuery] int page = 1, [FromQuery] int pageSize = 20, [FromQuery]EnumSample enumSample = EnumSample.Two)
         {
             return Result.Success(new
             {
@@ -50,17 +50,14 @@ namespace Bing.Samples.Api.Controllers
             });
         }
 
-
-        ///// <summary>
-        ///// 提交
-        ///// </summary>
-        ///// <param name="sample">查询例子</param>
-        //[HttpPost]
-        //public Result Post([FromBody] QuerySample sample)
-        //{
-        //    return Result.Success(sample);
-        //}
-
-
+        /// <summary>
+        /// 提交
+        /// </summary>
+        /// <param name="sample">查询例子</param>
+        [HttpPost]
+        public Result Post([FromBody] QuerySample sample)
+        {
+            return Result.Success(sample);
+        }
     }
 }

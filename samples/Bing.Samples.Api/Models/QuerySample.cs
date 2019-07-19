@@ -40,6 +40,7 @@ namespace Bing.Samples.Api.Models
         /// <summary>
         /// 枚举例子
         /// </summary>
+        [DefaultValue(Models.EnumSample.Two)]
         public EnumSample EnumSample { get; set; }
     }
 
@@ -52,16 +53,16 @@ namespace Bing.Samples.Api.Models
         /// 老大
         /// </summary>
         [Description("老大")]
-        One=1,
+        One = 1,
         /// <summary>
         /// 老二
         /// </summary>
         [Description("老二")]
-        Two=2,
+        Two = 2,
         /// <summary>
         /// 老三
         /// </summary>
         [Description("老三")]
-        Three=3
+        Three = 3
     }
 }

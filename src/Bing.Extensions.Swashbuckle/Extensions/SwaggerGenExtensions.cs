@@ -199,6 +199,15 @@ namespace Bing.Extensions.Swashbuckle.Extensions
             options.AddOperationFilter<AppendAuthorizeToSummaryOperationFilter>();
         }
 
+        /// <summary>
+        /// 启用默认值过滤器
+        /// </summary>
+        /// <param name="options">Swagger生成选项</param>
+        public static void EnableDefaultValue(this SwaggerGenOptions options)
+        {
+            options.AddOperationFilter<DefaultValueOperationFilter>();
+        }
+
         ///// <summary>
         ///// 显示授权信息
         ///// </summary>
