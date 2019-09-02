@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Bing.Extensions.Swashbuckle.Internal
 {
@@ -11,6 +12,11 @@ namespace Bing.Extensions.Swashbuckle.Internal
         /// Swagger扩展选项配置
         /// </summary>
         public SwaggerExtensionOptions Options { get; set; } = new SwaggerExtensionOptions();
+
+        /// <summary>
+        /// 服务提供程序
+        /// </summary>
+        public IServiceProvider ServiceProvider { get; set; }
 
         /// <summary>
         /// 对象

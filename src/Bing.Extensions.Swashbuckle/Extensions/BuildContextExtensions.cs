@@ -26,6 +26,11 @@ namespace Bing.Extensions.Swashbuckle.Extensions
         public const string InfoMap = "SwaggerInfoMap";
 
         /// <summary>
+        /// Api分组上下文
+        /// </summary>
+        public const string ApiGroupContext = "ApiGroupContext";
+
+        /// <summary>
         /// 获取API分组
         /// </summary>
         /// <param name="context">构建上下文</param>
@@ -44,7 +49,7 @@ namespace Bing.Extensions.Swashbuckle.Extensions
         /// </summary>
         /// <param name="context">构建上下文</param>
         /// <param name="apiGroups">Api分组</param>
-        public static void SetApiGroups(this BuildContext context,List<ApiGroupInfo> apiGroups) => context.SetItem(DocsMap,apiGroups);
+        public static void SetApiGroups(this BuildContext context, List<ApiGroupInfo> apiGroups) => context.SetItem(DocsMap, apiGroups);
 
         /// <summary>
         /// 获取地址映射字典
@@ -80,7 +85,7 @@ namespace Bing.Extensions.Swashbuckle.Extensions
         {
             if (!context.Items.ContainsKey(InfoMap))
             {
-                var dictionary=new Dictionary<string,Info>();
+                var dictionary = new Dictionary<string, Info>();
                 context.SetInfoMaps(dictionary);
             }
 
@@ -97,6 +102,32 @@ namespace Bing.Extensions.Swashbuckle.Extensions
             if (dictionary == null)
                 return;
             context.SetItem(InfoMap, dictionary);
+        }
+
+        /// <summary>
+        /// 获取API分组上下文
+        /// </summary>
+        /// <param name="context">构建上下文</param>
+        public static ApiGroupContext GetApiGroupContext(this BuildContext context)
+        {
+            if (!context.Items.ContainsKey(ApiGroupContext))
+            {
+                var builder = new ApiGroupContextBuilder();
+                context.SetApiGroupContext(builder.Build());
+            }
+            return context.GetItem<ApiGroupContext>(ApiGroupContext);
+        }
+
+        /// <summary>
+        /// 设置API分组上下文
+        /// </summary>
+        /// <param name="context">构建上下文</param>
+        /// <param name="apiGroupContext">API分组上下文</param>
+        public static void SetApiGroupContext(this BuildContext context, ApiGroupContext apiGroupContext)
+        {
+            if (apiGroupContext == null)
+                return;
+            context.SetItem(ApiGroupContext, apiGroupContext);
         }
     }
 }

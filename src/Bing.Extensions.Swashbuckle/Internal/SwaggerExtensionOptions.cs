@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using Bing.Extensions.Swashbuckle.Configs;
 using Bing.Extensions.Swashbuckle.Core;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Bing.Extensions.Swashbuckle.Internal
 {
@@ -52,5 +57,30 @@ namespace Bing.Extensions.Swashbuckle.Internal
         /// Url 显示模式
         /// </summary>
         public UrlShowMode UrlMode { get; set; }
+
+        /// <summary>
+        /// Api版本列表
+        /// </summary>
+        public List<ApiVersion> ApiVersions { get; set; } = new List<ApiVersion>();
+
+        /// <summary>
+        /// 是否自定义版本
+        /// </summary>
+        public bool HasCustomVersion => ApiVersions.Count > 0;
+
+        /// <summary>
+        /// Swagger选项配置
+        /// </summary>
+        public SwaggerOptions SwaggerOptions { get; set; }
+
+        /// <summary>
+        /// SwaggerUI选项配置
+        /// </summary>
+        public SwaggerUIOptions SwaggerUiOptions { get; set; }
+
+        /// <summary>
+        /// Swagger选项配置
+        /// </summary>
+        public SwaggerGenOptions SwaggerGenOptions { get; set; }
     }
 }

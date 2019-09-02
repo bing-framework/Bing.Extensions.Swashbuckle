@@ -188,7 +188,7 @@ namespace Bing.Samples.Api
                 config.UseDefaultSwaggerUI();
 
                 // 使用API分组
-                config.EnableApiGroup<GroupSample>();
+                //config.EnableApiGroup<GroupSample>();
             }
         };
     }

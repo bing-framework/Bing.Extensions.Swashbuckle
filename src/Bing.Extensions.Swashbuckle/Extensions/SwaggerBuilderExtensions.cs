@@ -20,16 +20,24 @@ namespace Bing.Extensions.Swashbuckle.Extensions
         /// <param name="options">自定义Swagger选项</param>
         public static IApplicationBuilder UseSwaggerCustom(this IApplicationBuilder app, CustomSwaggerOptions options)
         {
+            BuildContext.Instance.ServiceProvider = app.ApplicationServices;
             var internalOptions = BuildContext.Instance.Options;
             internalOptions.RoutePrefix = options.RoutePrefix;
             internalOptions.ProjectName = options.ProjectName;
             internalOptions.EnableCustomIndex = options.UseCustomIndex;
             internalOptions.EnableAuthorization = options.SwaggerAuthorizations.Count > 0;
+            internalOptions.ApiVersions = options.ApiVersions;
+            internalOptions.EnableApiVersion = options.EnableApiVersion;
 
             app.UseSwaggerCustomAuthorization(options)
-                .UseSwagger(o => { options.UseSwaggerAction?.Invoke(o); })
+                .UseSwagger(o =>
+                {
+                    BuildContext.Instance.Options.SwaggerOptions = o;
+                    options.UseSwaggerAction?.Invoke(o);
+                })
                 .UseSwaggerUI(o =>
                 {
+                    BuildContext.Instance.Options.SwaggerUiOptions = o;
                     o.RoutePrefix = internalOptions.RoutePrefix;
                     o.DocumentTitle = internalOptions.ProjectName;
                     // 启用自定义主页
@@ -49,17 +57,17 @@ namespace Bing.Extensions.Swashbuckle.Extensions
                         return;
                     }
 
-                    foreach (var item in options.ApiVersions)
-                    {
-                        var url = $"/swagger/{item.Version}/swagger.json";
-                        var name = $"{(string.IsNullOrWhiteSpace(item.Description) ? item.Version : item.Description)}";
-                        if (o.ExistsApiVersion(name, url))
-                        {
-                            continue;
-                        }
+                    //foreach (var item in options.ApiVersions)
+                    //{
+                    //    var url = $"/swagger/{item.Version}/swagger.json";
+                    //    var name = $"{(string.IsNullOrWhiteSpace(item.Description) ? item.Version : item.Description)}";
+                    //    if (o.ExistsApiVersion(name, url))
+                    //    {
+                    //        continue;
+                    //    }
 
-                        o.SwaggerEndpoint(url, name);
-                    }
+                    //    o.SwaggerEndpoint(url, name);
+                    //}
 
                     options.UseSwaggerUIAction?.Invoke(o);
                 });

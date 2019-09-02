@@ -10,7 +10,7 @@
         /// <summary>
         /// 标题
         /// </summary>
-        public string Title => $"{Group.Title} - {Version}";
+        public string Title => GetTitle();
 
         /// <summary>
         /// 名称
@@ -26,5 +26,15 @@
         /// 分组信息
         /// </summary>
         public ApiGroupInfo Group { get; set; }
+
+        /// <summary>
+        /// 获取标题
+        /// </summary>
+        private string GetTitle()
+        {
+            if (string.IsNullOrEmpty(Version))
+                return Group.Title;
+            return $"{Group.Title} - {Version}";
+        }
     }
 }

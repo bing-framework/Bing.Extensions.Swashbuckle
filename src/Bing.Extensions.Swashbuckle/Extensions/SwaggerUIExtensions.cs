@@ -86,7 +86,7 @@ namespace Bing.Extensions.Swashbuckle.Extensions
                 return;
             var urlMaps = BuildContext.Instance.GetUrlMaps();
             urlMaps[name] = url;
-            options.SwaggerEndpoint(name, url);
+            options.SwaggerEndpoint(url, name);
         }
 
         /// <summary>
