@@ -43,14 +43,6 @@ namespace Bing.Extensions.Swashbuckle.Extensions
             //    });
             //});
 
-
-
-            // 没有加特性的分到这个NoGroup上
-            options.SwaggerDoc("NoGroup", new Info()
-            {
-                Title = "无分组"
-            });
-
             // 判断接口归于哪个分组
             options.DocInclusionPredicate((docName, apiDescription) =>
             {

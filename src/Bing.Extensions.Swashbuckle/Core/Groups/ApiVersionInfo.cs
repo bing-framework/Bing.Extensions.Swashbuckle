@@ -34,7 +34,9 @@
         {
             if (string.IsNullOrEmpty(Version))
                 return Group.Title;
-            return $"{Group.Title} - {Version}";
+            if (Group.Title == Name)
+                return Group.Title;
+            return $"{Group.Title} - {Name}";
         }
     }
 }

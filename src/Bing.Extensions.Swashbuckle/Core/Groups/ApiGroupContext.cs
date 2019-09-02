@@ -104,6 +104,7 @@ namespace Bing.Extensions.Swashbuckle.Core.Groups
                 }
             }
 
+            dict["NoGroup"] = new Info() {Title = "无分组"};
             return dict;
         }
 
@@ -134,6 +135,8 @@ namespace Bing.Extensions.Swashbuckle.Core.Groups
                     dict[apiVersion.Title] = $"/swagger/{apiVersion.Name}/swagger.json";
                 }
             }
+
+            dict["无分组"] = "/swagger/NoGroup/swagger.json";
 
             return dict;
         }
