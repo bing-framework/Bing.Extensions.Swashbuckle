@@ -33,6 +33,11 @@ namespace Bing.Extensions.Swashbuckle.Configs
         public bool UseCustomIndex { get; set; }
 
         /// <summary>
+        /// 是否启用Api版本号
+        /// </summary>
+        public bool EnableApiVersion { get; set; }
+
+        /// <summary>
         /// Swagger授权登录账号，未指定则不启用
         /// </summary>
         public List<CustomSwaggerAuthorization> SwaggerAuthorizations { get; set; } =

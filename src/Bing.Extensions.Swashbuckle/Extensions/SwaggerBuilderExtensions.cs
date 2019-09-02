@@ -2,6 +2,7 @@
 using System.Linq;
 using Bing.Extensions.Swashbuckle.Configs;
 using Bing.Extensions.Swashbuckle.Core;
+using Bing.Extensions.Swashbuckle.Internal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
@@ -19,18 +20,23 @@ namespace Bing.Extensions.Swashbuckle.Extensions
         /// <param name="options">自定义Swagger选项</param>
         public static IApplicationBuilder UseSwaggerCustom(this IApplicationBuilder app, CustomSwaggerOptions options)
         {
+            var internalOptions = BuildContext.Instance.Options;
+            internalOptions.RoutePrefix = options.RoutePrefix;
+            internalOptions.ProjectName = options.ProjectName;
+            internalOptions.EnableCustomIndex = options.UseCustomIndex;
+            internalOptions.EnableAuthorization = options.SwaggerAuthorizations.Count > 0;
+
             app.UseSwaggerCustomAuthorization(options)
                 .UseSwagger(o => { options.UseSwaggerAction?.Invoke(o); })
                 .UseSwaggerUI(o =>
                 {
-                    o.RoutePrefix = options.RoutePrefix;
-                    o.DocumentTitle = options.ProjectName;
-                    if (options.UseCustomIndex)
-                    {
+                    o.RoutePrefix = internalOptions.RoutePrefix;
+                    o.DocumentTitle = internalOptions.ProjectName;
+                    // 启用自定义主页
+                    if (internalOptions.EnableCustomIndex)
                         o.UseCustomSwaggerIndex();
-                    }
-
-                    if (options.SwaggerAuthorizations.Count > 0)
+                    // 启用授权
+                    if (internalOptions.EnableAuthorization)
                     {
                         o.ConfigObject.AdditionalItems["customAuth"] = true;
                         o.ConfigObject.AdditionalItems["loginUrl"] = $"/{options.RoutePrefix}/login.html";

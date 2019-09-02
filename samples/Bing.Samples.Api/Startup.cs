@@ -45,6 +45,18 @@ namespace Bing.Samples.Api
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(o => { o.SerializerSettings.ContractResolver = new DefaultContractResolver(); })
                 .AddControllersAsServices();
+            services.AddApiVersioning(options =>
+            {
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ReportApiVersions = false;
+            });
+            services.AddVersionedApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVVV";
+                options.SubstituteApiVersionInUrl = true;
+                options.AssumeDefaultVersionWhenUnspecified = true;
+            });
+
             //services.AddAuthorization(o => { o.AddPolicy("Admin", policy => policy.RequireClaim("Admin")); });
             var builder = new ContainerBuilder();
             builder.RegisterDynamicProxy(config =>
@@ -94,7 +106,8 @@ namespace Bing.Samples.Api
             ProjectName = "Bing.Sample.Api 在线文档调试",
             UseCustomIndex = true,
             RoutePrefix = "swagger",
-            //ApiVersions = new List<ApiVersion>() {new ApiVersion(){Description = "通用接口",Version = "v1"},new ApiVersion(){Description = "测试接口",Version = "v2"}},
+            EnableApiVersion = true,
+            ApiVersions = new List<Extensions.Swashbuckle.Configs.ApiVersion>() {new Extensions.Swashbuckle.Configs.ApiVersion(){Description = "通用接口",Version = "v1"},new Extensions.Swashbuckle.Configs.ApiVersion(){Description = "测试接口",Version = "v2"}},
             //SwaggerAuthorizations = new List<CustomSwaggerAuthorization>()
             //{
             //    new CustomSwaggerAuthorization("admin","123456")
@@ -156,7 +169,7 @@ namespace Bing.Samples.Api
                 });
 
                 // 启用默认值
-                config.EnableDefaultValue();
+                //config.EnableDefaultValue();
             },
             UseSwaggerAction = config =>
             {

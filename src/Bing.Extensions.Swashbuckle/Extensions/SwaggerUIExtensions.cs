@@ -2,6 +2,7 @@
 using System.Reflection;
 using Bing.Extensions.Swashbuckle.Attributes;
 using Bing.Extensions.Swashbuckle.Configs;
+using Bing.Extensions.Swashbuckle.Internal;
 using Microsoft.AspNetCore.Builder;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -58,19 +59,34 @@ namespace Bing.Extensions.Swashbuckle.Extensions
             {
                 var info = x.GetCustomAttributes(typeof(SwaggerApiGroupInfoAttribute), false)
                     .OfType<SwaggerApiGroupInfoAttribute>().FirstOrDefault();
-                var url = $"/swagger/{x.Name}/swagger.json";
+                var url = $"/swagger/{(string.IsNullOrEmpty(info?.Name) ? x.Name : info.Name)}/swagger.json";
                 var name = info != null ? info.Title : x.Name;
                 if (options.ExistsApiVersion(name, url))
                 {
                     return;
                 }
-                options.SwaggerEndpoint($"/swagger/{x.Name}/swagger.json", info != null ? info.Title : x.Name);
+                options.SwaggerEndpoint($"/swagger/{(string.IsNullOrEmpty(info?.Name) ? x.Name : info.Name)}/swagger.json", info != null ? info.Title : x.Name);
             });
             if (options.ExistsApiVersion("/swagger/NoGroup/swagger.json", "无分组"))
             {
                 return;
             }
             options.SwaggerEndpoint("/swagger/NoGroup/swagger.json", "无分组");
+        }
+
+        /// <summary>
+        /// 添加信息
+        /// </summary>
+        /// <param name="options">SwaggerUI选项配置</param>
+        /// <param name="name">名称</param>
+        /// <param name="url">地址</param>
+        internal static void AddInfo(this SwaggerUIOptions options, string name, string url)
+        {
+            if (options.ExistsApiVersion(name, url))
+                return;
+            var urlMaps = BuildContext.Instance.GetUrlMaps();
+            urlMaps[name] = url;
+            options.SwaggerEndpoint(name, url);
         }
 
         /// <summary>
@@ -82,10 +98,7 @@ namespace Bing.Extensions.Swashbuckle.Extensions
         internal static bool ExistsApiVersion(this SwaggerUIOptions options, string name, string url)
         {
             if (options?.ConfigObject?.Urls == null)
-            {
                 return false;
-            }
-
             return options.ConfigObject.Urls.Any(x => x.Name == name || x.Url == url);
         }
     }

@@ -40,5 +40,6 @@ namespace Bing.Extensions.Swashbuckle.Extensions
             });
             return services;
         }
+
     }
 }

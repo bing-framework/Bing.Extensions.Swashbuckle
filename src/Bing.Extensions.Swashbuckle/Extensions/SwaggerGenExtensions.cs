@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Bing.Extensions.Swashbuckle.Attributes;
 using Bing.Extensions.Swashbuckle.Core;
 using Bing.Extensions.Swashbuckle.Filters.Documents;
 using Bing.Extensions.Swashbuckle.Filters.Operations;
+using Bing.Extensions.Swashbuckle.Internal;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -28,18 +28,22 @@ namespace Bing.Extensions.Swashbuckle.Extensions
             {
                 return;
             }
+            BuildContext.Instance.Options.EnableApiGroup = true;
+            BuildContext.Instance.Options.ApiGroupType = type;
             // 遍历 TEnum 所有枚举值生成接口文档，Skip(1)是因为Enum第一个FileInfo是内置的一个int值
-            type.GetFields().Skip(1).ToList().ForEach(x =>
-            {
-                var info = x.GetCustomAttributes(typeof(SwaggerApiGroupInfoAttribute), false)
-                    .OfType<SwaggerApiGroupInfoAttribute>().FirstOrDefault();
-                options.SwaggerDoc(x.Name, new Info()
-                {
-                    Title = info?.Title,
-                    Version = info?.Version,
-                    Description = info?.Description
-                });
-            });
+            //type.GetFields().Skip(1).ToList().ForEach(x =>
+            //{
+            //    var info = x.GetCustomAttributes(typeof(SwaggerApiGroupInfoAttribute), false)
+            //        .OfType<SwaggerApiGroupInfoAttribute>().FirstOrDefault();
+            //    options.SwaggerDoc(string.IsNullOrEmpty(info?.Name) ? x.Name : info.Name, new Info()
+            //    {
+            //        Title = info?.Title,
+            //        Version = info?.Version,
+            //        Description = info?.Description
+            //    });
+            //});
+
+
 
             // 没有加特性的分到这个NoGroup上
             options.SwaggerDoc("NoGroup", new Info()
@@ -54,6 +58,11 @@ namespace Bing.Extensions.Swashbuckle.Extensions
                 {
                     // 当分组为NoGroup时，只要没加特性的都属于这个组
                     return string.IsNullOrWhiteSpace(apiDescription.GroupName);
+                }
+
+                if (docName == apiDescription.GroupName)
+                {
+                    return true;
                 }
 
                 foreach (var obj in apiDescription.ActionDescriptor.EndpointMetadata)

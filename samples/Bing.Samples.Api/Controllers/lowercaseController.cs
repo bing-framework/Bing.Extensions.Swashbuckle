@@ -12,6 +12,7 @@ namespace Bing.Samples.Api.Controllers
     [ApiController]
     [SwaggerApiGroup(GroupSample.Demo)]
     [SwaggerApiGroup(GroupSample.Test)]
+    [ApiVersionNeutral]
     public class lowercaseController : ControllerBase
     {
         // GET api/values
