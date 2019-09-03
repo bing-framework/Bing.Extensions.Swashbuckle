@@ -1,9 +1,9 @@
 <Project>
   <PropertyGroup>
     <VersionMajor>1</VersionMajor>
-    <VersionMinor>0</VersionMinor>
-    <VersionPatch>1</VersionPatch>
-    <VersionQuality>20190719-1</VersionQuality>
+    <VersionMinor>1</VersionMinor>
+    <VersionPatch>0</VersionPatch>
+    <VersionQuality>20190903-1</VersionQuality>
     <VersionPrefix>$(VersionMajor).$(VersionMinor).$(VersionPatch)</VersionPrefix>
     <VersionSuffix>preview-$(VersionQuality)</VersionSuffix>
   </PropertyGroup>

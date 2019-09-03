@@ -9,6 +9,7 @@ Bing.Extensions.Swashbuckle是扩展Swashbuckle.AspNetCore一些常用操作，�
 |Bing.Extensions.Swashbuckle|[![NuGet Badge](https://buildstats.info/nuget/Bing.Extensions.Swashbuckle?includePreReleases=true)](https://www.nuget.org/packages/Bing.Extensions.Swashbuckle)|
 
 ## 功能
+- 支持多版本分组
 - 支持多API分组功能
 - 支持文件上传参数
 - 支持添加通用参数
