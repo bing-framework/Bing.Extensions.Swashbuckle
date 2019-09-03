@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using Bing.Extensions.Swashbuckle.Attributes;
 using Bing.Extensions.Swashbuckle.Core;
 using Bing.Extensions.Swashbuckle.Filters.Documents;
 using Bing.Extensions.Swashbuckle.Filters.Operations;
-using Bing.Extensions.Swashbuckle.Internal;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -16,62 +13,6 @@ namespace Bing.Extensions.Swashbuckle.Extensions
     /// </summary>
     public static class SwaggerGenExtensions
     {
-        /// <summary>
-        /// Api分组
-        /// </summary>
-        /// <typeparam name="TEnum">枚举类型</typeparam>
-        /// <param name="options">Swagger生成选项</param>
-        public static void ApiGroup<TEnum>(this SwaggerGenOptions options) where TEnum : struct
-        {
-            var type = typeof(TEnum);
-            if (!type.IsEnum)
-            {
-                return;
-            }
-            BuildContext.Instance.Options.EnableApiGroup = true;
-            BuildContext.Instance.Options.ApiGroupType = type;
-            // 遍历 TEnum 所有枚举值生成接口文档，Skip(1)是因为Enum第一个FileInfo是内置的一个int值
-            //type.GetFields().Skip(1).ToList().ForEach(x =>
-            //{
-            //    var info = x.GetCustomAttributes(typeof(SwaggerApiGroupInfoAttribute), false)
-            //        .OfType<SwaggerApiGroupInfoAttribute>().FirstOrDefault();
-            //    options.SwaggerDoc(string.IsNullOrEmpty(info?.Name) ? x.Name : info.Name, new Info()
-            //    {
-            //        Title = info?.Title,
-            //        Version = info?.Version,
-            //        Description = info?.Description
-            //    });
-            //});
-
-            // 判断接口归于哪个分组
-            options.DocInclusionPredicate((docName, apiDescription) =>
-            {
-                if (docName == "NoGroup")
-                {
-                    // 当分组为NoGroup时，只要没加特性的都属于这个组
-                    return string.IsNullOrWhiteSpace(apiDescription.GroupName);
-                }
-
-                if (docName == apiDescription.GroupName)
-                {
-                    return true;
-                }
-
-                foreach (var obj in apiDescription.ActionDescriptor.EndpointMetadata)
-                {
-                    if (obj is SwaggerApiGroupAttribute swaggerApiGroup)
-                    {
-                        if (docName == swaggerApiGroup.GroupName)
-                        {
-                            return true;
-                        }
-                    }
-                }
-
-                return false;
-            });
-        }
-
         /// <summary>
         /// 显示枚举描述
         /// </summary>
@@ -176,19 +117,13 @@ namespace Bing.Extensions.Swashbuckle.Extensions
         /// 启用请求头过滤器
         /// </summary>
         /// <param name="options">Swagger生成选项</param>
-        public static void EnableRequestHeader(this SwaggerGenOptions options)
-        {
-            options.AddOperationFilter<RequestHeaderOperationFilter>();
-        }
+        public static void EnableRequestHeader(this SwaggerGenOptions options) => options.AddOperationFilter<RequestHeaderOperationFilter>();
 
         /// <summary>
         /// 启用响应头过滤器
         /// </summary>
         /// <param name="options">Swagger生成选项</param>
-        public static void EnableResponseHeader(this SwaggerGenOptions options)
-        {
-            options.AddOperationFilter<ResponseHeadersOperationFilter>();
-        }
+        public static void EnableResponseHeader(this SwaggerGenOptions options) => options.AddOperationFilter<ResponseHeadersOperationFilter>();
 
         /// <summary>
         /// 显示授权信息
@@ -204,10 +139,7 @@ namespace Bing.Extensions.Swashbuckle.Extensions
         /// 启用默认值过滤器
         /// </summary>
         /// <param name="options">Swagger生成选项</param>
-        public static void EnableDefaultValue(this SwaggerGenOptions options)
-        {
-            options.AddOperationFilter<DefaultValueOperationFilter>();
-        }
+        public static void EnableDefaultValue(this SwaggerGenOptions options) => options.AddOperationFilter<DefaultValueOperationFilter>();
 
         ///// <summary>
         ///// 显示授权信息

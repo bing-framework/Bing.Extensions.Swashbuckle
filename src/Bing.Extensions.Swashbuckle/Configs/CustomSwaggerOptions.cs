@@ -20,7 +20,7 @@ namespace Bing.Extensions.Swashbuckle.Configs
         /// <summary>
         /// Api版本列表
         /// </summary>
-        public List<ApiVersion> ApiVersions { get; set; }
+        public List<ApiVersion> ApiVersions { get; set; } = new List<ApiVersion>();
 
         /// <summary>
         /// 接口文档访问路由前缀
@@ -36,6 +36,11 @@ namespace Bing.Extensions.Swashbuckle.Configs
         /// 是否启用Api版本号
         /// </summary>
         public bool EnableApiVersion { get; set; }
+
+        /// <summary>
+        /// Api分组类型
+        /// </summary>
+        public Type ApiGroupType { get; set; }
 
         /// <summary>
         /// Swagger授权登录账号，未指定则不启用

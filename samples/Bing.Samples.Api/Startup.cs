@@ -1,19 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using AspectCore.DynamicProxy;
-using AspectCore.DynamicProxy.Parameters;
-using AspectCore.Extensions.AspectScope;
-using AspectCore.Extensions.Autofac;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using Bing.Extensions.Swashbuckle.Configs;
-using Bing.Extensions.Swashbuckle.Core;
 using Bing.Extensions.Swashbuckle.Extensions;
-using Bing.Extensions.Swashbuckle.Filters.Operations;
 using Bing.Extensions.Swashbuckle.Filters.Schemas;
-using Bing.Samples.Api.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -25,16 +15,29 @@ using Swashbuckle.AspNetCore.Swagger;
 
 namespace Bing.Samples.Api
 {
+    /// <summary>
+    /// 启动配置
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// 初始化一个<see cref="Startup"/>类型的实例
+        /// </summary>
+        /// <param name="configuration">配置</param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// 配置
+        /// </summary>
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// 配置服务
+        /// </summary>
+        /// <param name="services">服务集合</param>
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             // 配置跨域
@@ -58,23 +61,12 @@ namespace Bing.Samples.Api
             });
 
             //services.AddAuthorization(o => { o.AddPolicy("Admin", policy => policy.RequireClaim("Admin")); });
-            var builder = new ContainerBuilder();
-            builder.RegisterDynamicProxy(config =>
-            {
-                config.EnableParameterAspect();
-                
-            });
-            builder.RegisterType<ScopeAspectScheduler>().As<IAspectScheduler>().InstancePerLifetimeScope();
-            builder.RegisterType<ScopeAspectBuilderFactory>().As<IAspectBuilderFactory>()
-                .InstancePerLifetimeScope();
-            builder.RegisterType<ScopeAspectContextFactory>().As<IAspectContextFactory>()
-                .InstancePerLifetimeScope();
-            builder.Populate(services);
-            var container = builder.Build();
-            return new AutofacServiceProvider(container);
+            return services.BuildServiceProvider();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// 配置请求管道
+        /// </summary>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -95,7 +87,6 @@ namespace Bing.Samples.Api
                 routes.MapRoute("areaRoute", "{area:exists}/{controller}/{action=Index}/{id?}");
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
-            //app.UseApiVersioning();
         }
 
         /// <summary>
@@ -107,7 +98,8 @@ namespace Bing.Samples.Api
             UseCustomIndex = true,
             RoutePrefix = "swagger",
             EnableApiVersion = true,
-            ApiVersions = new List<Extensions.Swashbuckle.Configs.ApiVersion>() {new Extensions.Swashbuckle.Configs.ApiVersion(){Description = "通用接口",Version = "v1"},new Extensions.Swashbuckle.Configs.ApiVersion(){Description = "测试接口",Version = "v2"}},
+            //ApiGroupType = typeof(GroupSample),
+            //ApiVersions = new List<Extensions.Swashbuckle.Configs.ApiVersion>() { new Extensions.Swashbuckle.Configs.ApiVersion() { Description = "通用接口", Version = "v1" }, new Extensions.Swashbuckle.Configs.ApiVersion() { Description = "测试接口", Version = "v2" } },
             //SwaggerAuthorizations = new List<CustomSwaggerAuthorization>()
             //{
             //    new CustomSwaggerAuthorization("admin","123456")
@@ -153,9 +145,6 @@ namespace Bing.Samples.Api
                 // 隐藏属性
                 config.SchemaFilter<IgnorePropertySchemaFilter>();
 
-                // 使用API分组
-                config.ApiGroup<GroupSample>();
-
                 // 添加通用参数
                 config.AddCommonParameter(new List<IParameter>()
                 {
@@ -169,7 +158,7 @@ namespace Bing.Samples.Api
                 });
 
                 // 启用默认值
-                //config.EnableDefaultValue();
+                config.EnableDefaultValue();
             },
             UseSwaggerAction = config =>
             {
@@ -186,9 +175,6 @@ namespace Bing.Samples.Api
 
                 // 使用默认SwaggerUI
                 config.UseDefaultSwaggerUI();
-
-                // 使用API分组
-                //config.EnableApiGroup<GroupSample>();
             }
         };
     }

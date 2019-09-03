@@ -31,7 +31,7 @@ namespace Bing.Extensions.Swashbuckle.Internal
         /// <summary>
         /// 是否启用API分组
         /// </summary>
-        public bool EnableApiGroup { get; set; }
+        public bool EnableApiGroup => ApiGroupType != null;
 
         /// <summary>
         /// API分组类型

@@ -22,7 +22,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
             if (operation?.Parameters == null || !operation.Parameters.Any())
                 return;
             var parameterValuePairs = context.ApiDescription.ParameterDescriptions
-                .Where(parameter => GetDefaultValueAttribute(parameter) != null || GetParameterInfo(parameter).HasDefaultValue)
+                .Where(parameter => GetDefaultValueAttribute(parameter) != null || HasDefaultValue(parameter))
                 .ToDictionary(parameter => parameter.Name, GetDefaultValue);
             foreach (var parameter in operation.Parameters)
             {
@@ -54,7 +54,20 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         /// 获取参数信息
         /// </summary>
         /// <param name="parameter">API参数</param>
-        private ParameterInfo GetParameterInfo(ApiParameterDescription parameter) => ((ControllerParameterDescriptor)parameter.ParameterDescriptor).ParameterInfo;
+        private ParameterInfo GetParameterInfo(ApiParameterDescription parameter) => ((ControllerParameterDescriptor) parameter.ParameterDescriptor).ParameterInfo;
+
+        /// <summary>
+        /// 是否含有默认值
+        /// </summary>
+        /// <param name="parameter">API参数</param>
+        private bool HasDefaultValue(ApiParameterDescription parameter)
+        {
+            if (parameter.ParameterDescriptor is ControllerParameterDescriptor controllerParameterDescriptor)
+            {
+                return controllerParameterDescriptor.ParameterInfo.HasDefaultValue;
+            }
+            return false;
+        }
 
         /// <summary>
         /// 获取默认值

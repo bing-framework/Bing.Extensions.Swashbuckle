@@ -36,7 +36,19 @@
                 return Group.Title;
             if (Group.Title == Name)
                 return Group.Title;
+            if (Group.Name == Name)
+                return Group.Title;
             return $"{Group.Title} - {Name}";
+        }
+
+        /// <summary>
+        /// 获取名称
+        /// </summary>
+        public string GetName()
+        {
+            if (Name == Group.Name)
+                return Name;
+            return $"{Group.Name}{Name}";
         }
     }
 }

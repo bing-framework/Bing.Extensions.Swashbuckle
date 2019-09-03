@@ -12,7 +12,7 @@ namespace Bing.Samples.Api.Controllers
     [ApiController]
     [SwaggerApiGroup(GroupSample.Demo)]
     [SwaggerApiGroup(GroupSample.Test)]
-    [ApiVersionNeutral]
+    // ReSharper disable once InconsistentNaming
     public class lowercaseController : ControllerBase
     {
         // GET api/values

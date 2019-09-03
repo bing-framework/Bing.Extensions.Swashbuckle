@@ -10,17 +10,17 @@ namespace Bing.Samples.Api.Models
         /// <summary>
         /// 登录
         /// </summary>
-        [SwaggerApiGroupInfo(Title = "登录模块", Name = "v1.0", Description = "登录模块相关接口", Version = "1.0")]
+        [SwaggerApiGroupInfo(Title = "登录模块", Description = "登录模块相关接口")]
         Login,
         /// <summary>
         /// 测试
         /// </summary>
-        [SwaggerApiGroupInfo(Title = "测试模块", Name = "v2.0", Description = "测试相关接口", Version = "2.0")]
+        [SwaggerApiGroupInfo(Title = "测试模块", Description = "测试相关接口")]
         Test,
         /// <summary>
         /// 案例
         /// </summary>
-        [SwaggerApiGroupInfo(Title = "Demo模块", Name = "v3.0", Description = "案例模块相关接口", Version = "3.0")]
+        [SwaggerApiGroupInfo(Title = "Demo模块", Description = "案例模块相关接口")]
         Demo
     }
 }

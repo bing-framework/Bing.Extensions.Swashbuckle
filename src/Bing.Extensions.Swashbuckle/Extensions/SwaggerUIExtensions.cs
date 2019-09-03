@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Reflection;
-using Bing.Extensions.Swashbuckle.Attributes;
 using Bing.Extensions.Swashbuckle.Configs;
 using Bing.Extensions.Swashbuckle.Internal;
 using Microsoft.AspNetCore.Builder;
@@ -41,37 +40,6 @@ namespace Bing.Extensions.Swashbuckle.Extensions
             var currentAssembly = typeof(CustomSwaggerOptions).GetTypeInfo().Assembly;
             options.IndexStream = () =>
                 currentAssembly.GetManifestResourceStream($"{currentAssembly.GetName().Name}.Resources.index.html");
-        }
-
-        /// <summary>
-        /// 启用Api分组
-        /// </summary>
-        /// <typeparam name="TEnum">枚举类型</typeparam>
-        /// <param name="options">SwaggerUI选项</param>
-        public static void EnableApiGroup<TEnum>(this SwaggerUIOptions options) where TEnum : struct
-        {
-            var type = typeof(TEnum);
-            if (!type.IsEnum)
-            {
-                return;
-            }
-            type.GetFields().Skip(1).ToList().ForEach(x =>
-            {
-                var info = x.GetCustomAttributes(typeof(SwaggerApiGroupInfoAttribute), false)
-                    .OfType<SwaggerApiGroupInfoAttribute>().FirstOrDefault();
-                var url = $"/swagger/{(string.IsNullOrEmpty(info?.Name) ? x.Name : info.Name)}/swagger.json";
-                var name = info != null ? info.Title : x.Name;
-                if (options.ExistsApiVersion(name, url))
-                {
-                    return;
-                }
-                options.SwaggerEndpoint($"/swagger/{(string.IsNullOrEmpty(info?.Name) ? x.Name : info.Name)}/swagger.json", info != null ? info.Title : x.Name);
-            });
-            if (options.ExistsApiVersion("/swagger/NoGroup/swagger.json", "无分组"))
-            {
-                return;
-            }
-            options.SwaggerEndpoint("/swagger/NoGroup/swagger.json", "无分组");
         }
 
         /// <summary>

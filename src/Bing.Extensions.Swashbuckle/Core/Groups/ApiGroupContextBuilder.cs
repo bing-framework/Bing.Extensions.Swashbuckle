@@ -21,6 +21,7 @@ namespace Bing.Extensions.Swashbuckle.Core.Groups
             context.Options = buildContext.Options;
             BuildGroup(context, buildContext);
             BuildCustomVersion(context, buildContext);
+            BuildNoGroup(context, buildContext);
             BuildApiVersion(context,buildContext);
             return context;
         }
@@ -42,12 +43,21 @@ namespace Bing.Extensions.Swashbuckle.Core.Groups
                     .OfType<SwaggerApiGroupInfoAttribute>().FirstOrDefault();
                 if (attribute == null)
                 {
-                    context.AddApiGroup(x.Name);
+                    if (buildContext.Options.EnableApiVersion)
+                    {
+                        context.AddGroup(x.Name);
+                        return;
+                    }
+                    context.AddApiGroupByCustomGroup(x.Name);
                     return;
                 }
 
-                context.AddApiGroup(attribute.Title, attribute.Name, attribute.Description, attribute.Name,
-                    attribute.Version);
+                if (buildContext.Options.EnableApiVersion)
+                {
+                    context.AddGroup(attribute.Title, x.Name, attribute.Description);
+                    return;
+                }
+                context.AddApiGroupByCustomGroup(attribute.Title, x.Name, attribute.Description, x.Name, x.Name);
             });
         }
 
@@ -58,6 +68,8 @@ namespace Bing.Extensions.Swashbuckle.Core.Groups
         /// <param name="buildContext">构建上下文</param>
         private void BuildCustomVersion(ApiGroupContext context, BuildContext buildContext)
         {
+            if (buildContext.Options.EnableApiGroup || buildContext.Options.EnableApiVersion)
+                return;
             if (!buildContext.Options.HasCustomVersion)
                 return;
             foreach (var apiVersion in buildContext.Options.ApiVersions)
@@ -76,9 +88,29 @@ namespace Bing.Extensions.Swashbuckle.Core.Groups
             var provider = buildContext.ServiceProvider.GetService<IApiVersionDescriptionProvider>();
             foreach (var description in provider.ApiVersionDescriptions)
             {
+                if (buildContext.Options.EnableApiGroup)
+                {
+                    context.AddApiVersion(description.GroupName,description.ApiVersion.ToString());
+                    continue;
+                }
                 context.AddApiGroup(description.GroupName, description.GroupName, string.Empty, description.GroupName,
                     description.ApiVersion.ToString());
             }
+        }
+
+        /// <summary>
+        /// 构建无分组
+        /// </summary>
+        /// <param name="context">Api分组上下文</param>
+        /// <param name="buildContext">构建上下文</param>
+        private void BuildNoGroup(ApiGroupContext context, BuildContext buildContext)
+        {
+            if (!buildContext.Options.EnableApiGroup)
+                return;
+            if (buildContext.Options.EnableApiVersion)
+                context.AddNoGroup();
+            else
+                context.AddNoGroupWithVersion();
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Bing.Extensions.Swashbuckle.Attributes;
+using Bing.Samples.Api.Models;
 using Bing.Samples.Api.V2.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +13,7 @@ namespace Bing.Samples.Api.V2.Controllers
     [ApiController]
     [ApiVersion("2.0")]
     [Route("api/[controller]")]
+    [SwaggerApiGroup(GroupSample.Login)]
     public class OrderController : ControllerBase
     {
         /// <summary>

@@ -28,6 +28,7 @@ namespace Bing.Extensions.Swashbuckle.Extensions
             internalOptions.EnableAuthorization = options.SwaggerAuthorizations.Count > 0;
             internalOptions.ApiVersions = options.ApiVersions;
             internalOptions.EnableApiVersion = options.EnableApiVersion;
+            internalOptions.ApiGroupType = options.ApiGroupType;
 
             app.UseSwaggerCustomAuthorization(options)
                 .UseSwagger(o =>
@@ -56,19 +57,6 @@ namespace Bing.Extensions.Swashbuckle.Extensions
                         options.UseSwaggerUIAction?.Invoke(o);
                         return;
                     }
-
-                    //foreach (var item in options.ApiVersions)
-                    //{
-                    //    var url = $"/swagger/{item.Version}/swagger.json";
-                    //    var name = $"{(string.IsNullOrWhiteSpace(item.Description) ? item.Version : item.Description)}";
-                    //    if (o.ExistsApiVersion(name, url))
-                    //    {
-                    //        continue;
-                    //    }
-
-                    //    o.SwaggerEndpoint(url, name);
-                    //}
-
                     options.UseSwaggerUIAction?.Invoke(o);
                 });
             return app;

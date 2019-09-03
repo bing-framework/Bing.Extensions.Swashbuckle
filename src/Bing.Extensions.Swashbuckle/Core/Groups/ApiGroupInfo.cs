@@ -24,6 +24,11 @@ namespace Bing.Extensions.Swashbuckle.Core.Groups
         public string Description { get; set; }
 
         /// <summary>
+        /// 是否自定义分组
+        /// </summary>
+        public bool IsCustomGroup { get; set; }
+
+        /// <summary>
         /// Api版本列表
         /// </summary>
         public List<ApiVersionInfo> ApiVersions { get; set; } = new List<ApiVersionInfo>();

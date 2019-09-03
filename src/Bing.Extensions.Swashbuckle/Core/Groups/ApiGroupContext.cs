@@ -26,19 +26,78 @@ namespace Bing.Extensions.Swashbuckle.Core.Groups
         public IList<ApiGroupInfo> GetApiGroups() => ApiGroups;
 
         /// <summary>
-        /// 添加API分组
+        /// 添加分组。仅添加分组，不添加版本
         /// </summary>
         /// <param name="name">名称</param>
-        public void AddApiGroup(string name)
+        public void AddGroup(string name)
         {
-            ApiGroupInfo apiGroup = GetApiGroup(name) ?? new ApiGroupInfo {Title = name, Name = name, Description = string.Empty};
+            AddGroup(name, name, string.Empty);
+        }
+
+        /// <summary>
+        /// 添加分组。仅添加分组，不添加版本
+        /// </summary>
+        /// <param name="title">标题</param>
+        /// <param name="name">名称</param>
+        /// <param name="description">描述</param>
+        public void AddGroup(string title, string name, string description)
+        {
+            ApiGroupInfo apiGroup = GetApiGroup(name) ?? new ApiGroupInfo { Title = title, Name = name, Description = string.Empty, IsCustomGroup = true };
+            if (!ExistsApiGroup(name))
+                ApiGroups.Add(apiGroup);
+        }
+
+        /// <summary>
+        /// 添加APi分组
+        /// </summary>
+        /// <param name="name">名称</param>
+        public void AddApiGroupByCustomGroup(string name)
+        {
+            ApiGroupInfo apiGroup = GetApiGroup(name) ?? new ApiGroupInfo {Title = name, Name = name, Description = string.Empty, IsCustomGroup = true};
             apiGroup.AddItem(new ApiVersionInfo()
             {
                 Name = name,
                 Version = string.Empty
             });
-            if(!ExistsApiGroup(name))
+            if (!ExistsApiGroup(name))
                 ApiGroups.Add(apiGroup);
+        }
+
+        /// <summary>
+        /// 添加API分组
+        /// </summary>
+        /// <param name="title">标题</param>
+        /// <param name="name">名称</param>
+        /// <param name="description">描述</param>
+        /// <param name="versionName">版本名称</param>
+        /// <param name="version">版本号</param>
+        public void AddApiGroupByCustomGroup(string title, string name, string description, string versionName,
+            string version)
+        {
+            ApiGroupInfo apiGroup = GetApiGroup(name) ?? new ApiGroupInfo {Title = title, Name = name, Description = description, IsCustomGroup = true};
+            apiGroup.AddItem(new ApiVersionInfo()
+            {
+                Name = versionName,
+                Version = version
+            });
+            if (!ExistsApiGroup(name))
+                ApiGroups.Add(apiGroup);
+        }
+
+        /// <summary>
+        /// 添加无分组
+        /// </summary>
+        public void AddNoGroup()
+        {
+            AddGroup("无分组", "NoGroup", string.Empty);
+        }
+
+        /// <summary>
+        /// 添加无分组，带API版本
+        /// </summary>
+        public void AddNoGroupWithVersion()
+        {
+            AddApiGroupByCustomGroup("无分组", "NoGroup", string.Empty, "NoGroup", string.Empty);
         }
 
         /// <summary>
@@ -79,6 +138,25 @@ namespace Bing.Extensions.Swashbuckle.Core.Groups
         }
 
         /// <summary>
+        /// 添加API版本
+        /// </summary>
+        /// <param name="name">名称</param>
+        /// <param name="version">版本号</param>
+        public void AddApiVersion(string name, string version)
+        {
+            foreach (var apiGroup in ApiGroups)
+            {
+                if (!apiGroup.IsCustomGroup)
+                    continue;
+                apiGroup.AddItem(new ApiVersionInfo()
+                {
+                    Name = name,
+                    Version = version
+                });
+            }
+        }
+
+        /// <summary>
         /// 是否存在API分组
         /// </summary>
         /// <param name="name">名称</param>
@@ -100,11 +178,10 @@ namespace Bing.Extensions.Swashbuckle.Core.Groups
             {
                 foreach (var apiVersion in apiGroup.ApiVersions)
                 {
-                    dict[apiVersion.Name] = CreateInfo(apiVersion);
+                    dict[apiVersion.GetName()] = CreateInfo(apiVersion);
                 }
             }
 
-            dict["NoGroup"] = new Info() {Title = "无分组"};
             return dict;
         }
 
@@ -132,11 +209,9 @@ namespace Bing.Extensions.Swashbuckle.Core.Groups
             {
                 foreach (var apiVersion in apiGroup.ApiVersions)
                 {
-                    dict[apiVersion.Title] = $"/swagger/{apiVersion.Name}/swagger.json";
+                    dict[apiVersion.Title] = $"/swagger/{apiVersion.GetName()}/swagger.json";
                 }
             }
-
-            dict["无分组"] = "/swagger/NoGroup/swagger.json";
 
             return dict;
         }

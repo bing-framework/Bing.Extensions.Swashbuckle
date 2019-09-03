@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Bing.Extensions.Swashbuckle.Attributes;
-using Bing.Samples.Api.Models;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace Bing.Samples.Api.Controllers
 {
