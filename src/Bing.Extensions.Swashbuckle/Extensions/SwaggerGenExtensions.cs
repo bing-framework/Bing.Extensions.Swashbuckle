@@ -3,6 +3,7 @@ using Bing.Extensions.Swashbuckle.Core;
 using Bing.Extensions.Swashbuckle.Filters.Documents;
 using Bing.Extensions.Swashbuckle.Filters.Operations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -44,12 +45,10 @@ namespace Bing.Extensions.Swashbuckle.Extensions
         /// </summary>
         /// <param name="options">Swagger生成选项</param>
         /// <param name="parameters">参数列表</param>
-        public static void AddCommonParameter(this SwaggerGenOptions options, IEnumerable<IParameter> parameters)
+        public static void AddCommonParameter(this SwaggerGenOptions options, IEnumerable<OpenApiParameter> parameters)
         {
             if (options.OperationFilterDescriptors.Exists(x => x.Type == typeof(CommonParametersOperationFilter)))
-            {
                 return;
-            }
             options.OperationFilter<CommonParametersOperationFilter>(parameters);
         }
 

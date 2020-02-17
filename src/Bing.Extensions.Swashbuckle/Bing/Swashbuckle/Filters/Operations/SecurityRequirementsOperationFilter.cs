@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Bing.Extensions.Swashbuckle.Extensions;
 using Microsoft.AspNetCore.Authorization;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Bing.Extensions.Swashbuckle.Filters.Operations
+namespace Bing.Swashbuckle.Filters.Operations
 {
     /// <summary>
     /// 添加安全请求 操作过滤器
@@ -22,20 +22,20 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         /// 初始化一个<see cref="SecurityRequirementsOperationFilter"/>类型的实例
         /// </summary>
         /// <param name="includeUnauthorizedAndForbiddenResponses">是否包含未授权或被禁止的响应，如果为true,则将为每个操作添加401、403响应</param>
-        public SecurityRequirementsOperationFilter(bool includeUnauthorizedAndForbiddenResponses = true)
+        /// <param name="securitySchemaName">安全架构名称</param>
+        public SecurityRequirementsOperationFilter(bool includeUnauthorizedAndForbiddenResponses = true, string securitySchemaName = "oauth2")
         {
-            IEnumerable<string> PolicySelector(IEnumerable<AuthorizeAttribute> authAttributes) =>
-                authAttributes.Where(x => !string.IsNullOrWhiteSpace(x.Policy)).Select(x => x.Policy);
-            _filter = new SecurityRequirementsOperationFilter<AuthorizeAttribute>(PolicySelector,
-                includeUnauthorizedAndForbiddenResponses);
+            Func<IEnumerable<AuthorizeAttribute>, IEnumerable<string>> policySelector = authAttributes =>
+                authAttributes.Where(x => !string.IsNullOrEmpty(x.Policy))
+                    .Select(x => x.Policy);
+            _filter = new SecurityRequirementsOperationFilter<AuthorizeAttribute>(policySelector,
+                includeUnauthorizedAndForbiddenResponses, securitySchemaName);
         }
 
         /// <summary>
         /// 重写操作处理
         /// </summary>
-        /// <param name="operation">当前操作</param>
-        /// <param name="context">操作过滤器上下文</param>
-        public void Apply(Operation operation, OperationFilterContext context)
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             _filter.Apply(operation, context);
         }
@@ -58,23 +58,28 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         private readonly Func<IEnumerable<TAttribute>, IEnumerable<string>> _policySelector;
 
         /// <summary>
+        /// 安全架构名称
+        /// </summary>
+        private readonly string _securitySchemaName;
+
+        /// <summary>
         /// 初始化一个<see cref="SecurityRequirementsOperationFilter{TAttribute}"/>类型的实例
         /// </summary>
         /// <param name="policySelector">授权策略选择器，从授权特性中选择授权策略。范例：(t => t.Policy)</param>
         /// <param name="includeUnauthorizedAndForbiddenResponses">是否包含未授权或被禁止的响应，如果为true,则将为每个操作添加401、403响应</param>
+        /// <param name="securitySchemaName">安全架构名称</param>
         public SecurityRequirementsOperationFilter(Func<IEnumerable<TAttribute>, IEnumerable<string>> policySelector,
-            bool includeUnauthorizedAndForbiddenResponses = true)
+            bool includeUnauthorizedAndForbiddenResponses = true, string securitySchemaName = "oauth2")
         {
-            this._policySelector = policySelector;
-            this._includeUnauthorizedAndForbiddenResponses = includeUnauthorizedAndForbiddenResponses;
+            _policySelector = policySelector;
+            _includeUnauthorizedAndForbiddenResponses = includeUnauthorizedAndForbiddenResponses;
+            _securitySchemaName = securitySchemaName;
         }
 
         /// <summary>
         /// 重写操作处理
         /// </summary>
-        /// <param name="operation">当前操作</param>
-        /// <param name="context">操作过滤器上下文</param>
-        public void Apply(Operation operation, OperationFilterContext context)
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             if (context.GetControllerAndActionAttributes<AllowAnonymousAttribute>().Any())
                 return;
@@ -83,18 +88,23 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
                 return;
             if (_includeUnauthorizedAndForbiddenResponses)
             {
-                operation.Responses.Add("401", new Response() { Description = "Unauthorized" });
-                operation.Responses.Add("403", new Response() { Description = "Forbidden" });
+                if (!operation.Responses.ContainsKey("401"))
+                    operation.Responses.Add("401", new OpenApiResponse() { Description = "Unauthorized" });
+                if (!operation.Responses.ContainsKey("403"))
+                    operation.Responses.Add("403", new OpenApiResponse() { Description = "Forbidden" });
             }
-
             var policies = _policySelector(actionAttributes) ?? Enumerable.Empty<string>();
-            operation.Security = new List<IDictionary<string, IEnumerable<string>>>()
+            operation.Security.Add(new OpenApiSecurityRequirement()
             {
-                new Dictionary<string, IEnumerable<string>>
                 {
-                    {"oauth2", policies}
+                    new OpenApiSecurityScheme()
+                    {
+                        Reference = new OpenApiReference()
+                            {Type = ReferenceType.SecurityScheme, Id = _securitySchemaName}
+                    },
+                    policies.ToList()
                 }
-            };
+            });
         }
     }
 }

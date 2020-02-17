@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Bing.Extensions.Swashbuckle.Filters.Operations
@@ -12,22 +13,20 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         /// <summary>
         /// 默认通用参数列表
         /// </summary>
-        private readonly List<IParameter> _defaultParameters = new List<IParameter>()
+        private readonly List<OpenApiParameter> _defaultParameters = new List<OpenApiParameter>()
         {
-            new NonBodyParameter()
+            new OpenApiParameter()
             {
                 Name = "Authorization",
-                In = "header",
-                Default = "",
-                Type = "string"
+                In = ParameterLocation.Header,
+                Schema = new OpenApiSchema() {Type = "string", Default = new OpenApiString("")},
             },
-            new NonBodyParameter()
+            new OpenApiParameter()
             {
                 Name = "X-Requested-With",
-                In = "header",
-                Default = "XMLHttpRequest",
-                Type = "string"
-            }
+                In = ParameterLocation.Header,
+                Schema = new OpenApiSchema() {Type = "string", Default = new OpenApiString("XMLHttpRequest")}
+            },
         };
 
         /// <summary>
@@ -39,7 +38,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         /// 初始化一个<see cref="CommonParametersOperationFilter"/>类型的实例
         /// </summary>
         /// <param name="parameters">追加参数列表</param>
-        public CommonParametersOperationFilter(IEnumerable<IParameter> parameters)
+        public CommonParametersOperationFilter(IEnumerable<OpenApiParameter> parameters)
         {
             _defaultParameters.AddRange(parameters);
         }
@@ -47,14 +46,12 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
         /// <summary>
         /// 重写操作处理
         /// </summary>
-        /// <param name="operation">当前操作</param>
-        /// <param name="context">操作过滤器上下文</param>
-        public void Apply(Operation operation, OperationFilterContext context)
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             if (operation == null || context == null)
                 return;
             if (operation.Parameters == null)
-                operation.Parameters = new List<IParameter>();
+                operation.Parameters = new List<OpenApiParameter>();
             foreach (var item in _defaultParameters)
                 operation.Parameters.Add(item);
         }

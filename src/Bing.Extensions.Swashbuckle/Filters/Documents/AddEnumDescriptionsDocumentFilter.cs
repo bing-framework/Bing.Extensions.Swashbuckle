@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -10,6 +11,43 @@ namespace Bing.Extensions.Swashbuckle.Filters.Documents
     /// </summary>
     public class AddEnumDescriptionsDocumentFilter : IDocumentFilter
     {
+        public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
+        {
+            // 添加枚举描述到结果模型
+            foreach (var schemaDictionaryItem in swaggerDoc.Components.Schemas)
+            {
+                var schema = schemaDictionaryItem.Value;
+                foreach (var propertyDictionaryItem in schema.Properties)
+                {
+                    var property = propertyDictionaryItem.Value;
+                    var propertyEnums = property.Enum;
+                    if (propertyEnums != null && propertyEnums.Count > 0)
+                    {
+                        property.Description += GetEnumDescription(propertyEnums);
+                        if (property.Extensions.ContainsKey("x-enumNames"))
+                        {
+                            property.Extensions["x-enumNames"] = GetStringMapping(propertyEnums);
+                            continue;
+                        }
+                        property.Extensions.Add("x-enumNames", GetStringMapping(propertyEnums));
+                    }
+                }
+            }
+
+            if (swaggerDoc.Paths.Count <= 0)
+                return;
+
+            // 添加枚举描述到输入参数
+            foreach (var pathItem in swaggerDoc.Paths.Values)
+            {
+                DescribeEnumParameters(pathItem.Parameters);
+                // head, patch, options, delete left out
+                var possibleParameterisedOperations = new List<OpenApiOperation> { pathItem.Get, pathItem.Post, pathItem.Put };
+                possibleParameterisedOperations.FindAll(x => x != null)
+                    .ForEach(x => DescribeEnumParameters(x.Parameters));
+            }
+        }
+
         /// <summary>
         /// 重写操作处理
         /// </summary>
@@ -72,7 +110,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Documents
         /// 描述枚举参数
         /// </summary>
         /// <param name="parameters">参数</param>
-        private static void DescribeEnumParameters(IList<IParameter> parameters)
+        private static void DescribeEnumParameters(IList<OpenApiParameter> parameters)
         {
             if (parameters == null)
                 return;
@@ -108,5 +146,7 @@ namespace Bing.Extensions.Swashbuckle.Filters.Documents
             var separator = isWrap ? Environment.NewLine : "; ";
             return $"{Environment.NewLine}{string.Join(separator, enumDescriptions)}";
         }
+
+        
     }
 }

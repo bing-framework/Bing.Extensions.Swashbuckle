@@ -2,10 +2,11 @@
 using System.Linq;
 using Bing.Extensions.Swashbuckle.Attributes;
 using Bing.Extensions.Swashbuckle.Extensions;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Bing.Extensions.Swashbuckle.Filters.Operations
+namespace Bing.Swashbuckle.Filters.Operations
 {
     /// <summary>
     /// 添加请求头 操作过滤器
@@ -39,6 +40,17 @@ namespace Bing.Extensions.Swashbuckle.Filters.Operations
                     Type = "string",
                     Default = requestHeader.Default
                 });
+            }
+        }
+
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        {
+            var swaggerRequestHeaders = context.GetControllerAndActionAttributes<SwaggerRequestHeaderAttribute>().ToList();
+            if (!swaggerRequestHeaders.Any())
+                return;
+            foreach (var requestHeader in swaggerRequestHeaders)
+            {
+                if(operation.Parameters==n)
             }
         }
     }

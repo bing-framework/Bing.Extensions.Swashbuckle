@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Bing.Extensions.Swashbuckle.Attributes;
 using Bing.Extensions.Swashbuckle.Core.Groups;
@@ -85,7 +86,10 @@ namespace Bing.Extensions.Swashbuckle.Internal
         private void BuildSwaggerDoc(ApiGroupContext context)
         {
             foreach (var info in context.GetInfos())
+            {
                 this.Options.SwaggerGenOptions.SwaggerDoc(info.Key, info.Value);
+            }
+                
         }
 
         /// <summary>

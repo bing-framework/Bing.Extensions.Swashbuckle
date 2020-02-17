@@ -10,8 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace Bing.Samples.Api
 {
@@ -113,14 +114,22 @@ namespace Bing.Samples.Api
 
                 //config.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>()
                 //    {{"oauth2", new string[] { }}});
-
-                config.AddSecurityDefinition("oauth2", new ApiKeyScheme()
+                config.AddSecurityDefinition("oauth2",new OpenApiSecurityScheme()
                 {
+                    Type = SecuritySchemeType.ApiKey,
                     Description = "Token令牌",
-                    In = "header",
                     Name = "Authorization",
-                    Type = "apiKey",
+                    In = ParameterLocation.Header,
                 });
+
+
+                //config.AddSecurityDefinition("oauth2", new ApiKeyScheme()
+                //{
+                //    Description = "Token令牌",
+                //    In = "header",
+                //    Name = "Authorization",
+                //    Type = "apiKey",
+                //});
 
                 //config.OperationFilter<ApiVersionDefaultValueOperationFilter>();
 
@@ -146,14 +155,13 @@ namespace Bing.Samples.Api
                 config.SchemaFilter<IgnorePropertySchemaFilter>();
 
                 // 添加通用参数
-                config.AddCommonParameter(new List<IParameter>()
+                config.AddCommonParameter(new List<OpenApiParameter>()
                 {
-                    new NonBodyParameter()
+                    new OpenApiParameter()
                     {
                         Name = "Test",
-                        In = "header",
-                        Default = "",
-                        Type = "string"
+                        In = ParameterLocation.Header,
+                        Schema = new OpenApiSchema() {Type = "string", Default = new OpenApiString("")}
                     }
                 });
 
