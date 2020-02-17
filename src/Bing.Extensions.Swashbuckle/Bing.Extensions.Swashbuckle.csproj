@@ -32,8 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Bing\Swashbuckle\Internals\" />
-    <Folder Include="Filters\Parameters\" />
+    <Folder Include="Attributes\" />
   </ItemGroup>
 
 </Project>

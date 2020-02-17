@@ -1,4 +1,4 @@
-﻿using Bing.Extensions.Swashbuckle.Attributes;
+﻿using Bing.Swashbuckle.Attributes;
 
 namespace Bing.Samples.MultipleVersionWithGroup
 {

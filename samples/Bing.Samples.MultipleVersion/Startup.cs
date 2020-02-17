@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Bing.Extensions.Swashbuckle.Configs;
 using Bing.Extensions.Swashbuckle.Extensions;
-using Bing.Extensions.Swashbuckle.Filters.Schemas;
+using Bing.Swashbuckle;
+using Bing.Swashbuckle.Filters.Schemas;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace Bing.Samples.MultipleVersion
 {
@@ -101,12 +102,12 @@ namespace Bing.Samples.MultipleVersion
                 var xmlPath = Path.Combine(basePath, "Bing.Samples.MultipleVersion.xml");
                 config.IncludeXmlComments(xmlPath, true);
 
-                config.AddSecurityDefinition("oauth2", new ApiKeyScheme()
+                config.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
                 {
+                    Type = SecuritySchemeType.ApiKey,
                     Description = "Token令牌",
-                    In = "header",
                     Name = "Authorization",
-                    Type = "apiKey",
+                    In = ParameterLocation.Header,
                 });
 
                 // 启用请求头过滤器。显示Swagger自定义请求头
@@ -128,14 +129,13 @@ namespace Bing.Samples.MultipleVersion
                 config.SchemaFilter<IgnorePropertySchemaFilter>();
 
                 // 添加通用参数
-                config.AddCommonParameter(new List<IParameter>()
+                config.AddCommonParameter(new List<OpenApiParameter>()
                 {
-                    new NonBodyParameter()
+                    new OpenApiParameter()
                     {
                         Name = "Test",
-                        In = "header",
-                        Default = "",
-                        Type = "string"
+                        In = ParameterLocation.Header,
+                        Schema = new OpenApiSchema() {Type = "string", Default = new OpenApiString("")}
                     }
                 });
 

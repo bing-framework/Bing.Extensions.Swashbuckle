@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Bing.Extensions.Swashbuckle.Attributes;
 using Bing.Extensions.Swashbuckle.Extensions;
+using Bing.Swashbuckle.Attributes;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Bing.Swashbuckle.Filters.Operations
@@ -16,33 +16,6 @@ namespace Bing.Swashbuckle.Filters.Operations
         /// <summary>
         /// 重写操作处理
         /// </summary>
-        /// <param name="operation">当前操作</param>
-        /// <param name="context">操作过滤器器上下文</param>
-        public void Apply(Operation operation, OperationFilterContext context)
-        {
-            var swaggerRequestHeaders = context.GetControllerAndActionAttributes<SwaggerRequestHeaderAttribute>().ToList();
-            if (!swaggerRequestHeaders.Any())
-                return;
-            foreach (var requestHeader in swaggerRequestHeaders)
-            {
-                if (operation.Parameters == null)
-                    operation.Parameters = new List<IParameter>();
-                var request =
-                    operation.Parameters.FirstOrDefault(x => x.In == "header" && x.Name == requestHeader.Name);
-                if (request != null)
-                    operation.Parameters.Remove(request);
-                operation.Parameters.Add(new NonBodyParameter()
-                {
-                    Name = requestHeader.Name,
-                    In = "header",
-                    Description = requestHeader.Description,
-                    Required = requestHeader.Required,
-                    Type = "string",
-                    Default = requestHeader.Default
-                });
-            }
-        }
-
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             var swaggerRequestHeaders = context.GetControllerAndActionAttributes<SwaggerRequestHeaderAttribute>().ToList();
@@ -50,7 +23,25 @@ namespace Bing.Swashbuckle.Filters.Operations
                 return;
             foreach (var requestHeader in swaggerRequestHeaders)
             {
-                if(operation.Parameters==n)
+                if (operation.Parameters == null)
+                    operation.Parameters = new List<OpenApiParameter>();
+                var request = operation.Parameters.FirstOrDefault(x =>
+                    x.In == ParameterLocation.Header && x.Name == requestHeader.Name);
+                if (request != null)
+                    operation.Parameters.Remove(request);
+                operation.Parameters.Add(new OpenApiParameter()
+                {
+                    Name = requestHeader.Name,
+                    In = ParameterLocation.Header,
+                    Required = requestHeader.Required,
+                    Description = requestHeader.Description,
+                    Schema = new OpenApiSchema()
+                    {
+                        Type = "string",
+                        Default = new OpenApiString(requestHeader.Default?.ToString())
+                    }
+                });
+
             }
         }
     }

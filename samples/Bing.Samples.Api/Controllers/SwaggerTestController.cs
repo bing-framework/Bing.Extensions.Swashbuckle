@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using Bing.Extensions.Swashbuckle.Attributes;
 using Bing.Samples.Api.Models;
+using Bing.Swashbuckle.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bing.Samples.Api.Controllers

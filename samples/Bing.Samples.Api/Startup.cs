@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Bing.Extensions.Swashbuckle.Configs;
 using Bing.Extensions.Swashbuckle.Extensions;
-using Bing.Extensions.Swashbuckle.Filters.Schemas;
+using Bing.Swashbuckle;
+using Bing.Swashbuckle.Filters.Schemas;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Bing.Samples.Api
 {
@@ -167,9 +169,13 @@ namespace Bing.Samples.Api
 
                 // 启用默认值
                 config.EnableDefaultValue();
+                // 配置自定义操作标识
+                config.CustomOperationIds(apiDesc => apiDesc.TryGetMethodInfo(out var methodInfo) ? methodInfo.Name : null);
+                config.MapType<IFormFile>(() => new OpenApiSchema() {Type = "file"});
             },
             UseSwaggerAction = config =>
             {
+                config.SerializeAsV2 = true;
             },
             UseSwaggerUIAction = config =>
             {

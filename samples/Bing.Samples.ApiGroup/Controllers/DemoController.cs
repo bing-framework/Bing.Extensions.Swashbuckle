@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Bing.Extensions.Swashbuckle.Attributes;
+using Bing.Swashbuckle.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bing.Samples.ApiGroup.Controllers

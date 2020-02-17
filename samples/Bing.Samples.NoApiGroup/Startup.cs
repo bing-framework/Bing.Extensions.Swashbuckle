@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Bing.Extensions.Swashbuckle.Configs;
 using Bing.Extensions.Swashbuckle.Extensions;
-using Bing.Extensions.Swashbuckle.Filters.Schemas;
+using Bing.Swashbuckle;
+using Bing.Swashbuckle.Filters.Schemas;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
-using Swashbuckle.AspNetCore.Swagger;
+using ApiVersion = Bing.Swashbuckle.ApiVersion;
 
 namespace Bing.Samples.NoApiGroup
 {
@@ -84,19 +86,19 @@ namespace Bing.Samples.NoApiGroup
             ProjectName = "Bing.Sample.Api 在线文档调试",
             UseCustomIndex = true,
             RoutePrefix = "swagger",
-            ApiVersions = new List<Extensions.Swashbuckle.Configs.ApiVersion>() { new Extensions.Swashbuckle.Configs.ApiVersion() { Description = "通用接口", Version = "v1" } },
+            ApiVersions = new List<ApiVersion>() { new ApiVersion() { Description = "通用接口", Version = "v1" } },
             AddSwaggerGenAction = config =>
             {
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "Bing.Samples.NoApiGroup.xml");
                 config.IncludeXmlComments(xmlPath, true);
 
-                config.AddSecurityDefinition("oauth2", new ApiKeyScheme()
+                config.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
                 {
+                    Type = SecuritySchemeType.ApiKey,
                     Description = "Token令牌",
-                    In = "header",
                     Name = "Authorization",
-                    Type = "apiKey",
+                    In = ParameterLocation.Header,
                 });
 
                 // 启用请求头过滤器。显示Swagger自定义请求头
@@ -118,14 +120,13 @@ namespace Bing.Samples.NoApiGroup
                 config.SchemaFilter<IgnorePropertySchemaFilter>();
 
                 // 添加通用参数
-                config.AddCommonParameter(new List<IParameter>()
+                config.AddCommonParameter(new List<OpenApiParameter>()
                 {
-                    new NonBodyParameter()
+                    new OpenApiParameter()
                     {
                         Name = "Test",
-                        In = "header",
-                        Default = "",
-                        Type = "string"
+                        In = ParameterLocation.Header,
+                        Schema = new OpenApiSchema() {Type = "string", Default = new OpenApiString("")}
                     }
                 });
 
