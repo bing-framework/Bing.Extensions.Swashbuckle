@@ -10,7 +10,7 @@ namespace Bing.Samples.Api.Controllers
     /// <summary>
     /// Swagger测试信息
     /// </summary>
-    [ApiController]    
+    [ApiController]
     [SwaggerApiGroup(GroupSample.Test)]
     [Route("api/[controller]")]
     public class SwaggerTestController: Controller

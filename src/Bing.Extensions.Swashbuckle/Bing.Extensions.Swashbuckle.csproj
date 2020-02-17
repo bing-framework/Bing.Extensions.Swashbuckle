@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>Bing.Extensions.Swashbuckle是扩展Swashbuckle.AspNetCore一些常用操作，便于使用以及过滤。</Description>
+    <RootNamespace />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -16,12 +17,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\export.js" />
-    <EmbeddedResource Include="Resources\index.html" />
-    <EmbeddedResource Include="Resources\jquery.min.js" />
-    <EmbeddedResource Include="Resources\login.html" />
-    <EmbeddedResource Include="Resources\swagger-common.css" />
-    <EmbeddedResource Include="Resources\translator.js" />
+    <EmbeddedResource Include="Bing\Swashbuckle\Resources\export.js" />
+    <EmbeddedResource Include="Bing\Swashbuckle\Resources\index.html" />
+    <EmbeddedResource Include="Bing\Swashbuckle\Resources\jquery.min.js" />
+    <EmbeddedResource Include="Bing\Swashbuckle\Resources\login.html" />
+    <EmbeddedResource Include="Bing\Swashbuckle\Resources\swagger-common.css" />
+    <EmbeddedResource Include="Bing\Swashbuckle\Resources\translator.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Bing\Swashbuckle\Internals\" />
     <Folder Include="Filters\Parameters\" />
   </ItemGroup>
 

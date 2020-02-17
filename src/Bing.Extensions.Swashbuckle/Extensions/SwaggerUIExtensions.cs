@@ -38,8 +38,10 @@ namespace Bing.Extensions.Swashbuckle.Extensions
         public static void UseCustomSwaggerIndex(this SwaggerUIOptions options)
         {
             var currentAssembly = typeof(CustomSwaggerOptions).GetTypeInfo().Assembly;
+            //options.IndexStream = () =>
+            //    currentAssembly.GetManifestResourceStream($"{currentAssembly.GetName().Name}.Resources.index.html");
             options.IndexStream = () =>
-                currentAssembly.GetManifestResourceStream($"{currentAssembly.GetName().Name}.Resources.index.html");
+                currentAssembly.GetManifestResourceStream($"Bing.Swashbuckle.Resources.index.html");
         }
 
         /// <summary>

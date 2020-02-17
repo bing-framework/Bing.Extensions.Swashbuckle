@@ -17,7 +17,7 @@ namespace Bing.Extensions.Swashbuckle.Internal
         /// <returns></returns>
         public static string LoadContent(string resourceFile)
         {
-            using (var stream = typeof(Common).GetTypeInfo().Assembly.GetManifestResourceStream($"Bing.Extensions.Swashbuckle.Resources.{resourceFile}"))
+            using (var stream = typeof(Common).GetTypeInfo().Assembly.GetManifestResourceStream($"Bing.Swashbuckle.Resources.{resourceFile}"))
             {
                 if (stream == null)
                 {
