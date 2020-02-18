@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace Bing.Extensions.Swashbuckle.Internal
+namespace Bing.Swashbuckle.Internals
 {
     /// <summary>
     /// 通用类

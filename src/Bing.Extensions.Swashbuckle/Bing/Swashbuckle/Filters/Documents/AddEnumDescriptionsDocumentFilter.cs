@@ -58,7 +58,7 @@ namespace Bing.Swashbuckle.Filters.Documents
             Type type = null;
             foreach (var enumOption in enums)
             {
-                if (type == null) 
+                if (type == null)
                     type = enumOption.GetType();
                 enumDescriptions.Add(Enum.GetName(type, enumOption));
             }
@@ -91,7 +91,7 @@ namespace Bing.Swashbuckle.Filters.Documents
         /// </summary>
         /// <param name="enums">枚举值</param>
         /// <param name="isWrap">是否换行</param>
-        private static string GetEnumDescription(IEnumerable<object> enums,bool isWrap = true)
+        private static string GetEnumDescription(IEnumerable<object> enums, bool isWrap = true)
         {
             var enumDescriptions = new List<string>();
             Type type = null;
@@ -100,13 +100,13 @@ namespace Bing.Swashbuckle.Filters.Documents
                 if (type == null)
                     type = enumOption.GetType();
                 enumDescriptions.Add(
-                    $"{Convert.ChangeType(enumOption, type.GetEnumUnderlyingType())} = {Extensions.Swashbuckle.Internal.Enum.GetDescription(type, enumOption)}");
+                    $"{Convert.ChangeType(enumOption, type.GetEnumUnderlyingType())} = {Internals.Enum.GetDescription(type, enumOption)}");
             }
 
             var separator = isWrap ? Environment.NewLine : "; ";
             return $"{Environment.NewLine}{string.Join(separator, enumDescriptions)}";
         }
 
-        
+
     }
 }

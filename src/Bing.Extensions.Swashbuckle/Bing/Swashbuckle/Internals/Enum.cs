@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Reflection;
+using Bing.Extensions.Swashbuckle.Internal;
 
-namespace Bing.Extensions.Swashbuckle.Internal
+namespace Bing.Swashbuckle.Internals
 {
     /// <summary>
     /// 枚举 操作

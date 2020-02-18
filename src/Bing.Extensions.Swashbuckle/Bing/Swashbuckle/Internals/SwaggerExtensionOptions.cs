@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Bing.Extensions.Swashbuckle.Core;
-using Bing.Swashbuckle;
+using Bing.Swashbuckle.Core;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
-namespace Bing.Extensions.Swashbuckle.Internal
+namespace Bing.Swashbuckle.Internals
 {
     /// <summary>
     /// Swagger扩展选项配置

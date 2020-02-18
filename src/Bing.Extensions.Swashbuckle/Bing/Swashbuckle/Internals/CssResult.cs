@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Bing.Extensions.Swashbuckle.Internal
+namespace Bing.Swashbuckle.Internals
 {
     /// <summary>
     /// Css结果

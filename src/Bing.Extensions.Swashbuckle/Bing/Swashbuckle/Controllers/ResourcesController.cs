@@ -1,8 +1,8 @@
-﻿using Bing.Extensions.Swashbuckle.Internal;
+﻿using Bing.Swashbuckle.Internals;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bing.Extensions.Swashbuckle.Controllers
+namespace Bing.Swashbuckle.Controllers
 {
     /// <summary>
     /// 资源 控制器

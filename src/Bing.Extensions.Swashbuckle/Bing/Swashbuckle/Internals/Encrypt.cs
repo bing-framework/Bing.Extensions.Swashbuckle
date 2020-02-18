@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Bing.Extensions.Swashbuckle.Internal
+namespace Bing.Swashbuckle.Internals
 {
     /// <summary>
     /// 加密操作

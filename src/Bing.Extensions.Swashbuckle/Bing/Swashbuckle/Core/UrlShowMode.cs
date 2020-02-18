@@ -1,4 +1,4 @@
-﻿namespace Bing.Extensions.Swashbuckle.Core
+﻿namespace Bing.Swashbuckle.Core
 {
     /// <summary>
     /// Url显示模式

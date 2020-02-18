@@ -4,7 +4,7 @@ using Bing.Swashbuckle.Attributes;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Bing.Extensions.Swashbuckle.Core.Groups
+namespace Bing.Swashbuckle.Core.Groups
 {
     /// <summary>
     /// Api分组上下文构建器

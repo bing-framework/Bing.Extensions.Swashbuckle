@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Bing.Extensions.Swashbuckle.Internal;
+using Bing.Swashbuckle.Internals;
 using Microsoft.OpenApi.Models;
 
-namespace Bing.Extensions.Swashbuckle.Core.Groups
+namespace Bing.Swashbuckle.Core.Groups
 {
     /// <summary>
     /// Api分组上下文

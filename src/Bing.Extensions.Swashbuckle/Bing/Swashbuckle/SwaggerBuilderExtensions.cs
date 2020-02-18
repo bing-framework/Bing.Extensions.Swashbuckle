@@ -2,11 +2,10 @@
 using System.Linq;
 using Bing.Extensions.Swashbuckle.Core;
 using Bing.Extensions.Swashbuckle.Internal;
-using Bing.Swashbuckle;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
-namespace Bing.Extensions.Swashbuckle.Extensions
+namespace Bing.Swashbuckle
 {
     /// <summary>
     /// Swagger构建器扩展

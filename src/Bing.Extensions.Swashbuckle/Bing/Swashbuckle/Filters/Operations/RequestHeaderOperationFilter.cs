@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Bing.Extensions.Swashbuckle.Extensions;
 using Bing.Swashbuckle.Attributes;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;

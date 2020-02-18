@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bing.Extensions.Swashbuckle.Core.Groups;
-using Bing.Extensions.Swashbuckle.Extensions;
+using Bing.Swashbuckle;
 using Bing.Swashbuckle.Attributes;
+using Bing.Swashbuckle.Core.Groups;
+using Bing.Swashbuckle.Internals;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -61,10 +62,7 @@ namespace Bing.Extensions.Swashbuckle.Internal
         /// <summary>
         /// 构建
         /// </summary>
-        public void Build()
-        {
-            BuildApiDoc();
-        }
+        public void Build() => BuildApiDoc();
 
         /// <summary>
         /// 构建API文档
@@ -85,7 +83,10 @@ namespace Bing.Extensions.Swashbuckle.Internal
         {
             foreach (var info in context.GetInfos())
             {
-                this.Options.SwaggerGenOptions.SwaggerDoc(info.Key, info.Value);
+                if (Options.SwaggerGenOptions.SwaggerGeneratorOptions.SwaggerDocs.ContainsKey(info.Key))
+                    Options.SwaggerGenOptions.SwaggerGeneratorOptions.SwaggerDocs[info.Key] = info.Value;
+                else
+                    Options.SwaggerGenOptions.SwaggerDoc(info.Key, info.Value);
             }
                 
         }

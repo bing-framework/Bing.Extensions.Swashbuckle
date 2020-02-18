@@ -1,8 +1,7 @@
 ﻿using System.Reflection;
-using Bing.Swashbuckle;
 using Microsoft.AspNetCore.Http;
 
-namespace Bing.Extensions.Swashbuckle.Extensions
+namespace Bing.Swashbuckle
 {
     /// <summary>
     /// Swagger扩展

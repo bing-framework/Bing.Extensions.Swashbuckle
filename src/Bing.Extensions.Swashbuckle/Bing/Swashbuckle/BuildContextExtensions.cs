@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Bing.Extensions.Swashbuckle.Core.Groups;
 using Bing.Extensions.Swashbuckle.Internal;
+using Bing.Swashbuckle.Core.Groups;
 using Microsoft.OpenApi.Models;
 
-namespace Bing.Extensions.Swashbuckle.Extensions
+namespace Bing.Swashbuckle
 {
     /// <summary>
     /// 构建上下文(<see cref="BuildContext"/>) 扩展

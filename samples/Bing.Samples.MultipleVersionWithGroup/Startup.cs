@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Bing.Extensions.Swashbuckle.Extensions;
 using Bing.Swashbuckle;
 using Bing.Swashbuckle.Filters.Schemas;
 using Microsoft.AspNetCore.Builder;

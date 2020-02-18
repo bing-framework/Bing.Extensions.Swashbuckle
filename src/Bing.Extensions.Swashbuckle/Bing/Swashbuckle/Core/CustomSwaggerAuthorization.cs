@@ -1,4 +1,5 @@
 ﻿using Bing.Extensions.Swashbuckle.Internal;
+using Bing.Swashbuckle.Internals;
 
 namespace Bing.Extensions.Swashbuckle.Core
 {

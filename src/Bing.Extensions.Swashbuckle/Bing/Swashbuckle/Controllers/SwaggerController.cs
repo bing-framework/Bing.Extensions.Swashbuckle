@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bing.Extensions.Swashbuckle.Controllers
+namespace Bing.Swashbuckle.Controllers
 {
     /// <summary>
     /// Swagger 控制器

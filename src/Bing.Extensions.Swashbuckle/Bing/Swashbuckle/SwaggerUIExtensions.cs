@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using System.Reflection;
 using Bing.Extensions.Swashbuckle.Internal;
-using Bing.Swashbuckle;
 using Microsoft.AspNetCore.Builder;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
-namespace Bing.Extensions.Swashbuckle.Extensions
+namespace Bing.Swashbuckle
 {
     /// <summary>
     /// SwaggerUI 扩展

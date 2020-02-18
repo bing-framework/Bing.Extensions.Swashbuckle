@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Bing.Extensions.Swashbuckle.Extensions
+namespace Bing.Swashbuckle
 {
     /// <summary>
     /// 操作过滤器上下文(<see cref="OperationFilterContext"/>) 扩展

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Bing.Extensions.Swashbuckle.Core;
+using Bing.Swashbuckle.Core;
 using Bing.Swashbuckle.Filters.Documents;
 using Bing.Swashbuckle.Filters.Operations;
 using Microsoft.Extensions.DependencyInjection;

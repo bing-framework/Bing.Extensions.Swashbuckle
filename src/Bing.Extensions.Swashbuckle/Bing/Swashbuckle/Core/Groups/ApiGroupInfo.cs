@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Bing.Extensions.Swashbuckle.Core.Groups
+namespace Bing.Swashbuckle.Core.Groups
 {
     /// <summary>
     /// Api分组信息

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
-namespace Bing.Extensions.Swashbuckle.Extensions
+namespace Bing.Swashbuckle
 {
     /// <summary>
     /// Api描述器(<see cref="ApiDescription"/>) 扩展
@@ -19,10 +19,7 @@ namespace Bing.Extensions.Swashbuckle.Extensions
             var areaList = new List<string>();
             areaList.Add(controllerName);
             if (!string.IsNullOrWhiteSpace(areaName))
-            {
                 description.RelativePath = $"{areaName}/{controllerName}/{description.RelativePath}";
-            }
-
             return areaList;
         }
     }

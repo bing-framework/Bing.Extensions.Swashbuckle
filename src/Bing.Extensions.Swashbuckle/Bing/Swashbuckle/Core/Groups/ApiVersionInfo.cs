@@ -1,4 +1,4 @@
-﻿namespace Bing.Extensions.Swashbuckle.Core.Groups
+﻿namespace Bing.Swashbuckle.Core.Groups
 {
     /// <summary>
     /// Api版本信息

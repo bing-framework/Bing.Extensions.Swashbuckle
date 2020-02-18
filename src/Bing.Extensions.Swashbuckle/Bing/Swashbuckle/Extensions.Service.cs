@@ -1,8 +1,7 @@
 ﻿using Bing.Extensions.Swashbuckle.Internal;
-using Bing.Swashbuckle;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Bing.Extensions.Swashbuckle.Extensions
+namespace Bing.Swashbuckle
 {
     /// <summary>
     /// 服务扩展
