@@ -1,7 +1,6 @@
-﻿using Bing.Extensions.Swashbuckle.Internal;
-using Bing.Swashbuckle.Internals;
+﻿using Bing.Swashbuckle.Internals;
 
-namespace Bing.Extensions.Swashbuckle.Core
+namespace Bing.Swashbuckle.Core
 {
     /// <summary>
     /// 自定义Swagger授权

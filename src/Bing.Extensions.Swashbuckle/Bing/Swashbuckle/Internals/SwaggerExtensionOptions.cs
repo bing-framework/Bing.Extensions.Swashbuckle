@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bing.Extensions.Swashbuckle.Core;
 using Bing.Swashbuckle.Core;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
