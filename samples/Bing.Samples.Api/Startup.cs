@@ -44,7 +44,8 @@ namespace Bing.Samples.Api
         {
             // 配置跨域
             services.AddCors();
-            services.AddSwaggerCustom(CurrentSwaggerOptions);
+            //services.AddSwaggerCustom(CurrentSwaggerOptions);
+            services.AddCachedSwaggerGen(CurrentSwaggerOptions);
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)

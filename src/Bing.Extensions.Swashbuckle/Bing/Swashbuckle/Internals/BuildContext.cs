@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Bing.Swashbuckle;
 using Bing.Swashbuckle.Attributes;
@@ -83,10 +84,8 @@ namespace Bing.Extensions.Swashbuckle.Internal
         {
             foreach (var info in context.GetInfos())
             {
-                if (Options.SwaggerGenOptions.SwaggerGeneratorOptions.SwaggerDocs.ContainsKey(info.Key))
-                    Options.SwaggerGenOptions.SwaggerGeneratorOptions.SwaggerDocs[info.Key] = info.Value;
-                else
-                    Options.SwaggerGenOptions.SwaggerDoc(info.Key, info.Value);
+                Debug.WriteLine($"Build Swagger Document Key: {info.Key}");
+                Options.SwaggerGenOptions.SwaggerGeneratorOptions.SwaggerDocs[info.Key] = info.Value;
             }
                 
         }
