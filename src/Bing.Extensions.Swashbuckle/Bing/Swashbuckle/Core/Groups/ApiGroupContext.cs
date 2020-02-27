@@ -53,7 +53,7 @@ namespace Bing.Swashbuckle.Core.Groups
         /// <param name="name">名称</param>
         public void AddApiGroupByCustomGroup(string name)
         {
-            ApiGroupInfo apiGroup = GetApiGroup(name) ?? new ApiGroupInfo {Title = name, Name = name, Description = string.Empty, IsCustomGroup = true};
+            ApiGroupInfo apiGroup = GetApiGroup(name) ?? new ApiGroupInfo { Title = name, Name = name, Description = string.Empty, IsCustomGroup = true };
             apiGroup.AddItem(new ApiVersionInfo()
             {
                 Name = name,
@@ -74,7 +74,7 @@ namespace Bing.Swashbuckle.Core.Groups
         public void AddApiGroupByCustomGroup(string title, string name, string description, string versionName,
             string version)
         {
-            ApiGroupInfo apiGroup = GetApiGroup(name) ?? new ApiGroupInfo {Title = title, Name = name, Description = description, IsCustomGroup = true};
+            ApiGroupInfo apiGroup = GetApiGroup(name) ?? new ApiGroupInfo { Title = title, Name = name, Description = description, IsCustomGroup = true };
             apiGroup.AddItem(new ApiVersionInfo()
             {
                 Name = versionName,
@@ -87,18 +87,12 @@ namespace Bing.Swashbuckle.Core.Groups
         /// <summary>
         /// 添加无分组
         /// </summary>
-        public void AddNoGroup()
-        {
-            AddGroup("无分组", "NoGroup", string.Empty);
-        }
+        public void AddNoGroup() => AddGroup("无分组", "NoGroup", string.Empty);
 
         /// <summary>
         /// 添加无分组，带API版本
         /// </summary>
-        public void AddNoGroupWithVersion()
-        {
-            AddApiGroupByCustomGroup("无分组", "NoGroup", string.Empty, "NoGroup", string.Empty);
-        }
+        public void AddNoGroupWithVersion() => AddApiGroupByCustomGroup("无分组", "NoGroup", string.Empty, "NoGroup", string.Empty);
 
         /// <summary>
         /// 添加API分组
@@ -127,7 +121,7 @@ namespace Bing.Swashbuckle.Core.Groups
         /// <param name="version">版本号</param>
         public void AddApiGroup(string title, string name, string description, string versionName, string version)
         {
-            ApiGroupInfo apiGroup = GetApiGroup(name) ?? new ApiGroupInfo {Title = title, Name = name, Description = description};
+            ApiGroupInfo apiGroup = GetApiGroup(name) ?? new ApiGroupInfo { Title = title, Name = name, Description = description };
             apiGroup.AddItem(new ApiVersionInfo()
             {
                 Name = versionName,
@@ -176,7 +170,7 @@ namespace Bing.Swashbuckle.Core.Groups
             var dict = new Dictionary<string, OpenApiInfo>();
             foreach (var apiGroup in ApiGroups)
             {
-                foreach (var apiVersion in apiGroup.ApiVersions) 
+                foreach (var apiVersion in apiGroup.ApiVersions)
                     dict[apiVersion.GetName()] = CreateInfo(apiVersion);
             }
 
@@ -187,15 +181,13 @@ namespace Bing.Swashbuckle.Core.Groups
         /// 创建信息
         /// </summary>
         /// <param name="apiVersion">API版本</param>
-        private OpenApiInfo CreateInfo(ApiVersionInfo apiVersion)
-        {
-            return new OpenApiInfo()
+        private OpenApiInfo CreateInfo(ApiVersionInfo apiVersion) =>
+            new OpenApiInfo
             {
                 Title = apiVersion.Title,
                 Version = apiVersion.Version,
                 Description = apiVersion.Group.Description,
             };
-        }
 
         /// <summary>
         /// 获取入口点列表

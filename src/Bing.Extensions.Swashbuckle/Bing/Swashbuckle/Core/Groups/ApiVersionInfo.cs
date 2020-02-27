@@ -44,11 +44,6 @@
         /// <summary>
         /// 获取名称
         /// </summary>
-        public string GetName()
-        {
-            if (Name == Group.Name)
-                return Name;
-            return $"{Group.Name}{Name}";
-        }
+        public string GetName() => Name == Group.Name ? Name : $"{Group.Name}{Name}";
     }
 }

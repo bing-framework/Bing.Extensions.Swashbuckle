@@ -73,10 +73,7 @@ namespace Bing.Swashbuckle
             CustomSwaggerOptions options)
         {
             if (options?.SwaggerAuthorizations.Count == 0)
-            {
                 return app;
-            }
-
             app.Use(async (context, next) =>
             {
                 var method = context.Request.Method.ToLower();

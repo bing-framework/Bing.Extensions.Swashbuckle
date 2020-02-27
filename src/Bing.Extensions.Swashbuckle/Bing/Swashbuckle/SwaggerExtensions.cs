@@ -18,9 +18,7 @@ namespace Bing.Swashbuckle
             var currentAssembly = typeof(CustomSwaggerOptions).GetTypeInfo().Assembly;
             var stream = currentAssembly.GetManifestResourceStream($"{currentAssembly.GetName().Name}.Resources.{page}.html");
             if (stream == null)
-            {
                 return;
-            }
             byte[] buffer = new byte[stream.Length];
             stream.Read(buffer, 0, buffer.Length);
             response.ContentType = "text/html;charset=utf-8";
