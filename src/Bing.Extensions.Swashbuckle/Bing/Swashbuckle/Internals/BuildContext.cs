@@ -17,6 +17,11 @@ namespace Bing.Extensions.Swashbuckle.Internal
     internal class BuildContext
     {
         /// <summary>
+        /// 对象锁
+        /// </summary>
+        private static readonly object Lock = new object();
+
+        /// <summary>
         /// Swagger扩展选项配置
         /// </summary>
         public SwaggerExtensionOptions Options { get; set; } = new SwaggerExtensionOptions();
@@ -84,10 +89,13 @@ namespace Bing.Extensions.Swashbuckle.Internal
         {
             foreach (var info in context.GetInfos())
             {
-                Debug.WriteLine($"Build Swagger Document Key: {info.Key}");
-                Options.SwaggerGenOptions.SwaggerGeneratorOptions.SwaggerDocs[info.Key] = info.Value;
+                // 锁住对象，防止多线程
+                lock (Lock)
+                {
+                    Debug.WriteLine($"Build Swagger Document Key: {info.Key}");
+                    Options.SwaggerGenOptions.SwaggerGeneratorOptions.SwaggerDocs[info.Key] = info.Value;
+                }
             }
-                
         }
 
         /// <summary>
