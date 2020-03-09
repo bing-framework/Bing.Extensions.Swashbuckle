@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -45,11 +46,17 @@ namespace Bing.Samples.Api
             // 配置跨域
             services.AddCors();
             //services.AddSwaggerCustom(CurrentSwaggerOptions);
+            services.AddSwaggerGenNewtonsoftSupport();
             services.AddCachedSwaggerGen(CurrentSwaggerOptions);
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddJsonOptions(o => { o.SerializerSettings.ContractResolver = new DefaultContractResolver(); })
+                .AddJsonOptions(o =>
+                {
+                    o.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                    o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    //o.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                })
                 .AddControllersAsServices();
             services.AddApiVersioning(options =>
             {
@@ -62,7 +69,7 @@ namespace Bing.Samples.Api
                 options.SubstituteApiVersionInUrl = true;
                 options.AssumeDefaultVersionWhenUnspecified = true;
             });
-
+            
             //services.AddAuthorization(o => { o.AddPolicy("Admin", policy => policy.RequireClaim("Admin")); });
             return services.BuildServiceProvider();
         }

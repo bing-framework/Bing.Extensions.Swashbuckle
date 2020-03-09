@@ -19,9 +19,12 @@ namespace Bing.Swashbuckle
         /// <param name="options">Swagger生成选项</param>
         public static void ShowEnumDescription(this SwaggerGenOptions options)
         {
-            if (options.DocumentFilterDescriptors.Exists(x => x.Type == typeof(AddEnumDescriptionsDocumentFilter)))
+            //if (options.DocumentFilterDescriptors.Exists(x => x.Type == typeof(AddEnumDescriptionsDocumentFilter)))
+            //    return;
+            //options.DocumentFilter<AddEnumDescriptionsDocumentFilter>();
+            if (options.ParameterFilterDescriptors.Exists(x => x.Type == typeof(AddEnumDescriptionsDocumentFilter)))
                 return;
-            options.DocumentFilter<AddEnumDescriptionsDocumentFilter>();
+            options.ParameterFilter<AddEnumDescriptionsDocumentFilter>();
         }
 
         /// <summary>

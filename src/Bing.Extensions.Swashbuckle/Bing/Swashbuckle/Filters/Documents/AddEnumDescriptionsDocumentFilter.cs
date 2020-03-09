@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -9,7 +11,7 @@ namespace Bing.Swashbuckle.Filters.Documents
     /// <summary>
     /// 添加枚举描述 文档过滤器。支持
     /// </summary>
-    public class AddEnumDescriptionsDocumentFilter : IDocumentFilter
+    public class AddEnumDescriptionsDocumentFilter : IDocumentFilter,IParameterFilter
     {
         public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
         {
@@ -17,20 +19,11 @@ namespace Bing.Swashbuckle.Filters.Documents
             foreach (var schemaDictionaryItem in swaggerDoc.Components.Schemas)
             {
                 var schema = schemaDictionaryItem.Value;
-                foreach (var propertyDictionaryItem in schema.Properties)
+                var enums = schema.Enum;
+                if (enums != null && enums.Count > 0)
                 {
-                    var property = propertyDictionaryItem.Value;
-                    var propertyEnums = property.Enum;
-                    if (propertyEnums != null && propertyEnums.Count > 0)
-                    {
-                        property.Description += GetEnumDescription(propertyEnums);
-                        if (property.Extensions.ContainsKey("x-enumNames"))
-                        {
-                            //property.Extensions["x-enumNames"] = GetStringMapping(propertyEnums);
-                            continue;
-                        }
-                        //property.Extensions.Add("x-enumNames", GetStringMapping(propertyEnums));
-                    }
+                    schema.Description += GetEnumDescription(enums);
+                    schema.Extensions["x-enumNames"] = new OpenApiString(GetStringMapping(enums));
                 }
             }
 
@@ -52,18 +45,17 @@ namespace Bing.Swashbuckle.Filters.Documents
         /// 获取字符串映射
         /// </summary>
         /// <param name="enums">枚举值</param>
-        private string[] GetStringMapping(IList<IOpenApiAny> enums)
+        private string GetStringMapping(IList<IOpenApiAny> enums)
         {
-            var enumDescriptions = new List<string>();
+            var sb = new StringBuilder();
             Type type = null;
             foreach (var enumOption in enums)
             {
                 if (type == null)
                     type = enumOption.GetType();
-                enumDescriptions.Add(Enum.GetName(type, enumOption));
+                sb.AppendLine(Enum.GetName(type, enumOption));
             }
-
-            return enumDescriptions.ToArray();
+            return sb.ToString();
         }
 
         /// <summary>
@@ -108,5 +100,33 @@ namespace Bing.Swashbuckle.Filters.Documents
         }
 
 
+        public void Apply(OpenApiParameter parameter, ParameterFilterContext context)
+        {
+            var type = context.ParameterInfo?.ParameterType;
+            if (type == null)
+                return;
+            if (type.IsEnum)
+            {
+                var names = Enum.GetNames(type);
+                var values = Enum.GetValues(type);
+                var desc = "";
+                foreach (var value in values)
+                {
+                    var intValue = Convert.ChangeType(value, Enum.GetUnderlyingType(value.GetType()));
+                    desc += $"{intValue}={value},";
+                }
+
+                desc = desc.TrimEnd(',');
+                if (!parameter.Extensions.ContainsKey("x-enumNames"))
+                {
+                    var api = new OpenApiArray();
+                    foreach (var name in names) 
+                        api.Add(new OpenApiString(name));
+                    parameter.Extensions.Add("x-enumNames", api);
+                }
+
+                parameter.Description = $"{parameter.Description}\r\n{desc}";
+            }
+        }
     }
 }

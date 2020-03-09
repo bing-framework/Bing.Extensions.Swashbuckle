@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Bing.Samples.Api.Models;
+using Bing.Samples.Api.Models.Requests;
 using Bing.Swashbuckle.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
@@ -128,6 +129,16 @@ namespace Bing.Samples.Api.Controllers
         [HttpPost("testResponseHeader")]
         [SwaggerResponseHeader(200, "正常", "tt", "成功响应")]
         public async Task<IActionResult> TestResponseHeader()
+        {
+            return new JsonResult("成功操作");
+        }
+
+        /// <summary>
+        /// 测试 Post Json属性
+        /// </summary>
+        /// <param name="request">请求</param>
+        [HttpPost("testPostJsonProperty")]
+        public async Task<IActionResult> TestPostJsonProperty([FromBody] PostJsonPropertyRequest request)
         {
             return new JsonResult("成功操作");
         }
