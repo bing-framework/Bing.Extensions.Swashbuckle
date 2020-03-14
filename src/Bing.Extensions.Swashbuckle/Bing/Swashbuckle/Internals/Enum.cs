@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Reflection;
-using Bing.Extensions.Swashbuckle.Internal;
 
 namespace Bing.Swashbuckle.Internals
 {

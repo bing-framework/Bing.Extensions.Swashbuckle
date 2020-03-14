@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Reflection;
-using Bing.Extensions.Swashbuckle.Internal;
+using Bing.Swashbuckle.Internals;
 using Microsoft.AspNetCore.Builder;
 using Swashbuckle.AspNetCore.SwaggerUI;
 

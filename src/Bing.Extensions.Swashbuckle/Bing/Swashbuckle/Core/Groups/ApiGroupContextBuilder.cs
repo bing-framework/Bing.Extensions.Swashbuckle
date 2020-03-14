@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using Bing.Extensions.Swashbuckle.Internal;
 using Bing.Swashbuckle.Attributes;
+using Bing.Swashbuckle.Internals;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 

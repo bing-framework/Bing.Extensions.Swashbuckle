@@ -1,5 +1,4 @@
-﻿using Bing.Extensions.Swashbuckle.Internal;
-using Bing.Swashbuckle.Internals;
+﻿using Bing.Swashbuckle.Internals;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Swashbuckle.AspNetCore.Swagger;

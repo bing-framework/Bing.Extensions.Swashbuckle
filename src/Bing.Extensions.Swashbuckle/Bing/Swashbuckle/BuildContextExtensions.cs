@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Bing.Extensions.Swashbuckle.Internal;
 using Bing.Swashbuckle.Core.Groups;
+using Bing.Swashbuckle.Internals;
 using Microsoft.OpenApi.Models;
 
 namespace Bing.Swashbuckle

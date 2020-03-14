@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Bing.Extensions.Swashbuckle.Internal;
 using Bing.Swashbuckle.Core;
+using Bing.Swashbuckle.Internals;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 

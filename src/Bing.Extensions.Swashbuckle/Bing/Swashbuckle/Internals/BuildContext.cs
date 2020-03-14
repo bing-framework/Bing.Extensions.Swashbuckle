@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Bing.Swashbuckle;
 using Bing.Swashbuckle.Attributes;
 using Bing.Swashbuckle.Core.Groups;
-using Bing.Swashbuckle.Internals;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Bing.Extensions.Swashbuckle.Internal
+namespace Bing.Swashbuckle.Internals
 {
     /// <summary>
     /// 构建上下文
@@ -75,10 +73,14 @@ namespace Bing.Extensions.Swashbuckle.Internal
         /// </summary>
         private void BuildApiDoc()
         {
-            var apiGroupContext = this.GetApiGroupContext();
-            BuildSwaggerDoc(apiGroupContext);
-            BuildSwaggerEndpoint(apiGroupContext);
-            BuildDocInclusionPredicate(apiGroupContext);
+            lock (Lock)
+            {
+                Debug.WriteLine("BuildApiDoc");
+                var apiGroupContext = this.GetApiGroupContext();
+                BuildSwaggerDoc(apiGroupContext);
+                BuildSwaggerEndpoint(apiGroupContext);
+                BuildDocInclusionPredicate(apiGroupContext);
+            }
         }
 
         /// <summary>
