@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using Bing.Swashbuckle;
+using Bing.Swashbuckle.Filters.Documents;
+using Bing.Swashbuckle.Filters.RequestBody;
 using Bing.Swashbuckle.Filters.Schemas;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -120,7 +122,7 @@ namespace Bing.Samples.Api
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "Bing.Samples.Api.xml");
                 config.IncludeXmlComments(xmlPath, true);
-
+                config.UseInlineDefinitionsForEnums();
                 //config.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>()
                 //    {{"oauth2", new string[] { }}});
                 config.AddSecurityDefinition("oauth2",new OpenApiSecurityScheme()
@@ -130,7 +132,6 @@ namespace Bing.Samples.Api
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                 });
-
 
                 //config.AddSecurityDefinition("oauth2", new ApiKeyScheme()
                 //{
@@ -179,6 +180,8 @@ namespace Bing.Samples.Api
                 // 配置自定义操作标识
                 config.CustomOperationIds(apiDesc => apiDesc.TryGetMethodInfo(out var methodInfo) ? methodInfo.Name : null);
                 config.MapType<IFormFile>(() => new OpenApiSchema() {Type = "file"});
+                config.RequestBodyFilter<AddEnumDescriptionRequestBodyFilter>();
+                config.SchemaFilter<EnumDescriptionSchemaFilter>();
             },
             UseSwaggerAction = config =>
             {

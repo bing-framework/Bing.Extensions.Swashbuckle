@@ -23,7 +23,7 @@ namespace Bing.Swashbuckle.Internals
         /// <param name="apiDescriptionsProvider">Api描述提供程序</param>
         /// <param name="schemaGenerator">架构生成器</param>
         /// <param name="options">Swagger生成选项配置</param>
-        public CacheSwaggerProvider(IApiDescriptionGroupCollectionProvider apiDescriptionsProvider, ISchemaGenerator schemaGenerator, SwaggerGeneratorOptions options) : base(apiDescriptionsProvider, schemaGenerator, options)
+        public CacheSwaggerProvider(IApiDescriptionGroupCollectionProvider apiDescriptionsProvider, ISchemaGenerator schemaGenerator, SwaggerGeneratorOptions options) : base(options, apiDescriptionsProvider, schemaGenerator)
         {
         }
 
