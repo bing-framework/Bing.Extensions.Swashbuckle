@@ -1,39 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Bing.Swashbuckle.Filters.Schemas
 {
-    public class EnumDescriptionSchemaFilter:ISchemaFilter
+    /// <summary>
+    /// 枚举描述 过滤器。支持Body参数内容
+    /// </summary>
+    internal class EnumDescriptionSchemaFilter : EnumHandleBase, ISchemaFilter
     {
+        /// <summary>
+        /// 重写操作处理
+        /// </summary>
         public void Apply(OpenApiSchema schema, SchemaFilterContext context)
         {
             if (context.Type.IsEnum)
             {
-                schema.Description = $"{schema.Description}\r\n{GetDescription(context.Type)}";
+                schema.Description = $"{schema.Description}\r\n{FormatDescription(context.Type)}";
             }
-        }
-
-        private string GetDescription(Type type)
-        {
-            var sb = new StringBuilder();
-            foreach (var field in type.GetFields())
-            {
-                if(!field.FieldType.IsEnum)
-                    continue;
-                sb.Append(
-                    $"{GetValue(type, field.Name)} = {Internals.Enum.GetDescription(type, field.Name)}{Environment.NewLine}");
-            }
-
-            return sb.ToString();
-        }
-
-        private int GetValue(Type type, object member)
-        {
-            var value = member.ToString();
-            return (int) Enum.Parse(type, member.ToString(), true);
         }
     }
 }

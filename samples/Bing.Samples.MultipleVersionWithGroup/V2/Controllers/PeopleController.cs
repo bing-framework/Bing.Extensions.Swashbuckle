@@ -26,22 +26,22 @@ namespace Bing.Samples.MultipleVersionWithGroup.V2.Controllers
                 new Person()
                 {
                     Id = 1,
-                    FirstName = "隔壁",
-                    LastName = "老王",
+                    FirstName = "隔壁-v2.0",
+                    LastName = "老王-v2.0",
                     Email = "gebilaowang@somewhere.com"
                 },
                 new Person()
                 {
                     Id = 2,
-                    FirstName = "隔壁",
-                    LastName = "老萌",
+                    FirstName = "隔壁-v2.0",
+                    LastName = "老萌-v2.0",
                     Email = "gebilaomeng@somewhere.com"
                 },
                 new Person()
                 {
                     Id = 3,
-                    FirstName = "隔壁",
-                    LastName = "张三",
+                    FirstName = "隔壁-v2.0",
+                    LastName = "张三-v2.0",
                     Email = "gebizhangsan@somewhere.com"
                 },
             };
@@ -59,8 +59,8 @@ namespace Bing.Samples.MultipleVersionWithGroup.V2.Controllers
         public IActionResult Get(int id) => Ok(new Person()
         {
             Id = id,
-            FirstName = "隔壁",
-            LastName = "老萌",
+            FirstName = "隔壁-v2.0",
+            LastName = "老萌-v2.0",
             Email = "gebilaomeng@somewhere.com"
         });
     }

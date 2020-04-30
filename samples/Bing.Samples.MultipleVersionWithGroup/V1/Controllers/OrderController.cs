@@ -20,7 +20,7 @@ namespace Bing.Samples.MultipleVersionWithGroup.V1.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(Order), 200)]
         [ProducesResponseType(404)]
-        public IActionResult Get(int id) => Ok(new Order() { Id = id, Customer = "隔壁老王" });
+        public IActionResult Get(int id) => Ok(new Order() { Id = id, Customer = "隔壁老王-v1.0" });
 
         /// <summary>
         /// 创建一个新的订单

@@ -26,9 +26,9 @@ namespace Bing.Samples.MultipleVersionWithGroup.V2.Controllers
         {
             var orders = new[]
             {
-                new Order() {Id = 1, Customer = "隔壁老王"},
-                new Order() {Id = 2, Customer = "隔壁老萌"},
-                new Order() {Id = 3, Customer = "隔壁张三", EffectiveDate = DateTimeOffset.UtcNow.AddDays(7d)},
+                new Order() {Id = 1, Customer = "隔壁老王-v2.0"},
+                new Order() {Id = 2, Customer = "隔壁老萌-v2.0"},
+                new Order() {Id = 3, Customer = "隔壁张三-v2.0", EffectiveDate = DateTimeOffset.UtcNow.AddDays(7d)},
             };
             return Ok(orders);
         }
@@ -42,7 +42,7 @@ namespace Bing.Samples.MultipleVersionWithGroup.V2.Controllers
         [ProducesResponseType(typeof(Order), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
-        public IActionResult Get(int id) => Ok(new Order() { Id = id, Customer = "隔壁老萌" });
+        public IActionResult Get(int id) => Ok(new Order() { Id = id, Customer = "隔壁老萌-v2.0" });
 
         /// <summary>
         /// 创建一个新的订单

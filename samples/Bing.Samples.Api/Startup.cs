@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using Bing.Swashbuckle;
-using Bing.Swashbuckle.Filters.Documents;
-using Bing.Swashbuckle.Filters.RequestBody;
 using Bing.Swashbuckle.Filters.Schemas;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,7 +13,6 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Bing.Samples.Api
@@ -180,8 +177,6 @@ namespace Bing.Samples.Api
                 // 配置自定义操作标识
                 config.CustomOperationIds(apiDesc => apiDesc.TryGetMethodInfo(out var methodInfo) ? methodInfo.Name : null);
                 config.MapType<IFormFile>(() => new OpenApiSchema() {Type = "file"});
-                config.RequestBodyFilter<AddEnumDescriptionRequestBodyFilter>();
-                config.SchemaFilter<EnumDescriptionSchemaFilter>();
             },
             UseSwaggerAction = config =>
             {

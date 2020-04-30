@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 
@@ -55,5 +56,34 @@ namespace Bing.Swashbuckle.Internals
         public static string GetDescription(Type type, object member) => Reflection.GetDescription(type, GetName(type, member));
 
         #endregion
+
+        #region GetDescriptions(获取描述列表)
+
+        /// <summary>
+        /// 获取描述列表
+        /// </summary>
+        /// <param name="type">枚举类型</param>
+        public static List<(int Value, string Name, string Description)> GetDescriptions(Type type)
+        {
+            if (InternalCache.EnumDict.ContainsKey(type))
+                return InternalCache.EnumDict[type];
+            var result = new List<(int Value, string Name, string Description)>();
+            if (!type.IsEnum)
+                return result;
+            foreach (var field in type.GetFields())
+            {
+                if(!field.FieldType.IsEnum)
+                    continue;
+                var name = field.Name;
+                var description = GetDescription(type, name);
+                var value = (int)System.Enum.Parse(type, name, true);
+                result.Add((value, name, description));
+            }
+            InternalCache.EnumDict[type] = result;
+            return result;
+        }
+
+        #endregion
+
     }
 }

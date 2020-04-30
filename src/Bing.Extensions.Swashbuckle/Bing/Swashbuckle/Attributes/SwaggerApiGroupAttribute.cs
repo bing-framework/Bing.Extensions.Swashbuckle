@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace Bing.Swashbuckle.Attributes
 {
@@ -7,7 +6,7 @@ namespace Bing.Swashbuckle.Attributes
     /// Swagger：Api分组
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
-    public class SwaggerApiGroupAttribute : Attribute, IApiDescriptionGroupNameProvider
+    public class SwaggerApiGroupAttribute : Attribute
     {
         /// <summary>
         /// 分组名

@@ -5,8 +5,8 @@ namespace Bing.Swashbuckle.Attributes
     /// <summary>
     /// Swagger: 请求头，用于标识接口请求头参数信息
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class|AttributeTargets.Method,AllowMultiple = true)]
-    public class SwaggerRequestHeaderAttribute:Attribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
+    public class SwaggerRequestHeaderAttribute : Attribute
     {
         /// <summary>
         /// 名称

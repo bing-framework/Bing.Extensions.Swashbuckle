@@ -2,6 +2,7 @@
 using Bing.Swashbuckle.Core;
 using Bing.Swashbuckle.Filters.Documents;
 using Bing.Swashbuckle.Filters.Operations;
+using Bing.Swashbuckle.Filters.Schemas;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -19,12 +20,10 @@ namespace Bing.Swashbuckle
         /// <param name="options">Swagger生成选项</param>
         public static void ShowEnumDescription(this SwaggerGenOptions options)
         {
-            //if (options.DocumentFilterDescriptors.Exists(x => x.Type == typeof(AddEnumDescriptionsDocumentFilter)))
-            //    return;
-            //options.DocumentFilter<AddEnumDescriptionsDocumentFilter>();
-            if (options.ParameterFilterDescriptors.Exists(x => x.Type == typeof(AddEnumDescriptionsDocumentFilter)))
-                return;
-            options.ParameterFilter<AddEnumDescriptionsDocumentFilter>();
+            if (!options.ParameterFilterDescriptors.Exists(x => x.Type == typeof(EnumDescriptionsDocumentFilter)))
+                options.ParameterFilter<EnumDescriptionsDocumentFilter>();
+            if (!options.SchemaFilterDescriptors.Exists(x => x.Type == typeof(EnumDescriptionSchemaFilter)))
+                options.SchemaFilter<EnumDescriptionSchemaFilter>();
         }
 
         /// <summary>
