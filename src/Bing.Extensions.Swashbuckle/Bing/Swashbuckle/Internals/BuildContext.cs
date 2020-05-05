@@ -25,11 +25,6 @@ namespace Bing.Swashbuckle.Internals
         public SwaggerExOptions ExOptions { get; set; } = new SwaggerExOptions();
 
         /// <summary>
-        /// Swagger扩展选项配置
-        /// </summary>
-        public SwaggerExtensionOptions Options { get; set; } = new SwaggerExtensionOptions();
-
-        /// <summary>
         /// 服务提供程序
         /// </summary>
         public IServiceProvider ServiceProvider { get; set; }

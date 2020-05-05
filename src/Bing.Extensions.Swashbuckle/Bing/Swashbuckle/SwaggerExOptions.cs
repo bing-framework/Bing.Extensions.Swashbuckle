@@ -38,6 +38,11 @@ namespace Bing.Swashbuckle
         public bool EnableCustomIndex { get; set; }
 
         /// <summary>
+        /// 是否启用缓存
+        /// </summary>
+        public bool EnableCached { get; set; }
+
+        /// <summary>
         /// 是否启用API版本号
         /// </summary>
         public bool EnableApiVersion { get; set; }

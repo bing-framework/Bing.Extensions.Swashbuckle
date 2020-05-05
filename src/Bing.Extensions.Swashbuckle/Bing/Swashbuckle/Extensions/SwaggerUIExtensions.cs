@@ -43,7 +43,7 @@ namespace Bing.Swashbuckle
         /// <param name="options">SwaggerUI选项</param>
         public static void UseCustomSwaggerIndex(this SwaggerUIOptions options)
         {
-            var currentAssembly = typeof(CustomSwaggerOptions).GetTypeInfo().Assembly;
+            var currentAssembly = typeof(SwaggerExOptions).GetTypeInfo().Assembly;
             options.IndexStream = () =>
                 currentAssembly.GetManifestResourceStream($"Bing.Swashbuckle.Resources.index.html");
         }
