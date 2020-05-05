@@ -133,7 +133,12 @@ namespace Bing.Swashbuckle.Internals
             ExOptions.SwaggerGenOptions.DocInclusionPredicate((docName, apiDescription) =>
             {
                 if (docName == "NoGroup")
+                {
+                    if (ExistsApiGroupAttribute(apiDescription.ActionDescriptor))
+                        return false;
                     return string.IsNullOrWhiteSpace(apiDescription.GroupName);
+                }
+                    
                 foreach (var obj in apiDescription.ActionDescriptor.EndpointMetadata)
                 {
                     if (!(obj is SwaggerApiGroupAttribute swaggerApiGroup))
