@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using Bing.Swashbuckle.Internals;
 
+// ReSharper disable once CheckNamespace
 namespace Bing.Swashbuckle
 {
     /// <summary>

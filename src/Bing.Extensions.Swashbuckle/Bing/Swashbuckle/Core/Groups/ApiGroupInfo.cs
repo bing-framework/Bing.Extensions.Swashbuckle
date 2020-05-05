@@ -6,7 +6,7 @@ namespace Bing.Swashbuckle.Core.Groups
     /// <summary>
     /// Api分组信息
     /// </summary>
-    public class ApiGroupInfo
+    internal class ApiGroupInfo
     {
         /// <summary>
         /// 标题
@@ -36,14 +36,25 @@ namespace Bing.Swashbuckle.Core.Groups
         /// <summary>
         /// 添加明细
         /// </summary>
+        /// <param name="name">名称</param>
+        /// <param name="version">版本号</param>
+        public void AddItem(string name, string version)
+        {
+            if(string.IsNullOrEmpty(name))
+                return;
+            if (ApiVersions.Any(x => x.Name == name && x.Version == version))
+                return;
+            AddItem(new ApiVersionInfo(this, name, version));
+        }
+
+        /// <summary>
+        /// 添加明细
+        /// </summary>
         /// <param name="apiVersion">Api版本</param>
-        public void AddItem(ApiVersionInfo apiVersion)
+        private void AddItem(ApiVersionInfo apiVersion)
         {
             if (apiVersion == null)
                 return;
-            if (ApiVersions.Any(x => x.Name == apiVersion.Name && x.Version == apiVersion.Version))
-                return;
-            apiVersion.Group = this;
             ApiVersions.Add(apiVersion);
         }
     }

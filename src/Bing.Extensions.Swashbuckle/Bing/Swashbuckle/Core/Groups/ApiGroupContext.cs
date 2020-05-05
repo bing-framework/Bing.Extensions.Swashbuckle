@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Bing.Swashbuckle.Internals;
 using Microsoft.OpenApi.Models;
 
 namespace Bing.Swashbuckle.Core.Groups
@@ -16,23 +16,10 @@ namespace Bing.Swashbuckle.Core.Groups
         private IList<ApiGroupInfo> ApiGroups { get; set; } = new List<ApiGroupInfo>();
 
         /// <summary>
-        /// Swagger扩展选项配置
-        /// </summary>
-        public SwaggerExtensionOptions Options { get; set; }
-
-        /// <summary>
-        /// 获取Api分组列表
-        /// </summary>
-        public IList<ApiGroupInfo> GetApiGroups() => ApiGroups;
-
-        /// <summary>
         /// 添加分组。仅添加分组，不添加版本
         /// </summary>
         /// <param name="name">名称</param>
-        public void AddGroup(string name)
-        {
-            AddGroup(name, name, string.Empty);
-        }
+        public void AddGroup(string name) => AddGroup(name, name, string.Empty);
 
         /// <summary>
         /// 添加分组。仅添加分组，不添加版本
@@ -40,28 +27,30 @@ namespace Bing.Swashbuckle.Core.Groups
         /// <param name="title">标题</param>
         /// <param name="name">名称</param>
         /// <param name="description">描述</param>
-        public void AddGroup(string title, string name, string description)
-        {
-            ApiGroupInfo apiGroup = GetApiGroup(name) ?? new ApiGroupInfo { Title = title, Name = name, Description = string.Empty, IsCustomGroup = true };
-            if (!ExistsApiGroup(name))
-                ApiGroups.Add(apiGroup);
-        }
+        public void AddGroup(string title, string name, string description) =>
+            SaveApiGroup(name, initAction: o =>
+            {
+                o.Title = title;
+                o.Name = name;
+                o.Description = description;
+                o.IsCustomGroup = true;
+            });
 
         /// <summary>
         /// 添加APi分组
         /// </summary>
         /// <param name="name">名称</param>
-        public void AddApiGroupByCustomGroup(string name)
-        {
-            ApiGroupInfo apiGroup = GetApiGroup(name) ?? new ApiGroupInfo { Title = name, Name = name, Description = string.Empty, IsCustomGroup = true };
-            apiGroup.AddItem(new ApiVersionInfo()
+        public void AddApiGroupByCustomGroup(string name) =>
+            SaveApiGroup(name, o =>
             {
-                Name = name,
-                Version = string.Empty
+                o.AddItem(name, string.Empty);
+            }, o =>
+            {
+                o.Title = name;
+                o.Name = name;
+                o.Description = string.Empty;
+                o.IsCustomGroup = true;
             });
-            if (!ExistsApiGroup(name))
-                ApiGroups.Add(apiGroup);
-        }
 
         /// <summary>
         /// 添加API分组
@@ -72,17 +61,17 @@ namespace Bing.Swashbuckle.Core.Groups
         /// <param name="versionName">版本名称</param>
         /// <param name="version">版本号</param>
         public void AddApiGroupByCustomGroup(string title, string name, string description, string versionName,
-            string version)
-        {
-            ApiGroupInfo apiGroup = GetApiGroup(name) ?? new ApiGroupInfo { Title = title, Name = name, Description = description, IsCustomGroup = true };
-            apiGroup.AddItem(new ApiVersionInfo()
+            string version) =>
+            SaveApiGroup(name, o =>
             {
-                Name = versionName,
-                Version = version
+                o.AddItem(versionName, version);
+            }, o =>
+            {
+                o.Title = title;
+                o.Name = name;
+                o.Description = description;
+                o.IsCustomGroup = true;
             });
-            if (!ExistsApiGroup(name))
-                ApiGroups.Add(apiGroup);
-        }
 
         /// <summary>
         /// 添加无分组
@@ -99,17 +88,16 @@ namespace Bing.Swashbuckle.Core.Groups
         /// </summary>
         /// <param name="name">名称</param>
         /// <param name="description">描述</param>
-        public void AddApiGroup(string name, string description)
-        {
-            ApiGroupInfo apiGroup = GetApiGroup(name) ?? new ApiGroupInfo { Title = name, Name = name, Description = description };
-            apiGroup.AddItem(new ApiVersionInfo()
+        public void AddApiGroup(string name, string description) =>
+            SaveApiGroup(name, o =>
             {
-                Name = name,
-                Version = string.Empty
+                o.AddItem(name, string.Empty);
+            }, o =>
+            {
+                o.Title = name;
+                o.Name = name;
+                o.Description = description;
             });
-            if (!ExistsApiGroup(name))
-                ApiGroups.Add(apiGroup);
-        }
 
         /// <summary>
         /// 添加API分组
@@ -119,17 +107,16 @@ namespace Bing.Swashbuckle.Core.Groups
         /// <param name="description">描述</param>
         /// <param name="versionName">版本名称</param>
         /// <param name="version">版本号</param>
-        public void AddApiGroup(string title, string name, string description, string versionName, string version)
-        {
-            ApiGroupInfo apiGroup = GetApiGroup(name) ?? new ApiGroupInfo { Title = title, Name = name, Description = description };
-            apiGroup.AddItem(new ApiVersionInfo()
+        public void AddApiGroup(string title, string name, string description, string versionName, string version) =>
+            SaveApiGroup(name, o =>
             {
-                Name = versionName,
-                Version = version
+                o.AddItem(versionName, version);
+            }, o =>
+            {
+                o.Title = title;
+                o.Name = name;
+                o.Description = description;
             });
-            if (!ExistsApiGroup(name))
-                ApiGroups.Add(apiGroup);
-        }
 
         /// <summary>
         /// 添加API版本
@@ -142,25 +129,30 @@ namespace Bing.Swashbuckle.Core.Groups
             {
                 if (!apiGroup.IsCustomGroup)
                     continue;
-                apiGroup.AddItem(new ApiVersionInfo()
-                {
-                    Name = name,
-                    Version = version
-                });
+                apiGroup.AddItem(name,version);
             }
         }
 
         /// <summary>
-        /// 是否存在API分组
+        /// 保存API分组
         /// </summary>
-        /// <param name="name">名称</param>
-        public bool ExistsApiGroup(string name) => ApiGroups.Any(x => x.Name == name);
-
-        /// <summary>
-        /// 获取API分组
-        /// </summary>
-        /// <param name="name">名称</param>
-        public ApiGroupInfo GetApiGroup(string name) => ApiGroups.FirstOrDefault(x => x.Name == name);
+        /// <param name="name">分组名称</param>
+        /// <param name="setupAction">配置操作</param>
+        /// <param name="initAction">初始化操作</param>
+        private void SaveApiGroup(string name, Action<ApiGroupInfo> setupAction = null, Action<ApiGroupInfo> initAction = null)
+        {
+            var exists = true;
+            var apiGroup = ApiGroups.FirstOrDefault(x => x.Name == name);
+            if (apiGroup == null)
+            {
+                apiGroup = new ApiGroupInfo();
+                initAction?.Invoke(apiGroup);
+                exists = false;
+            }
+            setupAction?.Invoke(apiGroup);
+            if(!exists)
+                ApiGroups.Add(apiGroup);
+        }
 
         /// <summary>
         /// 获取信息列表

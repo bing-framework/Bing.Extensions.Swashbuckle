@@ -3,6 +3,7 @@ using Bing.Swashbuckle.Core.Groups;
 using Bing.Swashbuckle.Internals;
 using Microsoft.OpenApi.Models;
 
+// ReSharper disable once CheckNamespace
 namespace Bing.Swashbuckle
 {
     /// <summary>

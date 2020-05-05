@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
 using Bing.Swashbuckle.Core;
+using Bing.Swashbuckle.Core.Authorization;
 using Bing.Swashbuckle.Internals;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
+// ReSharper disable once CheckNamespace
 namespace Bing.Swashbuckle
 {
     /// <summary>
@@ -13,10 +15,33 @@ namespace Bing.Swashbuckle
     public static class SwaggerBuilderExtensions
     {
         /// <summary>
+        /// 启用SwaggerEx
+        /// </summary>
+        /// <param name="app">应用构建器</param>
+        /// <param name="setupAction">配置操作</param>
+        public static IApplicationBuilder UseSwaggerEx(this IApplicationBuilder app, Action<SwaggerExOptions> setupAction = null)
+        {
+            // 初始化配置信息
+            setupAction?.Invoke(BuildContext.Instance.ExOptions);
+            if (BuildContext.Instance.ExOptions.EnableAuthorization())
+                app.UseMiddleware<SwaggerAuthorizeMiddleware>();
+            app.UseSwagger(o =>
+                {
+                    BuildContext.Instance.ExOptions.InitSwaggerOptions(o);
+                })
+                .UseSwaggerUI(o =>
+                {
+                    BuildContext.Instance.ExOptions.InitSwaggerUiOptions(o);
+                });
+            return app;
+        }
+
+        /// <summary>
         /// 使用自定义Swagger
         /// </summary>
         /// <param name="app">应用构建器</param>
         /// <param name="options">自定义Swagger选项</param>
+        [Obsolete]
         public static IApplicationBuilder UseSwaggerCustom(this IApplicationBuilder app, CustomSwaggerOptions options)
         {
             BuildContext.Instance.ServiceProvider = app.ApplicationServices;
@@ -95,7 +120,7 @@ namespace Bing.Swashbuckle
 
                     if (method == "post")
                     {
-                        var user = new CustomSwaggerAuthorization(context.Request.Form["userName"],
+                        var user = new SwaggerAuthorizationUser(context.Request.Form["userName"],
                             context.Request.Form["password"]);
                         if (!options.SwaggerAuthorizations.Any(x =>
                             x.UserName == user.UserName && x.Password == user.Password))

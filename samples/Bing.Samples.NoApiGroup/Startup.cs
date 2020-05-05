@@ -43,7 +43,63 @@ namespace Bing.Samples.NoApiGroup
         {
             // 配置跨域
             services.AddCors();
-            services.AddSwaggerCustom(CurrentSwaggerOptions);
+            services.AddSwaggerEx(o =>
+            {
+                o.ProjectName = "Bing.Sample.NoApiGroup 在线文档调试";
+                o.EnableCustomIndex = true;
+                o.RoutePrefix = "swagger";
+                o.ApiVersions.Add(new ApiVersion()
+                {
+                    Description = "通用结果",
+                    Version = "v1"
+                });
+                o.AddSwaggerGenAction = config =>
+                {
+                    var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                    var xmlPath = Path.Combine(basePath, "Bing.Samples.NoApiGroup.xml");
+                    config.IncludeXmlComments(xmlPath, true);
+
+                    config.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
+                    {
+                        Type = SecuritySchemeType.ApiKey,
+                        Description = "Token令牌",
+                        Name = "Authorization",
+                        In = ParameterLocation.Header,
+                    });
+
+                    // 启用请求头过滤器。显示Swagger自定义请求头
+                    config.EnableRequestHeader();
+
+                    // 启用响应由过滤器。显示Swagger自定义响应头
+                    config.EnableResponseHeader();
+
+                    // 显示文件参数
+                    config.ShowFileParameter();
+
+                    // 显示枚举描述
+                    config.ShowEnumDescription();
+
+                    // 显示Url模式：首字母小写、首字母大写、全小写、全大写、默认
+                    config.ShowUrlMode();
+
+                    // 隐藏属性
+                    config.SchemaFilter<IgnorePropertySchemaFilter>();
+
+                    // 添加通用参数
+                    config.AddCommonParameter(new List<OpenApiParameter>()
+                    {
+                        new OpenApiParameter()
+                        {
+                            Name = "Test",
+                            In = ParameterLocation.Header,
+                            Schema = new OpenApiSchema() {Type = "string", Default = new OpenApiString("")}
+                        }
+                    });
+
+                    // 启用默认值
+                    config.EnableDefaultValue();
+                };
+            });
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
@@ -69,81 +125,23 @@ namespace Bing.Samples.NoApiGroup
                     .AllowAnyMethod()
                     .AllowCredentials();
             });
-            app.UseSwaggerCustom(CurrentSwaggerOptions);
+            app.UseSwaggerEx(o =>
+            {
+                o.UseSwaggerUIAction = config =>
+                {
+                    config.InjectJavascript("/swagger/resources/jquery");
+                    config.InjectJavascript("/swagger/resources/translator");
+                    config.InjectStylesheet("/swagger/resources/swagger-common");
+
+                    // 使用默认SwaggerUI
+                    config.UseDefaultSwaggerUI();
+                };
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute("areaRoute", "{area:exists}/{controller}/{action=Index}/{id?}");
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
-
-        /// <summary>
-        /// 项目接口文档配置
-        /// </summary>
-        private CustomSwaggerOptions CurrentSwaggerOptions = new CustomSwaggerOptions()
-        {
-            ProjectName = "Bing.Sample.Api 在线文档调试",
-            UseCustomIndex = true,
-            RoutePrefix = "swagger",
-            ApiVersions = new List<ApiVersion>() { new ApiVersion() { Description = "通用接口", Version = "v1" } },
-            AddSwaggerGenAction = config =>
-            {
-                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                var xmlPath = Path.Combine(basePath, "Bing.Samples.NoApiGroup.xml");
-                config.IncludeXmlComments(xmlPath, true);
-
-                config.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
-                {
-                    Type = SecuritySchemeType.ApiKey,
-                    Description = "Token令牌",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                });
-
-                // 启用请求头过滤器。显示Swagger自定义请求头
-                config.EnableRequestHeader();
-
-                // 启用响应由过滤器。显示Swagger自定义响应头
-                config.EnableResponseHeader();
-
-                // 显示文件参数
-                config.ShowFileParameter();
-
-                // 显示枚举描述
-                config.ShowEnumDescription();
-
-                // 显示Url模式：首字母小写、首字母大写、全小写、全大写、默认
-                config.ShowUrlMode();
-
-                // 隐藏属性
-                config.SchemaFilter<IgnorePropertySchemaFilter>();
-
-                // 添加通用参数
-                config.AddCommonParameter(new List<OpenApiParameter>()
-                {
-                    new OpenApiParameter()
-                    {
-                        Name = "Test",
-                        In = ParameterLocation.Header,
-                        Schema = new OpenApiSchema() {Type = "string", Default = new OpenApiString("")}
-                    }
-                });
-
-                // 启用默认值
-                config.EnableDefaultValue();
-            },
-            UseSwaggerAction = config =>
-            {
-            },
-            UseSwaggerUIAction = config =>
-            {
-                config.InjectJavascript("/swagger/resources/jquery");
-                config.InjectJavascript("/swagger/resources/translator");
-                config.InjectStylesheet("/swagger/resources/swagger-common");
-
-                // 使用默认SwaggerUI
-                config.UseDefaultSwaggerUI();
-            }
-        };
     }
 }

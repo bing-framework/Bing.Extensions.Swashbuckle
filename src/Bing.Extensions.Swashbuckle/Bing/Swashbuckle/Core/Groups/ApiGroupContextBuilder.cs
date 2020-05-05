@@ -18,7 +18,6 @@ namespace Bing.Swashbuckle.Core.Groups
         {
             var context = new ApiGroupContext();
             var buildContext = BuildContext.Instance;
-            context.Options = buildContext.Options;
             BuildGroup(context, buildContext);
             BuildCustomVersion(context, buildContext);
             BuildNoGroup(context, buildContext);
@@ -33,17 +32,17 @@ namespace Bing.Swashbuckle.Core.Groups
         /// <param name="buildContext">构建上下文</param>
         private void BuildGroup(ApiGroupContext context, BuildContext buildContext)
         {
-            if (!buildContext.Options.EnableApiGroup)
+            if (!buildContext.ExOptions.EnableApiGroup())
                 return;
-            if (!buildContext.Options.ApiGroupType.IsEnum)
+            if (!buildContext.ExOptions.ApiGroupType.IsEnum)
                 return;
-            buildContext.Options.ApiGroupType.GetFields().Skip(1).ToList().ForEach(x =>
+            buildContext.ExOptions.ApiGroupType.GetFields().Skip(1).ToList().ForEach(x =>
             {
                 var attribute = x.GetCustomAttributes(typeof(SwaggerApiGroupInfoAttribute), false)
                     .OfType<SwaggerApiGroupInfoAttribute>().FirstOrDefault();
                 if (attribute == null)
                 {
-                    if (buildContext.Options.EnableApiVersion)
+                    if (buildContext.ExOptions.EnableApiVersion)
                     {
                         context.AddGroup(x.Name);
                         return;
@@ -52,7 +51,7 @@ namespace Bing.Swashbuckle.Core.Groups
                     return;
                 }
 
-                if (buildContext.Options.EnableApiVersion)
+                if (buildContext.ExOptions.EnableApiVersion)
                 {
                     context.AddGroup(attribute.Title, x.Name, attribute.Description);
                     return;
@@ -68,11 +67,11 @@ namespace Bing.Swashbuckle.Core.Groups
         /// <param name="buildContext">构建上下文</param>
         private void BuildCustomVersion(ApiGroupContext context, BuildContext buildContext)
         {
-            if (buildContext.Options.EnableApiGroup || buildContext.Options.EnableApiVersion)
+            if (buildContext.ExOptions.EnableApiGroup() || buildContext.ExOptions.EnableApiVersion)
                 return;
-            if (!buildContext.Options.HasCustomVersion)
+            if (!buildContext.ExOptions.HasCustomVersion())
                 return;
-            foreach (var apiVersion in buildContext.Options.ApiVersions)
+            foreach (var apiVersion in buildContext.ExOptions.ApiVersions)
                 context.AddApiGroup(apiVersion.Version, apiVersion.Description);
         }
 
@@ -83,12 +82,12 @@ namespace Bing.Swashbuckle.Core.Groups
         /// <param name="buildContext">构建上下文</param>
         private void BuildApiVersion(ApiGroupContext context, BuildContext buildContext)
         {
-            if (!buildContext.Options.EnableApiVersion)
+            if (!buildContext.ExOptions.EnableApiVersion)
                 return;
             var provider = buildContext.ServiceProvider.GetService<IApiVersionDescriptionProvider>();
             foreach (var description in provider.ApiVersionDescriptions)
             {
-                if (buildContext.Options.EnableApiGroup)
+                if (buildContext.ExOptions.EnableApiGroup())
                 {
                     context.AddApiVersion(description.GroupName,description.ApiVersion.ToString());
                     continue;
@@ -105,9 +104,9 @@ namespace Bing.Swashbuckle.Core.Groups
         /// <param name="buildContext">构建上下文</param>
         private void BuildNoGroup(ApiGroupContext context, BuildContext buildContext)
         {
-            if (!buildContext.Options.EnableApiGroup)
+            if (!buildContext.ExOptions.EnableApiGroup())
                 return;
-            if (buildContext.Options.EnableApiVersion)
+            if (buildContext.ExOptions.EnableApiVersion)
                 context.AddNoGroup();
             else
                 context.AddNoGroupWithVersion();

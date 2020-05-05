@@ -4,6 +4,7 @@ using Bing.Swashbuckle.Internals;
 using Microsoft.AspNetCore.Builder;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
+// ReSharper disable once CheckNamespace
 namespace Bing.Swashbuckle
 {
     /// <summary>
@@ -12,8 +13,10 @@ namespace Bing.Swashbuckle
     // ReSharper disable once InconsistentNaming
     public static class SwaggerUIExtensions
     {
+        #region UseDefaultUI(使用默认的UI)
+
         /// <summary>
-        /// 使用默认SwggerUI
+        /// 使用默认的UI
         /// </summary>
         /// <param name="options">SwaggerUI配置</param>
         // ReSharper disable once InconsistentNaming
@@ -30,6 +33,10 @@ namespace Bing.Swashbuckle
             options.EnableFilter();// 启用过滤文本框
         }
 
+        #endregion
+
+        #region UseCustomIndex(使用自定义首页)
+
         /// <summary>
         /// 使用自定义首页
         /// </summary>
@@ -37,11 +44,11 @@ namespace Bing.Swashbuckle
         public static void UseCustomSwaggerIndex(this SwaggerUIOptions options)
         {
             var currentAssembly = typeof(CustomSwaggerOptions).GetTypeInfo().Assembly;
-            //options.IndexStream = () =>
-            //    currentAssembly.GetManifestResourceStream($"{currentAssembly.GetName().Name}.Resources.index.html");
             options.IndexStream = () =>
                 currentAssembly.GetManifestResourceStream($"Bing.Swashbuckle.Resources.index.html");
         }
+
+        #endregion
 
         /// <summary>
         /// 添加信息

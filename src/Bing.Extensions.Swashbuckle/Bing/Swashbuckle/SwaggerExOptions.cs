@@ -8,14 +8,24 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 namespace Bing.Swashbuckle
 {
     /// <summary>
-    /// 自定义Swagger选项
+    /// Swagger 扩展选项配置
     /// </summary>
-    public class CustomSwaggerOptions
+    public class SwaggerExOptions
     {
+        /// <summary>
+        /// 初始化一个<see cref="SwaggerExOptions"/>类型的实例
+        /// </summary>
+        public SwaggerExOptions() { }
+
         /// <summary>
         /// 项目名称
         /// </summary>
         public string ProjectName { get; set; } = "My Api";
+
+        /// <summary>
+        /// 路由前缀。默认：swagger
+        /// </summary>
+        public string RoutePrefix { get; set; } = "swagger";
 
         /// <summary>
         /// Api版本列表
@@ -23,17 +33,12 @@ namespace Bing.Swashbuckle
         public List<ApiVersion> ApiVersions { get; set; } = new List<ApiVersion>();
 
         /// <summary>
-        /// 接口文档访问路由前缀
+        /// 是否启用自定义首页
         /// </summary>
-        public string RoutePrefix { get; set; } = "swagger";
+        public bool EnableCustomIndex { get; set; }
 
         /// <summary>
-        /// 是否使用自定义首页
-        /// </summary>
-        public bool UseCustomIndex { get; set; }
-
-        /// <summary>
-        /// 是否启用Api版本号
+        /// 是否启用API版本号
         /// </summary>
         public bool EnableApiVersion { get; set; }
 
@@ -45,8 +50,7 @@ namespace Bing.Swashbuckle
         /// <summary>
         /// Swagger授权登录账号，未指定则不启用
         /// </summary>
-        public List<SwaggerAuthorizationUser> SwaggerAuthorizations { get; set; } =
-            new List<SwaggerAuthorizationUser>();
+        public List<SwaggerAuthorizationUser> SwaggerAuthorizations { get; set; } = new List<SwaggerAuthorizationUser>();
 
         /// <summary>
         /// UseSwagger 操作
@@ -65,19 +69,18 @@ namespace Bing.Swashbuckle
         public Action<SwaggerGenOptions> AddSwaggerGenAction { get; set; }
 
         /// <summary>
-        /// 初始化一个<see cref="CustomSwaggerOptions"/>类型的实例
+        /// Swagger选项配置
         /// </summary>
-        public CustomSwaggerOptions() { }
+        internal SwaggerOptions SwaggerOptions { get; set; }
 
         /// <summary>
-        /// 初始化一个<see cref="CustomSwaggerOptions"/>类型的实例
+        /// SwaggerUI选项配置
         /// </summary>
-        /// <param name="projectName">项目名称</param>
-        /// <param name="apiVersions">Api版本列表</param>
-        public CustomSwaggerOptions(string projectName, List<ApiVersion> apiVersions)
-        {
-            ProjectName = projectName;
-            ApiVersions = apiVersions;
-        }
+        internal SwaggerUIOptions SwaggerUiOptions { get; set; }
+
+        /// <summary>
+        /// Swagger选项配置
+        /// </summary>
+        internal SwaggerGenOptions SwaggerGenOptions { get; set; }
     }
 }

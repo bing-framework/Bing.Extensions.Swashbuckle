@@ -5,8 +5,21 @@
     /// 下拉列表：自定义名称(名称) - 版本号
     /// 下拉列表地址：/swagger/{Name}-v1.0/swagger.json
     /// </summary>
-    public class ApiVersionInfo
+    internal class ApiVersionInfo
     {
+        /// <summary>
+        /// 初始化一个<see cref="ApiVersionInfo"/>类型的实例
+        /// </summary>
+        /// <param name="group">API分组信息</param>
+        /// <param name="name">名称</param>
+        /// <param name="version">版本号</param>
+        public ApiVersionInfo(ApiGroupInfo group, string name, string version)
+        {
+            Group = group;
+            Name = name;
+            Version = version;
+        }
+
         /// <summary>
         /// 标题
         /// </summary>

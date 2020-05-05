@@ -1,4 +1,5 @@
-﻿using Bing.Swashbuckle.Internals;
+﻿using System;
+using Bing.Swashbuckle.Internals;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Swashbuckle.AspNetCore.Swagger;
@@ -15,6 +16,7 @@ namespace Bing.Swashbuckle
         /// </summary>
         /// <param name="services">服务集合</param>
         /// <param name="options">自定义Swagger选项</param>
+        [Obsolete]
         public static IServiceCollection AddSwaggerCustom(this IServiceCollection services,
             CustomSwaggerOptions options)
         {
@@ -29,10 +31,27 @@ namespace Bing.Swashbuckle
         }
 
         /// <summary>
+        /// 注册Swagger扩展
+        /// </summary>
+        /// <param name="services">服务集合</param>
+        /// <param name="setupAction">操作配置</param>
+        public static IServiceCollection AddSwaggerEx(this IServiceCollection services, Action<SwaggerExOptions> setupAction = null)
+        {
+            setupAction?.Invoke(BuildContext.Instance.ExOptions);
+            services.AddSwaggerGen(o =>
+            {
+                BuildContext.Instance.ExOptions.InitSwaggerGenOptions(o);
+                BuildContext.Instance.Build();
+            });
+            return services;
+        }
+
+        /// <summary>
         /// 注册缓存Swagger
         /// </summary>
         /// <param name="services">服务集合</param>
         /// <param name="options">自定义Swagger选项</param>
+        [Obsolete]
         public static IServiceCollection AddCachedSwaggerGen(this IServiceCollection services,
             CustomSwaggerOptions options)
         {

@@ -1,11 +1,11 @@
 ﻿using Bing.Swashbuckle.Internals;
 
-namespace Bing.Swashbuckle.Core
+namespace Bing.Swashbuckle.Core.Authorization
 {
     /// <summary>
-    /// 自定义Swagger授权
+    /// Swagger授权用户
     /// </summary>
-    public class CustomSwaggerAuthorization
+    public class SwaggerAuthorizationUser
     {
         /// <summary>
         /// 用户名
@@ -23,16 +23,16 @@ namespace Bing.Swashbuckle.Core
         public string Token => Encrypt.HmacSha256($"{UserName}{Password}", "Bing.Extensions.Swashbuckle");
 
         /// <summary>
-        /// 初始化一个<see cref="CustomSwaggerAuthorization"/>类型的实例
+        /// 初始化一个<see cref="SwaggerAuthorizationUser"/>类型的实例
         /// </summary>
-        public CustomSwaggerAuthorization() { }
+        public SwaggerAuthorizationUser() { }
 
         /// <summary>
-        /// 初始化一个<see cref="CustomSwaggerAuthorization"/>类型的实例
+        /// 初始化一个<see cref="SwaggerAuthorizationUser"/>类型的实例
         /// </summary>
         /// <param name="userName">用户名</param>
         /// <param name="password">密码</param>
-        public CustomSwaggerAuthorization(string userName, string password)
+        public SwaggerAuthorizationUser(string userName, string password)
         {
             UserName = userName;
             Password = password;

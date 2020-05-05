@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
+// ReSharper disable once CheckNamespace
 namespace Bing.Swashbuckle
 {
     /// <summary>

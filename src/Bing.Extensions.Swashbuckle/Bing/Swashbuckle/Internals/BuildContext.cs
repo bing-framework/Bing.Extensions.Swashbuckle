@@ -22,6 +22,11 @@ namespace Bing.Swashbuckle.Internals
         /// <summary>
         /// Swagger扩展选项配置
         /// </summary>
+        public SwaggerExOptions ExOptions { get; set; } = new SwaggerExOptions();
+
+        /// <summary>
+        /// Swagger扩展选项配置
+        /// </summary>
         public SwaggerExtensionOptions Options { get; set; } = new SwaggerExtensionOptions();
 
         /// <summary>
@@ -95,7 +100,7 @@ namespace Bing.Swashbuckle.Internals
                 lock (Lock)
                 {
                     Debug.WriteLine($"Build Swagger Document Key: {info.Key}");
-                    Options.SwaggerGenOptions.SwaggerGeneratorOptions.SwaggerDocs[info.Key] = info.Value;
+                    ExOptions.SwaggerGenOptions.SwaggerGeneratorOptions.SwaggerDocs[info.Key] = info.Value;
                 }
             }
         }
@@ -107,7 +112,7 @@ namespace Bing.Swashbuckle.Internals
         private void BuildSwaggerEndpoint(ApiGroupContext context)
         {
             foreach (var endpoint in context.GetEndpoints())
-                this.Options.SwaggerUiOptions.AddInfo(endpoint.Key, endpoint.Value);
+                ExOptions.SwaggerUiOptions.AddInfo(endpoint.Key, endpoint.Value);
         }
 
         /// <summary>
@@ -126,11 +131,11 @@ namespace Bing.Swashbuckle.Internals
         /// </summary>
         private void BuildDocInclusionPredicateByApiGroup()
         {
-            if(Options.EnableApiVersion)
+            if(ExOptions.EnableApiVersion)
                 return;
-            if(!Options.EnableApiGroup)
+            if(!ExOptions.EnableApiGroup())
                 return;
-            Options.SwaggerGenOptions.DocInclusionPredicate((docName, apiDescription) =>
+            ExOptions.SwaggerGenOptions.DocInclusionPredicate((docName, apiDescription) =>
             {
                 if (docName == "NoGroup")
                     return string.IsNullOrWhiteSpace(apiDescription.GroupName);
@@ -150,11 +155,11 @@ namespace Bing.Swashbuckle.Internals
         /// </summary>
         private void BuildDocInclusionPredicateByApiVersion()
         {
-            if (Options.EnableApiGroup)
+            if (ExOptions.EnableApiGroup())
                 return;
-            if (!Options.EnableApiVersion)
+            if (!ExOptions.EnableApiVersion)
                 return;
-            Options.SwaggerGenOptions.DocInclusionPredicate((docName, apiDescription) => docName == apiDescription.GroupName);
+            ExOptions.SwaggerGenOptions.DocInclusionPredicate((docName, apiDescription) => docName == apiDescription.GroupName);
         }
 
         /// <summary>
@@ -162,11 +167,11 @@ namespace Bing.Swashbuckle.Internals
         /// </summary>
         private void BuildDocInclusionPredicateByApiVersionWithGroup()
         {
-            if(!Options.EnableApiGroup)
+            if(!ExOptions.EnableApiGroup())
                 return;
-            if(!Options.EnableApiVersion)
+            if(!ExOptions.EnableApiVersion)
                 return;
-            Options.SwaggerGenOptions.DocInclusionPredicate((docName, apiDescription) =>
+            ExOptions.SwaggerGenOptions.DocInclusionPredicate((docName, apiDescription) =>
             {
                 // 无分组处理
                 if (docName.StartsWith("NoGroup"))

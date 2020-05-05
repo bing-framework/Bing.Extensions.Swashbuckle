@@ -48,16 +48,6 @@ namespace Bing.Swashbuckle.Internals
         public bool EnableAuthorization { get; set; }
 
         /// <summary>
-        /// 是否启用显示枚举描述
-        /// </summary>
-        public bool EnableEnumDescription { get; set; }
-
-        /// <summary>
-        /// Url 显示模式
-        /// </summary>
-        public UrlShowMode UrlMode { get; set; }
-
-        /// <summary>
         /// Api版本列表
         /// </summary>
         public List<ApiVersion> ApiVersions { get; set; } = new List<ApiVersion>();

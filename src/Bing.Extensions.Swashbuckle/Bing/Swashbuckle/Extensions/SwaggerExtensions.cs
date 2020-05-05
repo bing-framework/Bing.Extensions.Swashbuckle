@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Http;
 
+// ReSharper disable once CheckNamespace
 namespace Bing.Swashbuckle
 {
     /// <summary>
@@ -15,7 +16,7 @@ namespace Bing.Swashbuckle
         /// <param name="page">页面名称</param>
         public static void WriteSwaggerPage(this HttpResponse response, string page)
         {
-            var currentAssembly = typeof(CustomSwaggerOptions).GetTypeInfo().Assembly;
+            var currentAssembly = typeof(SwaggerExOptions).GetTypeInfo().Assembly;
             var stream = currentAssembly.GetManifestResourceStream($"{currentAssembly.GetName().Name}.Resources.{page}.html");
             if (stream == null)
                 return;
