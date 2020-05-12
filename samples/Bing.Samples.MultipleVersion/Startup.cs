@@ -134,9 +134,9 @@ namespace Bing.Samples.MultipleVersion
             {
                 o.UseSwaggerUIAction = config =>
                 {
-                    config.InjectJavascript("/swagger/resources/jquery");
-                    config.InjectJavascript("/swagger/resources/translator");
-                    config.InjectStylesheet("/swagger/resources/swagger-common");
+                    config.InjectJavascript("resources/jquery");
+                    config.InjectJavascript("resources/translator");
+                    config.InjectStylesheet("resources/swagger-common");
 
                     // 使用默认SwaggerUI
                     config.UseDefaultSwaggerUI();

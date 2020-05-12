@@ -173,10 +173,10 @@ namespace Bing.Samples.Api
                     //config.IndexStream = () =>
                     //    GetType().GetTypeInfo().Assembly.GetManifestResourceStream("Bing.Samples.Api.Swagger.index.html");
                     //config.SwaggerEndpoint("/swagger/v1/swagger.json", "Bing.Samples.Api v1");
-                    config.InjectJavascript("/swagger/resources/jquery");
-                    config.InjectJavascript("/swagger/resources/translator");
+                    config.InjectJavascript("resources/jquery");
+                    config.InjectJavascript("resources/translator");
                     //config.InjectJavascript("/swagger/resources/export");
-                    config.InjectStylesheet("/swagger/resources/swagger-common");
+                    config.InjectStylesheet("resources/swagger-common");
 
                     // 使用默认SwaggerUI
                     config.UseDefaultSwaggerUI();

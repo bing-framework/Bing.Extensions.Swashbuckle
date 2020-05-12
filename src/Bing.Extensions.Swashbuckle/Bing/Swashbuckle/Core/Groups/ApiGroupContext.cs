@@ -191,7 +191,7 @@ namespace Bing.Swashbuckle.Core.Groups
             {
                 foreach (var apiVersion in apiGroup.ApiVersions)
                 {
-                    dict[apiVersion.Title] = $"/swagger/{apiVersion.GetName()}/swagger.json";
+                    dict[apiVersion.Title] = $"{apiVersion.GetName()}/swagger.json";
                 }
             }
 
