@@ -21,6 +21,8 @@ Bing.Extensions.Swashbuckle是扩展Swashbuckle.AspNetCore一些常用操作，�
 - 支持显示枚举描述
 - 支持Swagger文档授权登录功能
 - 支持默认值设置
+- 支持控制器排序
+- 支持Token令牌存储
 
 
 ## 依赖类库

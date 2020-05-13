@@ -1,12 +1,13 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using System;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Bing.Swashbuckle.Filters.Documents
+namespace Bing.Swashbuckle.Filters.Parameters
 {
     /// <summary>
-    /// 枚举描述 文档过滤器。支持Url查询参数
+    /// 枚举描述 参数过滤器。支持Url查询参数
     /// </summary>
-    internal class EnumDescriptionsDocumentFilter : EnumHandleBase, IParameterFilter
+    internal class EnumDescriptionsParameterFilter : EnumHandleBase, IParameterFilter
     {
         /// <summary>
         /// 重写操作处理
@@ -16,10 +17,8 @@ namespace Bing.Swashbuckle.Filters.Documents
             var type = context.ParameterInfo?.ParameterType;
             if (type == null)
                 return;
-            if (type.IsEnum)
-            {
-                parameter.Description = $"{parameter.Description}\r\n{FormatDescription(type)}";
-            }
+            if (type.IsEnum) 
+                parameter.Description = $"{parameter.Description}{Environment.NewLine}{FormatDescription(type)}";
         }
     }
 }

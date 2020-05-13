@@ -81,6 +81,10 @@
         window.onload = function () {
             var configObject = JSON.parse('%(ConfigObject)');
             var oauthConfigObject = JSON.parse('%(OAuthConfigObject)');
+
+            console.log('configObject', configObject);
+            console.log('oauthConfigObject', oauthConfigObject);
+
             // Apply mandatory parameters
             configObject.dom_id = "#swagger-ui";
             configObject.presets = [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset];
@@ -98,9 +102,13 @@
             if (!configObject.hasOwnProperty("oauth2RedirectUrl"))
                 //configObject.oauth2RedirectUrl = window.location + "oauth2-redirect.html"; // use the built-in default
                 configObject.oauth2RedirectUrl = window.location.href.replace("index.html", "oauth2-redirect.html");
+            
+            // 初始化Token存储
+            initTokenStorage(configObject);
 
             // Build a system
-            const ui = SwaggerUIBundle(configObject);            
+            const ui = SwaggerUIBundle(configObject);
+            window.ui = ui;
 
             // Apply OAuth config
             ui.initOAuth(oauthConfigObject);
@@ -141,6 +149,48 @@
                 }
                 document.getElementsByClassName('topbar-wrapper')[0].appendChild(logOutEle)
             }
+        }
+
+        function initTokenStorage(configObject) {
+            if(!configObject.token_storage)
+                return;
+            configObject.onComplete= () => {
+                var result = (localStorage.getItem(configObject.token_storage.securityDefinition)) || (sessionStorage.getItem(configObject.token_storage.securityDefinition));
+                ui.preauthorizeApiKey(configObject.token_storage.securityDefinition, result);
+            };
+            configObject.requestInterceptor = (req) => {
+                req.headers["Authorization"] = (localStorage.getItem(configObject.token_storage.securityDefinition)) || (sessionStorage.getItem(configObject.token_storage.securityDefinition));
+                return req;
+            };
+            addAuthorizeListener(configObject);
+        }
+
+        function addAuthorizeListener(configObject) {
+            var authWrapper = document.querySelector(".scheme-container .auth-wrapper");
+            if(authWrapper === undefined || authWrapper === null){
+                setTimeout(function(){
+                    addAuthorizeListener(configObject);
+                }, 3000);
+                return;
+            }
+            console.log("初始化存储 Token 监听处理");
+            authWrapper.addEventListener("click", function(e){
+                if(e.type === "click" && e.srcElement.tagName === "BUTTON") {
+                    if(e.srcElement.innerText === "Authorize") {
+                        var result = document.querySelector(".auth-container .wrapper input").value;
+                        console.log(result);
+                        if(configObject.token_storage.cacheType === "Local")
+                            localStorage.setItem(configObject.token_storage.securityDefinition, result);
+                        else
+                            sessionStorage.setItem(configObject.token_storage.securityDefinition, result);
+                    } else if(e.srcElement.innerText === "Logout") {
+                        if(configObject.token_storage.cacheType === "Local")
+                            localStorage.removeItem(configObject.token_storage.securityDefinition);
+                        else
+                            sessionStorage.removeItem(configObject.token_storage.securityDefinition);
+                    }
+                }
+            }, false);
         }
     </script>
 </body>

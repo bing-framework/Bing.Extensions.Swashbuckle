@@ -18,7 +18,7 @@ namespace Bing.Swashbuckle
             var sb = new StringBuilder();
             var result = Enum.GetDescriptions(type);
             foreach (var item in result)
-                sb.AppendLine($"{item.Value} = {(string.IsNullOrEmpty(item.Description) ? item.Name : item.Description)}");
+                sb.Append($"{item.Value} = {(string.IsNullOrEmpty(item.Description) ? item.Name : item.Description)}{Environment.NewLine}");
             return sb.ToString();
         }
     }

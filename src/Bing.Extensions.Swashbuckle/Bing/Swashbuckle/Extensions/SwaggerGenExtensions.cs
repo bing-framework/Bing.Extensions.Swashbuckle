@@ -2,6 +2,7 @@
 using Bing.Swashbuckle.Core;
 using Bing.Swashbuckle.Filters.Documents;
 using Bing.Swashbuckle.Filters.Operations;
+using Bing.Swashbuckle.Filters.Parameters;
 using Bing.Swashbuckle.Filters.Schemas;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -15,17 +16,38 @@ namespace Bing.Swashbuckle
     /// </summary>
     public static class SwaggerGenExtensions
     {
+        #region ShowEnumDescription(显示枚举描述)
+
         /// <summary>
         /// 显示枚举描述
         /// </summary>
         /// <param name="options">Swagger生成选项</param>
         public static void ShowEnumDescription(this SwaggerGenOptions options)
         {
-            if (!options.ParameterFilterDescriptors.Exists(x => x.Type == typeof(EnumDescriptionsDocumentFilter)))
-                options.ParameterFilter<EnumDescriptionsDocumentFilter>();
+            if (!options.ParameterFilterDescriptors.Exists(x => x.Type == typeof(EnumDescriptionsParameterFilter)))
+                options.ParameterFilter<EnumDescriptionsParameterFilter>();
             if (!options.SchemaFilterDescriptors.Exists(x => x.Type == typeof(EnumDescriptionSchemaFilter)))
                 options.SchemaFilter<EnumDescriptionSchemaFilter>();
         }
+
+        #endregion
+
+        #region OrderByController(基于控制器进行排序)
+
+        /// <summary>
+        /// 基于控制器进行排序
+        /// </summary>
+        /// <param name="options">Swagger生成选项</param>
+        /// <param name="orderByDesc">是否降序排序</param>
+        public static void OrderByController(this SwaggerGenOptions options, bool orderByDesc = false)
+        {
+            if (!options.DocumentFilterDescriptors.Exists(x => x.Type == typeof(TagReOrderDocumentFilter)))
+                options.DocumentFilter<TagReOrderDocumentFilter>(orderByDesc);
+        }
+
+        #endregion
+
+
 
         /// <summary>
         /// 显示文件参数

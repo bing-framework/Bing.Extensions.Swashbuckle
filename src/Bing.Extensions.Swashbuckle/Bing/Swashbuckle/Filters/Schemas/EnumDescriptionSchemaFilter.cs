@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using System;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Bing.Swashbuckle.Filters.Schemas
@@ -14,9 +15,7 @@ namespace Bing.Swashbuckle.Filters.Schemas
         public void Apply(OpenApiSchema schema, SchemaFilterContext context)
         {
             if (context.Type.IsEnum)
-            {
-                schema.Description = $"{schema.Description}\r\n{FormatDescription(context.Type)}";
-            }
+                schema.Description = $"{schema.Description}{Environment.NewLine}{FormatDescription(context.Type)}";
         }
     }
 }

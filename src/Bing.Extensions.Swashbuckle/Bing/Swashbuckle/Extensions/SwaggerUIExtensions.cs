@@ -50,6 +50,25 @@ namespace Bing.Swashbuckle
 
         #endregion
 
+        #region UseTokenStorage(使用令牌存储)
+
+        /// <summary>
+        /// 使用令牌存储。解决刷新页面导致令牌丢失问题，前提必须使用 <see cref="UseCustomSwaggerIndex"/> 方法
+        /// </summary>
+        /// <param name="options">SwaggerUI选项</param>
+        /// <param name="securityDefinition">授权定义。对应于 AddSecurityDefinition 中的 name</param>
+        /// <param name="cacheType">缓存类型</param>
+        public static void UseTokenStorage(this SwaggerUIOptions options, string securityDefinition, WebCacheType cacheType = WebCacheType.Session)
+        {
+            options.ConfigObject.AdditionalItems["token_storage"] = new TokenStorageParameter
+            {
+                CacheType = cacheType,
+                SecurityDefinition = securityDefinition
+            };
+        }
+
+        #endregion
+
         /// <summary>
         /// 添加信息
         /// </summary>

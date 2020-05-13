@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using Bing.Swashbuckle;
+using Bing.Swashbuckle.Filters.Documents;
 using Bing.Swashbuckle.Filters.Schemas;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
@@ -88,9 +90,11 @@ namespace Bing.Samples.Api
 
                     //// 显示授权信息
                     //config.ShowAuthorizeInfo();
-
                     // 显示枚举描述
                     config.ShowEnumDescription();
+
+                    // 控制器排序
+                    config.OrderByController();
 
                     // 显示Url模式：首字母小写、首字母大写、全小写、全大写、默认
                     config.ShowUrlMode();
@@ -177,9 +181,10 @@ namespace Bing.Samples.Api
                     config.InjectJavascript("resources/translator");
                     //config.InjectJavascript("/swagger/resources/export");
                     config.InjectStylesheet("resources/swagger-common");
-
                     // 使用默认SwaggerUI
                     config.UseDefaultSwaggerUI();
+                    // 启用Token存储
+                    config.UseTokenStorage("oauth2");
                 };
             });
             app.UseMvc(routes =>
