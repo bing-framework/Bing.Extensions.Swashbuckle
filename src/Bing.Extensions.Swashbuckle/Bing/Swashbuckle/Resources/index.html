@@ -156,6 +156,8 @@
                 return;
             configObject.onComplete= () => {
                 var result = (localStorage.getItem(configObject.token_storage.securityDefinition)) || (sessionStorage.getItem(configObject.token_storage.securityDefinition));
+                if(result === undefined || result=== null || result === "")
+                    return;
                 ui.preauthorizeApiKey(configObject.token_storage.securityDefinition, result);
             };
             configObject.requestInterceptor = (req) => {
