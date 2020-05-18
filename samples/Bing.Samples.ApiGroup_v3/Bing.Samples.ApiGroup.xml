@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Bing.Samples.ApiGroup_v3</name>
+    </assembly>
+    <members>
+        <member name="T:Bing.Samples.ApiGroup.ApiGroupSample">
+            <summary>
+            Api分组例子
+            </summary>
+        </member>
+        <member name="F:Bing.Samples.ApiGroup.ApiGroupSample.Demo">
+            <summary>
+            案例
+            </summary>
+        </member>
+        <member name="F:Bing.Samples.ApiGroup.ApiGroupSample.Test">
+            <summary>
+            测试
+            </summary>
+        </member>
+        <member name="T:Bing.Samples.ApiGroup.Controllers.DemoController">
+            <summary>
+            案例 控制器
+            </summary>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Controllers.DemoController.Get">
+            <summary>
+            获取列表
+            </summary>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Controllers.DemoController.Get(System.Int32)">
+            <summary>
+            获取详情
+            </summary>
+            <param name="id">标识</param>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Controllers.DemoController.Post(System.String)">
+            <summary>
+            新增
+            </summary>
+            <param name="value">值</param>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Controllers.DemoController.Put(System.Int32,System.String)">
+            <summary>
+            修改
+            </summary>
+            <param name="id">标识</param>
+            <param name="value">值</param>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Controllers.DemoController.Delete(System.Int32)">
+            <summary>
+            删除
+            </summary>
+            <param name="id">标识</param>
+        </member>
+        <member name="T:Bing.Samples.ApiGroup.Controllers.TestController">
+            <summary>
+            测试 控制器
+            </summary>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Controllers.TestController.Get">
+            <summary>
+            获取列表
+            </summary>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Controllers.TestController.Get(System.Int32)">
+            <summary>
+            获取详情
+            </summary>
+            <param name="id">标识</param>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Controllers.TestController.Post(System.String)">
+            <summary>
+            新增
+            </summary>
+            <param name="value">值</param>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Controllers.TestController.Put(System.Int32,System.String)">
+            <summary>
+            修改
+            </summary>
+            <param name="id">标识</param>
+            <param name="value">值</param>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Controllers.TestController.Delete(System.Int32)">
+            <summary>
+            删除
+            </summary>
+            <param name="id">标识</param>
+        </member>
+        <member name="T:Bing.Samples.ApiGroup.Controllers.ValuesController">
+            <summary>
+            值 控制器
+            </summary>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Controllers.ValuesController.Get">
+            <summary>
+            获取列表
+            </summary>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Controllers.ValuesController.Get(System.Int32)">
+            <summary>
+            获取详情
+            </summary>
+            <param name="id">标识</param>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Controllers.ValuesController.Post(System.String)">
+            <summary>
+            新增
+            </summary>
+            <param name="value">值</param>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Controllers.ValuesController.Put(System.Int32,System.String)">
+            <summary>
+            修改
+            </summary>
+            <param name="id">标识</param>
+            <param name="value">值</param>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Controllers.ValuesController.Delete(System.Int32)">
+            <summary>
+            删除
+            </summary>
+            <param name="id">标识</param>
+        </member>
+        <member name="T:Bing.Samples.ApiGroup.Startup">
+            <summary>
+            启动配置
+            </summary>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            初始化一个<see cref="T:Bing.Samples.ApiGroup.Startup"/>类型的实例
+            </summary>
+            <param name="configuration">配置</param>
+        </member>
+        <member name="P:Bing.Samples.ApiGroup.Startup.Configuration">
+            <summary>
+            配置
+            </summary>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            配置服务
+            </summary>
+            <param name="services">服务集合</param>
+        </member>
+        <member name="M:Bing.Samples.ApiGroup.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            配置请求管道
+            </summary>
+        </member>
+    </members>
+</doc>

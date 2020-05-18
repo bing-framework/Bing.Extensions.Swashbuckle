@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Bing.Samples.NoApiGroup_v3</name>
+    </assembly>
+    <members>
+        <member name="T:Bing.Samples.NoApiGroup.Controllers.ValuesController">
+            <summary>
+            值 控制器
+            </summary>
+        </member>
+        <member name="M:Bing.Samples.NoApiGroup.Controllers.ValuesController.Get">
+            <summary>
+            获取列表
+            </summary>
+        </member>
+        <member name="M:Bing.Samples.NoApiGroup.Controllers.ValuesController.Get(System.Int32)">
+            <summary>
+            获取详情
+            </summary>
+            <param name="id">标识</param>
+        </member>
+        <member name="M:Bing.Samples.NoApiGroup.Controllers.ValuesController.Post(System.String)">
+            <summary>
+            新增
+            </summary>
+            <param name="value">值</param>
+        </member>
+        <member name="M:Bing.Samples.NoApiGroup.Controllers.ValuesController.Put(System.Int32,System.String)">
+            <summary>
+            修改
+            </summary>
+            <param name="id">标识</param>
+            <param name="value">值</param>
+        </member>
+        <member name="M:Bing.Samples.NoApiGroup.Controllers.ValuesController.Delete(System.Int32)">
+            <summary>
+            删除
+            </summary>
+            <param name="id">标识</param>
+        </member>
+        <member name="T:Bing.Samples.NoApiGroup.Startup">
+            <summary>
+            启动配置
+            </summary>
+        </member>
+        <member name="M:Bing.Samples.NoApiGroup.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            初始化一个<see cref="T:Bing.Samples.NoApiGroup.Startup"/>类型的实例
+            </summary>
+            <param name="configuration">配置</param>
+        </member>
+        <member name="P:Bing.Samples.NoApiGroup.Startup.Configuration">
+            <summary>
+            配置
+            </summary>
+        </member>
+        <member name="M:Bing.Samples.NoApiGroup.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            配置服务
+            </summary>
+            <param name="services">服务集合</param>
+        </member>
+    </members>
+</doc>

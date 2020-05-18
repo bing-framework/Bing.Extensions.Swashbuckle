@@ -95,7 +95,7 @@ namespace Bing.Samples.MultipleVersionWithGroup
                     config.EnableDefaultValue();
                 };
             });
-            //services.AddSwaggerCustom(CurrentSwaggerOptions);
+
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
@@ -144,7 +144,7 @@ namespace Bing.Samples.MultipleVersionWithGroup
                     config.UseDefaultSwaggerUI();
                 };
             });
-            //app.UseSwaggerCustom(CurrentSwaggerOptions);
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute("areaRoute", "{area:exists}/{controller}/{action=Index}/{id?}");
