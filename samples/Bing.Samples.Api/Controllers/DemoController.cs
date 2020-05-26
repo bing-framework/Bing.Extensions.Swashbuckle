@@ -54,6 +54,10 @@ namespace Bing.Samples.Api.Controllers
         /// 提交
         /// </summary>
         /// <param name="sample">查询例子</param>
+        [SwaggerRequestHeader("clientid", "客户端ID", Default = "666", Required = true)]
+        [SwaggerRequestHeader("channel", "渠道（小米、应用宝、百度等）", Default = "baidu", Required = true)]
+        [SwaggerRequestHeader("platform", "平台(ios或android)", Default = "ios", Required = true)]
+        [SwaggerRequestHeader("osversion", "安卓或苹果系统版本(例：8.0.1)", Default = "8.0.1", Required = true)]
         [HttpPost]
         public Result Post([FromBody] QuerySample sample)
         {
