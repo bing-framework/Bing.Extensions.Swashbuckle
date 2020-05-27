@@ -751,6 +751,12 @@
             <param name="options">Swagger生成选项</param>
             <param name="orderByDesc">是否降序排序</param>
         </member>
+        <member name="M:Bing.Swashbuckle.SwaggerGenExtensions.ShowActionCount(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions)">
+            <summary>
+            显示方法计数
+            </summary>
+            <param name="options">Swagger生成选项</param>
+        </member>
         <member name="M:Bing.Swashbuckle.SwaggerGenExtensions.ShowFileParameter(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions)">
             <summary>
             显示文件参数
@@ -851,6 +857,16 @@
             <param name="options">SwaggerUI选项</param>
             <param name="name">名称</param>
             <param name="url">地址</param>
+        </member>
+        <member name="T:Bing.Swashbuckle.Filters.Documents.AppendActionCountToTagSummaryDocumentFilter">
+            <summary>
+            控制器方法计数 文档过滤
+            </summary>
+        </member>
+        <member name="M:Bing.Swashbuckle.Filters.Documents.AppendActionCountToTagSummaryDocumentFilter.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+            重写操作处理
+            </summary>
         </member>
         <member name="T:Bing.Swashbuckle.Filters.Documents.FirstLowerUrlDocumentFilter">
             <summary>

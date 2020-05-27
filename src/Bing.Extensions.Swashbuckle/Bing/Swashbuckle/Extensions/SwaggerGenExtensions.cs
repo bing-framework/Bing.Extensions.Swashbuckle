@@ -47,6 +47,19 @@ namespace Bing.Swashbuckle
 
         #endregion
 
+        #region ShowActionCount(显示方法计数)
+
+        /// <summary>
+        /// 显示方法计数
+        /// </summary>
+        /// <param name="options">Swagger生成选项</param>
+        public static void ShowActionCount(this SwaggerGenOptions options)
+        {
+            if (!options.DocumentFilterDescriptors.Exists(x => x.Type == typeof(AppendActionCountToTagSummaryDocumentFilter)))
+                options.DocumentFilter<AppendActionCountToTagSummaryDocumentFilter>();
+        }
+
+        #endregion
 
 
         /// <summary>

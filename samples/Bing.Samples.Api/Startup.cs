@@ -114,8 +114,9 @@ namespace Bing.Samples.Api
                     // 启用默认值
                     config.EnableDefaultValue();
                     // 配置自定义操作标识
-                    config.CustomOperationIds(apiDesc =>
-                        apiDesc.TryGetMethodInfo(out var methodInfo) ? methodInfo.Name : null);
+                    config.CustomOperationIds(apiDesc => apiDesc.TryGetMethodInfo(out var methodInfo) ? methodInfo.Name : null);
+                    // 显示方法计数
+                    config.ShowActionCount();
                     config.MapType<IFormFile>(() => new OpenApiSchema() {Type = "file"});
                 };
             });

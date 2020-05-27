@@ -138,8 +138,10 @@
 
         function custom_translate(configObject) {
             window.swagger_config = configObject;
-            document.getElementsByTagName('span')[0].innerText = document.getElementsByTagName('span')[0].innerText.replace('swagger', '项目接口文档')
-            document.getElementsByTagName('span')[1].innerText = document.getElementsByTagName('span')[1].innerText.replace('Select a spec', '版本选择')
+            //document.getElementsByTagName('span')[0].innerText =
+            //    document.getElementsByTagName('span')[0].innerText.replace('swagger', '项目接口文档');
+            //document.getElementsByTagName('span')[1].innerText =
+            //    document.getElementsByTagName('span')[1].innerText.replace('Select a spec', '版本选择');
             if (configObject.customAuth) {
                 var logOutEle = document.createElement('button');
                 logOutEle.className = "btn ";
@@ -147,7 +149,7 @@
                 logOutEle.onclick = function () {
                     location.href = configObject.logoutUrl;
                 }
-                document.getElementsByClassName('topbar-wrapper')[0].appendChild(logOutEle)
+                document.getElementsByClassName('topbar-wrapper')[0].appendChild(logOutEle);
             }
         }
 
@@ -155,16 +157,24 @@
             if(!configObject.token_storage)
                 return;
             configObject.onComplete= () => {
-                var result = (localStorage.getItem(configObject.token_storage.securityDefinition)) || (sessionStorage.getItem(configObject.token_storage.securityDefinition));
+                var result = getTokenStorage(configObject);
                 if(result === undefined || result=== null || result === "")
                     return;
                 ui.preauthorizeApiKey(configObject.token_storage.securityDefinition, result);
             };
             configObject.requestInterceptor = (req) => {
-                req.headers["Authorization"] = (localStorage.getItem(configObject.token_storage.securityDefinition)) || (sessionStorage.getItem(configObject.token_storage.securityDefinition));
+                req.headers["Authorization"] = getTokenStorage(configObject);
                 return req;
             };
             addAuthorizeListener(configObject);
+        }
+
+        function getTokenStorage(configObject) {
+            const key = configObject.token_storage.securityDefinition;
+            if (configObject.token_storage.cacheType.toLowerCase() === "local")
+                return localStorage.getItem(key);
+            else
+                return sessionStorage.getItem(key);
         }
 
         function addAuthorizeListener(configObject) {
@@ -172,21 +182,23 @@
             if(authWrapper === undefined || authWrapper === null){
                 setTimeout(function(){
                     addAuthorizeListener(configObject);
-                }, 3000);
+                }, 1000);
                 return;
             }
             console.log("初始化存储 Token 监听处理");
             authWrapper.addEventListener("click", function(e){
-                if(e.type === "click" && e.srcElement.tagName === "BUTTON") {
-                    if(e.srcElement.innerText === "Authorize") {
-                        var result = document.querySelector(".auth-container .wrapper input").value;
-                        console.log(result);
-                        if(configObject.token_storage.cacheType === "Local")
+                if (e.type === "click" && e.srcElement.tagName === "BUTTON") {
+                    if (e.srcElement.innerText === "Authorize") {
+                        var el = document.querySelector(".auth-container .wrapper input");
+                        if (el === undefined || el === null)
+                            return;
+                        var result = el.value;
+                        if(configObject.token_storage.cacheType.toLowerCase() === "local")
                             localStorage.setItem(configObject.token_storage.securityDefinition, result);
                         else
                             sessionStorage.setItem(configObject.token_storage.securityDefinition, result);
                     } else if(e.srcElement.innerText === "Logout") {
-                        if(configObject.token_storage.cacheType === "Local")
+                        if(configObject.token_storage.cacheType.toLowerCase() === "local")
                             localStorage.removeItem(configObject.token_storage.securityDefinition);
                         else
                             sessionStorage.removeItem(configObject.token_storage.securityDefinition);

@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bing.Samples.Api.Controllers
 {
+    /// <summary>
+    /// 值
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
