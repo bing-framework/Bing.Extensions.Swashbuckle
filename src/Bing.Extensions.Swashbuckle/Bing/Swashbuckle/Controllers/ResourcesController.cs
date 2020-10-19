@@ -1,4 +1,5 @@
-﻿using Bing.Swashbuckle.Internals;
+﻿using System.Threading.Tasks;
+using Bing.Swashbuckle.Internals;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,50 +10,57 @@ namespace Bing.Swashbuckle.Controllers
     /// </summary>
     [AllowAnonymous]
     [Route("swagger/resources")]
-    public class ResourcesController: Controller
+    public class ResourcesController : Controller
     {
         /// <summary>
-        /// 获取翻译器资源
+        /// 获取资源。通过 /swagger/resources?name=
         /// </summary>
-        /// <returns></returns>
-        [HttpGet("translator")]
+        /// <param name="name">资源文件名</param>
+        [HttpGet]
         [ApiExplorerSettings(IgnoreApi = true)]
-        public JavaScriptResult Translator()
+        public async Task<ContentResult> GetAsync([FromQuery] string name)
         {
-            return new JavaScriptResult(Common.LoadContent("translator.js"));
+            var result = new ContentResult();
+            var names = name.Split('.');
+            if (names.Length < 2)
+                return result;
+            var suffix = names[names.Length - 1];
+            result.Content = await Common.LoadContentAsync(name);
+            result.ContentType = GetContentType(suffix);
+            return result;
         }
 
         /// <summary>
-        /// 获取jquery
+        /// 获取内容类型
         /// </summary>
-        /// <returns></returns>
-        [HttpGet("jquery")]
-        [ApiExplorerSettings(IgnoreApi = true)]
-        public JavaScriptResult JQuery()
+        /// <param name="suffix">后缀</param>
+        private static string GetContentType(string suffix)
         {
-            return new JavaScriptResult(Common.LoadContent("jquery.min.js"));
+            switch (suffix.ToLower())
+            {
+                case "css":
+                    return "text/css";
+                case "js":
+                    return "application/javascript";
+                default:
+                    return "text/plain;";
+            }
         }
 
         /// <summary>
-        /// 获取导出资源
+        /// 获取语言资源文件
         /// </summary>
-        /// <returns></returns>
-        [HttpGet("export")]
+        /// <param name="name">语言名称</param>
+        [HttpGet("getLanguage")]
         [ApiExplorerSettings(IgnoreApi = true)]
-        public JavaScriptResult Export()
+        public async Task<ContentResult> GetLanguageAsync([FromQuery] string name)
         {
-            return new JavaScriptResult(Common.LoadContent("export.js"));
-        }
-
-        /// <summary>
-        /// 获取导出资源
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("swagger-common")]
-        [ApiExplorerSettings(IgnoreApi = true)]
-        public CssResult SwaggerCommon()
-        {
-            return new CssResult(Common.LoadContent("swagger-common.css"));
+            var result = new ContentResult
+            {
+                Content = await Common.GetLanguageAsync(name), 
+                ContentType = GetContentType("js")
+            };
+            return result;
         }
     }
 }

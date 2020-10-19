@@ -69,6 +69,37 @@ namespace Bing.Swashbuckle
 
         #endregion
 
+        #region UseInternalResources(使用内部资源)
+
+        /// <summary>
+        /// 使用内部资源。
+        /// </summary>
+        /// <param name="options">SwaggerUI选项</param>
+        public static void UseInternalResources(this SwaggerUIOptions options)
+        {
+            options.InjectJavascript("resources?name=jquery-3.3.1.min.js");
+            options.InjectJavascript("resources?name=jquery.initialize.min.js");
+            //options.InjectJavascript("/swagger/resources?name=export.js");
+            options.InjectStylesheet("resources?name=swagger-common.css");
+        }
+
+        #endregion
+
+        #region UseTranslate(使用翻译)
+
+        /// <summary>
+        /// 使用翻译。
+        /// </summary>
+        /// <param name="options">SwaggerUI选项</param>
+        /// <param name="language">语言</param>
+        public static void UseTranslate(this SwaggerUIOptions options, string language="zh-cn")
+        {
+            options.InjectJavascript($"resources/getLanguage?name={language}");
+            options.InjectJavascript("resources?name=translate.js");
+        }
+
+        #endregion
+
         /// <summary>
         /// 添加信息
         /// </summary>

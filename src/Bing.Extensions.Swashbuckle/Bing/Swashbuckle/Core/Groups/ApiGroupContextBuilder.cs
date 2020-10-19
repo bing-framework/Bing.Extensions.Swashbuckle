@@ -21,7 +21,7 @@ namespace Bing.Swashbuckle.Core.Groups
             BuildGroup(context, buildContext);
             BuildCustomVersion(context, buildContext);
             BuildNoGroup(context, buildContext);
-            BuildApiVersion(context,buildContext);
+            BuildApiVersion(context, buildContext);
             return context;
         }
 
@@ -89,7 +89,7 @@ namespace Bing.Swashbuckle.Core.Groups
             {
                 if (buildContext.ExOptions.EnableApiGroup())
                 {
-                    context.AddApiVersion(description.GroupName,description.ApiVersion.ToString());
+                    context.AddApiVersion(description.GroupName, description.ApiVersion.ToString());
                     continue;
                 }
                 context.AddApiGroup(description.GroupName, description.GroupName, string.Empty, description.GroupName,

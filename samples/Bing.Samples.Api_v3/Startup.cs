@@ -157,10 +157,7 @@ namespace Bing.Samples.Api
                     //config.IndexStream = () =>
                     //    GetType().GetTypeInfo().Assembly.GetManifestResourceStream("Bing.Samples.Api.Swagger.index.html");
                     //config.SwaggerEndpoint("/swagger/v1/swagger.json", "Bing.Samples.Api v1");
-                    config.InjectJavascript("resources/jquery");
-                    config.InjectJavascript("resources/translator");
-                    //config.InjectJavascript("/swagger/resources/export");
-                    config.InjectStylesheet("resources/swagger-common");
+                    config.UseInternalResources();
                     // 使用默认SwaggerUI
                     config.UseDefaultSwaggerUI();
                     // 启用Token存储

@@ -185,29 +185,23 @@
             资源 控制器
             </summary>
         </member>
-        <member name="M:Bing.Swashbuckle.Controllers.ResourcesController.Translator">
+        <member name="M:Bing.Swashbuckle.Controllers.ResourcesController.GetAsync(System.String)">
             <summary>
-            获取翻译器资源
+            获取资源。通过 /swagger/resources?name=
             </summary>
-            <returns></returns>
+            <param name="name">资源文件名</param>
         </member>
-        <member name="M:Bing.Swashbuckle.Controllers.ResourcesController.JQuery">
+        <member name="M:Bing.Swashbuckle.Controllers.ResourcesController.GetContentType(System.String)">
             <summary>
-            获取jquery
+            获取内容类型
             </summary>
-            <returns></returns>
+            <param name="suffix">后缀</param>
         </member>
-        <member name="M:Bing.Swashbuckle.Controllers.ResourcesController.Export">
+        <member name="M:Bing.Swashbuckle.Controllers.ResourcesController.GetLanguageAsync(System.String)">
             <summary>
-            获取导出资源
+            获取语言资源文件
             </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Bing.Swashbuckle.Controllers.ResourcesController.SwaggerCommon">
-            <summary>
-            获取导出资源
-            </summary>
-            <returns></returns>
+            <param name="name">语言名称</param>
         </member>
         <member name="T:Bing.Swashbuckle.Controllers.SwaggerController">
             <summary>
@@ -554,6 +548,12 @@
             <param name="services">服务集合</param>
             <param name="setupAction">操作配置</param>
         </member>
+        <member name="M:Bing.Swashbuckle.Extensions.AddSwaggerCaching(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加Swagger文档缓存。必须在 AddSwaggerGen() 方法之后使用。
+            </summary>
+            <param name="services">服务集合</param>
+        </member>
         <member name="T:Bing.Swashbuckle.ApiDescriptionExtensions">
             <summary>
             Api描述器(<see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiDescription"/>) 扩展
@@ -841,6 +841,19 @@
             <param name="options">SwaggerUI选项</param>
             <param name="securityDefinition">授权定义。对应于 AddSecurityDefinition 中的 name</param>
             <param name="cacheType">缓存类型</param>
+        </member>
+        <member name="M:Bing.Swashbuckle.SwaggerUIExtensions.UseInternalResources(Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions)">
+            <summary>
+            使用内部资源。
+            </summary>
+            <param name="options">SwaggerUI选项</param>
+        </member>
+        <member name="M:Bing.Swashbuckle.SwaggerUIExtensions.UseTranslate(Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions,System.String)">
+            <summary>
+            使用翻译。
+            </summary>
+            <param name="options">SwaggerUI选项</param>
+            <param name="language">语言</param>
         </member>
         <member name="M:Bing.Swashbuckle.SwaggerUIExtensions.AddInfo(Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions,System.String,System.String)">
             <summary>
@@ -1289,25 +1302,30 @@
             </summary>
             <param name="actionDescriptor">操作描述器</param>
         </member>
-        <member name="T:Bing.Swashbuckle.Internals.CacheSwaggerProvider">
+        <member name="T:Bing.Swashbuckle.Internals.CachingSwaggerProvider">
             <summary>
-            Swagger缓存文档提供程序
+            Swagger缓存提供程序
             </summary>
         </member>
-        <member name="F:Bing.Swashbuckle.Internals.CacheSwaggerProvider.Cache">
+        <member name="F:Bing.Swashbuckle.Internals.CachingSwaggerProvider.Cache">
             <summary>
             缓存字典
             </summary>
         </member>
-        <member name="M:Bing.Swashbuckle.Internals.CacheSwaggerProvider.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider,Swashbuckle.AspNetCore.SwaggerGen.ISchemaGenerator,Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorOptions)">
+        <member name="F:Bing.Swashbuckle.Internals.CachingSwaggerProvider._swaggerGenerator">
             <summary>
-            初始化一个<see cref="T:Bing.Swashbuckle.Internals.CacheSwaggerProvider"/>类型的实例
+            Swagger文档生成器
             </summary>
-            <param name="apiDescriptionsProvider">Api描述提供程序</param>
-            <param name="schemaGenerator">架构生成器</param>
-            <param name="options">Swagger生成选项配置</param>
         </member>
-        <member name="M:Bing.Swashbuckle.Internals.CacheSwaggerProvider.GetSwagger(System.String,System.String,System.String)">
+        <member name="M:Bing.Swashbuckle.Internals.CachingSwaggerProvider.#ctor(Microsoft.Extensions.Options.IOptions{Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorOptions},Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider,Swashbuckle.AspNetCore.SwaggerGen.ISchemaGenerator)">
+            <summary>
+            初始化一个<see cref="T:Bing.Swashbuckle.Internals.CachingSwaggerProvider"/>类型的实例
+            </summary>
+            <param name="optionsAccessor">Swagger生成器选项配置</param>
+            <param name="apiDescriptionGroupCollectionProvider">Api描述提供程序</param>
+            <param name="schemaGenerator">架构生成器</param>
+        </member>
+        <member name="M:Bing.Swashbuckle.Internals.CachingSwaggerProvider.GetSwagger(System.String,System.String,System.String)">
             <summary>
             获取Swagger文档
             </summary>
@@ -1326,6 +1344,18 @@
             </summary>
             <param name="resourceFile">资源文件</param>
             <returns></returns>
+        </member>
+        <member name="M:Bing.Swashbuckle.Internals.Common.LoadContentAsync(System.String)">
+            <summary>
+            加载内容
+            </summary>
+            <param name="resourceFile">资源文件</param>
+        </member>
+        <member name="M:Bing.Swashbuckle.Internals.Common.GetLanguageAsync(System.String)">
+            <summary>
+            获取语言资源文件
+            </summary>
+            <param name="language">语言</param>
         </member>
         <member name="M:Bing.Swashbuckle.Internals.Common.GetType``1">
             <summary>

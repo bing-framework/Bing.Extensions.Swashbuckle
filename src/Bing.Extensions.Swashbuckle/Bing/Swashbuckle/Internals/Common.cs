@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Bing.Swashbuckle.Internals
 {
@@ -14,18 +15,26 @@ namespace Bing.Swashbuckle.Internals
         /// 加载内容
         /// </summary>
         /// <param name="resourceFile">资源文件</param>
-        /// <returns></returns>
-        public static string LoadContent(string resourceFile)
+        public static async Task<string> LoadContentAsync(string resourceFile)
         {
-            using (var stream = typeof(Common).GetTypeInfo().Assembly.GetManifestResourceStream($"Bing.Swashbuckle.Resources.{resourceFile}"))
-            {
-                if (stream == null)
-                    return string.Empty;
-                using (var sr = new StreamReader(stream, Encoding.UTF8))
-                {
-                    return sr.ReadToEnd();
-                }
-            }
+            using var stream = typeof(Common).GetTypeInfo().Assembly.GetManifestResourceStream($"Bing.Swashbuckle.Resources.{resourceFile}");
+            if (stream == null)
+                return string.Empty;
+            using var sr = new StreamReader(stream, Encoding.UTF8);
+            return await sr.ReadToEndAsync();
+        }
+
+        /// <summary>
+        /// 获取语言资源文件
+        /// </summary>
+        /// <param name="language">语言</param>
+        public static async Task<string> GetLanguageAsync(string language)
+        {
+            using var stream = typeof(Common).GetTypeInfo().Assembly.GetManifestResourceStream($"Bing.Swashbuckle.Resources.lang.{language}.js");
+            if (stream == null)
+                return string.Empty;
+            using var sr = new StreamReader(stream, Encoding.UTF8);
+            return await sr.ReadToEndAsync();
         }
 
         /// <summary>

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bing.Swashbuckle
+﻿namespace Bing.Swashbuckle
 {
     /// <summary>
     /// Api版本

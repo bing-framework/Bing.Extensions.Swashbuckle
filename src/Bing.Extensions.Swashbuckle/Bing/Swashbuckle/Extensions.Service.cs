@@ -22,7 +22,7 @@ namespace Bing.Swashbuckle
             if (BuildContext.Instance.ExOptions.EnableCached)
             {
                 services.AddSwaggerGen();
-                services.Replace(ServiceDescriptor.Transient<ISwaggerProvider, CacheSwaggerProvider>());
+                services.AddSwaggerCaching();
                 services.ConfigureSwaggerGen(o =>
                 {
                     BuildContext.Instance.ExOptions.InitSwaggerGenOptions(o);
@@ -37,5 +37,11 @@ namespace Bing.Swashbuckle
             });
             return services;
         }
+
+        /// <summary>
+        /// 添加Swagger文档缓存。必须在 AddSwaggerGen() 方法之后使用。
+        /// </summary>
+        /// <param name="services">服务集合</param>
+        public static IServiceCollection AddSwaggerCaching(this IServiceCollection services) => services.Replace(ServiceDescriptor.Transient<ISwaggerProvider, CachingSwaggerProvider>());
     }
 }
