@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Bing.Samples.Api.V1.Models
@@ -23,5 +24,26 @@ namespace Bing.Samples.Api.V1.Models
         /// </summary>
         [Required]
         public string Customer { get; set; }
+
+        /// <summary>
+        /// 订单明细
+        /// </summary>
+        public List<OrderItem> Items { get; set; } = new List<OrderItem>();
+    }
+
+    /// <summary>
+    /// 订单项
+    /// </summary>
+    public class OrderItem
+    {
+        /// <summary>
+        /// 产品标识
+        /// </summary>
+        public int ProductId { get; set; }
+
+        /// <summary>
+        /// 数量
+        /// </summary>
+        public int Qty { get; set; }
     }
 }
