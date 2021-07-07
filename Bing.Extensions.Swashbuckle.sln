@@ -30,15 +30,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "netcore2.x", "netcore2.x", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "netcore3.x", "netcore3.x", "{40F52FCD-9F02-4A62-B267-20F7A7DAE5ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bing.Samples.NoApiGroup_v3", "samples\Bing.Samples.NoApiGroup_v3\Bing.Samples.NoApiGroup_v3.csproj", "{38E69DE5-D2E8-46EF-B12E-FDE41DDB1D3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bing.Samples.NoApiGroup_v3", "samples\Bing.Samples.NoApiGroup_v3\Bing.Samples.NoApiGroup_v3.csproj", "{38E69DE5-D2E8-46EF-B12E-FDE41DDB1D3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bing.Samples.ApiGroup_v3", "samples\Bing.Samples.ApiGroup_v3\Bing.Samples.ApiGroup_v3.csproj", "{ACEF6446-9825-4513-BE36-4790ACADA73D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bing.Samples.ApiGroup_v3", "samples\Bing.Samples.ApiGroup_v3\Bing.Samples.ApiGroup_v3.csproj", "{ACEF6446-9825-4513-BE36-4790ACADA73D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bing.Samples.MultipleVersion_v3", "samples\Bing.Samples.MultipleVersion_v3\Bing.Samples.MultipleVersion_v3.csproj", "{DD7184E0-4B5A-450D-926F-D1662CD8F89A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bing.Samples.MultipleVersion_v3", "samples\Bing.Samples.MultipleVersion_v3\Bing.Samples.MultipleVersion_v3.csproj", "{DD7184E0-4B5A-450D-926F-D1662CD8F89A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bing.Samples.MultipleVersionWithGroup_v3", "samples\Bing.Samples.MultipleVersionWithGroup_v3\Bing.Samples.MultipleVersionWithGroup_v3.csproj", "{88D415D4-93C5-4C5C-B4B4-FA8CE0578ED8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bing.Samples.MultipleVersionWithGroup_v3", "samples\Bing.Samples.MultipleVersionWithGroup_v3\Bing.Samples.MultipleVersionWithGroup_v3.csproj", "{88D415D4-93C5-4C5C-B4B4-FA8CE0578ED8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bing.Samples.Api_v3", "samples\Bing.Samples.Api_v3\Bing.Samples.Api_v3.csproj", "{0D1E224A-3C50-40D3-827D-2BBAC909BC8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bing.Samples.Api_v3", "samples\Bing.Samples.Api_v3\Bing.Samples.Api_v3.csproj", "{0D1E224A-3C50-40D3-827D-2BBAC909BC8C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net5", "net5", "{1BFBA44E-A1C3-4A02-A474-7A0C756AD424}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bing.Samples.Api_v5", "samples\Bing.Samples.Api_v5\Bing.Samples.Api_v5.csproj", "{F84C8296-023C-41C8-A10E-44C141EF5628}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,6 +94,10 @@ Global
 		{0D1E224A-3C50-40D3-827D-2BBAC909BC8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D1E224A-3C50-40D3-827D-2BBAC909BC8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D1E224A-3C50-40D3-827D-2BBAC909BC8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F84C8296-023C-41C8-A10E-44C141EF5628}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F84C8296-023C-41C8-A10E-44C141EF5628}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F84C8296-023C-41C8-A10E-44C141EF5628}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F84C8296-023C-41C8-A10E-44C141EF5628}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,6 +116,8 @@ Global
 		{DD7184E0-4B5A-450D-926F-D1662CD8F89A} = {40F52FCD-9F02-4A62-B267-20F7A7DAE5ED}
 		{88D415D4-93C5-4C5C-B4B4-FA8CE0578ED8} = {40F52FCD-9F02-4A62-B267-20F7A7DAE5ED}
 		{0D1E224A-3C50-40D3-827D-2BBAC909BC8C} = {40F52FCD-9F02-4A62-B267-20F7A7DAE5ED}
+		{1BFBA44E-A1C3-4A02-A474-7A0C756AD424} = {FB32239E-3E8D-4345-B0FA-E0041E2F9A29}
+		{F84C8296-023C-41C8-A10E-44C141EF5628} = {1BFBA44E-A1C3-4A02-A474-7A0C756AD424}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BD76A559-CBB4-4242-AF46-12A788F3EC89}
