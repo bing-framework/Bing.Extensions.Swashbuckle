@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace>Bing.Samples.Api</RootNamespace>
+		<AssemblyName>Bing.Samples.Api</AssemblyName>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<!--保证引用顺序方可正确生成XML文件-->
+	<Import Project="../common.samples.props"/>
+	
+	<ItemGroup>
+		<None Remove="Swagger\index.html" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Swagger\index.html" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<Folder Include="Models\Responses\" />
+	</ItemGroup>
+
+</Project>

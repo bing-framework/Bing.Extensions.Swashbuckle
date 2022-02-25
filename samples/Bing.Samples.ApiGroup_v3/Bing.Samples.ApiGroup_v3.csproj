@@ -1,21 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<RootNamespace>Bing.Samples.ApiGroup</RootNamespace>
+		<AssemblyName>Bing.Samples.ApiGroup</AssemblyName>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Bing.Samples.ApiGroup</RootNamespace>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netcoreapp3.1\Bing.Samples.ApiGroup.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Bing.Extensions.Swashbuckle\Bing.Extensions.Swashbuckle.csproj" />
-  </ItemGroup>
-
-
+	<!--保证引用顺序方可正确生成XML文件-->
+	<Import Project="../common.samples.props"/>
+	
 </Project>

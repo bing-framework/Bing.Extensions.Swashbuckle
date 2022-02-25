@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Bing.Samples.Common;
 using Bing.Samples.MultipleVersionWithGroup.V3.Models;
 using Bing.Swashbuckle.Attributes;
 using Microsoft.AspNetCore.Mvc;

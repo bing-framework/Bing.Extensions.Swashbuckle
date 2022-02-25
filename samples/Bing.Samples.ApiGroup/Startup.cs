@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
+using Bing.Samples.Common;
 using Bing.Swashbuckle;
-using Bing.Swashbuckle.Filters.Schemas;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.PlatformAbstractions;
-using Microsoft.OpenApi.Any;
-using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 
 namespace Bing.Samples.ApiGroup
@@ -42,59 +37,18 @@ namespace Bing.Samples.ApiGroup
         {
             // 配置跨域
             services.AddCors();
+            #region Swagger相关操作
+
             services.AddSwaggerEx(o =>
             {
-                o.ProjectName = "Bing.Sample.ApiGroup 在线文档调试";
-                o.EnableCustomIndex = true;
-                o.RoutePrefix = "swagger";
-                o.ApiGroupType = typeof(ApiGroupSample);
-                o.AddSwaggerGenAction = config =>
-                {
-                    var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                    var xmlPath = Path.Combine(basePath, "Bing.Samples.ApiGroup.xml");
-                    config.IncludeXmlComments(xmlPath, true);
-
-                    config.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
-                    {
-                        Type = SecuritySchemeType.ApiKey,
-                        Description = "Token令牌",
-                        Name = "Authorization",
-                        In = ParameterLocation.Header,
-                    });
-
-                    // 启用请求头过滤器。显示Swagger自定义请求头
-                    config.EnableRequestHeader();
-
-                    // 启用响应由过滤器。显示Swagger自定义响应头
-                    config.EnableResponseHeader();
-
-                    // 显示文件参数
-                    config.ShowFileParameter();
-
-                    // 显示枚举描述
-                    config.ShowEnumDescription();
-
-                    // 显示Url模式：首字母小写、首字母大写、全小写、全大写、默认
-                    config.ShowUrlMode();
-
-                    // 隐藏属性
-                    config.SchemaFilter<IgnorePropertySchemaFilter>();
-
-                    // 添加通用参数
-                    config.AddCommonParameter(new List<OpenApiParameter>()
-                    {
-                        new OpenApiParameter()
-                        {
-                            Name = "Test",
-                            In = ParameterLocation.Header,
-                            Schema = new OpenApiSchema() {Type = "string", Default = new OpenApiString("")}
-                        }
-                    });
-
-                    // 启用默认值
-                    config.EnableDefaultValue();
-                };
+                StartupConfig.ConfigureServicesByApiGroup(o);
             });
+
+            // 启用 JSON.NET
+            services.AddSwaggerGenNewtonsoftSupport();
+
+            #endregion
+
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
@@ -121,18 +75,15 @@ namespace Bing.Samples.ApiGroup
                     .AllowAnyMethod()
                     .AllowCredentials();
             });
+            #region Swagger相关操作
+
             app.UseSwaggerEx(o =>
             {
-                o.UseSwaggerUIAction = config =>
-                {
-                    config.InjectJavascript("resources/jquery");
-                    config.InjectJavascript("resources/translator");
-                    config.InjectStylesheet("resources/swagger-common");
-
-                    // 使用默认SwaggerUI
-                    config.UseDefaultSwaggerUI();
-                };
+                StartupConfig.ConfigureByApiGroup(o);
             });
+
+            #endregion
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute("areaRoute", "{area:exists}/{controller}/{action=Index}/{id?}");
