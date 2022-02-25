@@ -50,7 +50,7 @@ namespace Bing.Samples.ApiGroup
                 o.ApiGroupType = typeof(ApiGroupSample);
                 o.AddSwaggerGenAction = config =>
                 {
-                    var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                    var basePath = AppContext.BaseDirectory;
                     var xmlPath = Path.Combine(basePath, "Bing.Samples.ApiGroup.xml");
                     config.IncludeXmlComments(xmlPath, true);
 

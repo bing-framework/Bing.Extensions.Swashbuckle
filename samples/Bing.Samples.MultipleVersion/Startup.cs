@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Bing.Swashbuckle;
 using Bing.Swashbuckle.Filters.Schemas;
@@ -49,7 +50,7 @@ namespace Bing.Samples.MultipleVersion
                 o.EnableApiVersion = true;
                 o.AddSwaggerGenAction = config =>
                 {
-                    var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                    var basePath = AppContext.BaseDirectory;
                     var xmlPath = Path.Combine(basePath, "Bing.Samples.MultipleVersion.xml");
                     config.IncludeXmlComments(xmlPath, true);
 

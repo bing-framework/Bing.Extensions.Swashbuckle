@@ -20,16 +20,18 @@ namespace Bing.Swashbuckle
         {
             setupAction?.Invoke(BuildContext.Instance.ExOptions);
             if (BuildContext.Instance.ExOptions.EnableCached)
-            {
-                services.AddSwaggerGen();
-                services.AddSwaggerCaching();
-                services.ConfigureSwaggerGen(o =>
-                {
-                    BuildContext.Instance.ExOptions.InitSwaggerGenOptions(o);
-                    BuildContext.Instance.Build();
-                });
-                return services;
-            }
+                services.TryAddTransient<ISwaggerProvider, CachingSwaggerProvider>();
+            //if (BuildContext.Instance.ExOptions.EnableCached)
+            //{
+            //    services.AddSwaggerGen();
+            //    services.AddSwaggerCaching();
+            //    services.ConfigureSwaggerGen(o =>
+            //    {
+            //        BuildContext.Instance.ExOptions.InitSwaggerGenOptions(o);
+            //        BuildContext.Instance.Build();
+            //    });
+            //    return services;
+            //}
             services.AddSwaggerGen(o =>
             {
                 BuildContext.Instance.ExOptions.InitSwaggerGenOptions(o);

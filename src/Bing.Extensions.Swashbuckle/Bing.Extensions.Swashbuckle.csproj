@@ -1,68 +1,78 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="../../build/version.props"></Import>
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
-    <Description>Bing.Extensions.Swashbuckle是扩展Swashbuckle.AspNetCore一些常用操作，便于使用以及过滤。</Description>
-    <RootNamespace />
-    <OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
+	<Import Project="../../build/version.props"></Import>
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;net5.0;netcoreapp3.1;netstandard2.0</TargetFrameworks>
+		<Description>Bing.Extensions.Swashbuckle是扩展Swashbuckle.AspNetCore一些常用操作，便于使用以及过滤。</Description>
+		<RootNamespace />
+		<OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <OutputPath>$(MSBuildThisFileDirectory)/../../output/$(Configuration)/</OutputPath>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputPath>$(MSBuildThisFileDirectory)/../../output/$(Configuration)/</OutputPath>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>$(AssemblyName).xml</DocumentationFile>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DocumentationFile>$(AssemblyName).xml</DocumentationFile>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>$(AssemblyName).xml</DocumentationFile>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile>$(AssemblyName).xml</DocumentationFile>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Attributes\**" />
-    <EmbeddedResource Remove="Attributes\**" />
-    <None Remove="Attributes\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="Attributes\**" />
+		<EmbeddedResource Remove="Attributes\**" />
+		<None Remove="Attributes\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Bing\Swashbuckle\Resources\jquery.initialize.min.js" />
-    <None Remove="Bing\Swashbuckle\Resources\lang\zh-cn.js" />
-    <None Remove="Bing\Swashbuckle\Resources\translate.js" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Bing\Swashbuckle\Resources\jquery.initialize.min.js" />
+		<None Remove="Bing\Swashbuckle\Resources\lang\zh-cn.js" />
+		<None Remove="Bing\Swashbuckle\Resources\translate.js" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="Bing\Swashbuckle\Resources\jquery.initialize.min.js" />
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Bing\Swashbuckle\Resources\jquery.initialize.min.js" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="Bing\Swashbuckle\Resources\export.js" />
-    <EmbeddedResource Include="Bing\Swashbuckle\Resources\index.html" />
-    <EmbeddedResource Include="Bing\Swashbuckle\Resources\jquery-3.3.1.min.js" />
-    <EmbeddedResource Include="Bing\Swashbuckle\Resources\lang\zh-cn.js" />
-    <EmbeddedResource Include="Bing\Swashbuckle\Resources\login.html" />
-    <EmbeddedResource Include="Bing\Swashbuckle\Resources\swagger-common.css" />
-    <EmbeddedResource Include="Bing\Swashbuckle\Resources\translate.js" />
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Bing\Swashbuckle\Resources\export.js" />
+		<EmbeddedResource Include="Bing\Swashbuckle\Resources\index.html" />
+		<EmbeddedResource Include="Bing\Swashbuckle\Resources\jquery-3.3.1.min.js" />
+		<EmbeddedResource Include="Bing\Swashbuckle\Resources\lang\zh-cn.js" />
+		<EmbeddedResource Include="Bing\Swashbuckle\Resources\login.html" />
+		<EmbeddedResource Include="Bing\Swashbuckle\Resources\swagger-common.css" />
+		<EmbeddedResource Include="Bing\Swashbuckle\Resources\translate.js" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+	</ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.1.0" />
-  </ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+		<PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.1.0" />
+	</ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.1.1" />
-  </ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.2.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Bing\Swashbuckle\Filters\RequestBody\" />
-  </ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Bing\Swashbuckle\Filters\RequestBody\" />
+	</ItemGroup>
 
 </Project>

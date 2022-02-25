@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29911.84
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00-document", "00-document", "{B40C34AE-0520-4EAE-97C8-CE45A0F1E1F8}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,6 +13,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-src", "01-src", "{B2B65EE3-5CB3-48AC-B316-33E4E7AAF942}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-samples", "02-samples", "{FB32239E-3E8D-4345-B0FA-E0041E2F9A29}"
+	ProjectSection(SolutionItems) = preProject
+		samples\common.samples.props = samples\common.samples.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bing.Extensions.Swashbuckle", "src\Bing.Extensions.Swashbuckle\Bing.Extensions.Swashbuckle.csproj", "{5C58B759-7E92-43B3-82DD-70B4198C1F08}"
 EndProject
@@ -42,7 +45,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bing.Samples.Api_v3", "samp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net5", "net5", "{1BFBA44E-A1C3-4A02-A474-7A0C756AD424}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bing.Samples.Api_v5", "samples\Bing.Samples.Api_v5\Bing.Samples.Api_v5.csproj", "{F84C8296-023C-41C8-A10E-44C141EF5628}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bing.Samples.Api_v5", "samples\Bing.Samples.Api_v5\Bing.Samples.Api_v5.csproj", "{F84C8296-023C-41C8-A10E-44C141EF5628}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net6", "net6", "{B7888489-E7F9-43B6-B462-7F44649F68BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bing.Samples.Api_v6", "samples\Bing.Samples.Api_v6\Bing.Samples.Api_v6.csproj", "{D8E7AFA6-6FA7-4FE1-A6F3-808AE4EC55E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -98,6 +105,10 @@ Global
 		{F84C8296-023C-41C8-A10E-44C141EF5628}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F84C8296-023C-41C8-A10E-44C141EF5628}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F84C8296-023C-41C8-A10E-44C141EF5628}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8E7AFA6-6FA7-4FE1-A6F3-808AE4EC55E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8E7AFA6-6FA7-4FE1-A6F3-808AE4EC55E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8E7AFA6-6FA7-4FE1-A6F3-808AE4EC55E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8E7AFA6-6FA7-4FE1-A6F3-808AE4EC55E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,6 +129,8 @@ Global
 		{0D1E224A-3C50-40D3-827D-2BBAC909BC8C} = {40F52FCD-9F02-4A62-B267-20F7A7DAE5ED}
 		{1BFBA44E-A1C3-4A02-A474-7A0C756AD424} = {FB32239E-3E8D-4345-B0FA-E0041E2F9A29}
 		{F84C8296-023C-41C8-A10E-44C141EF5628} = {1BFBA44E-A1C3-4A02-A474-7A0C756AD424}
+		{B7888489-E7F9-43B6-B462-7F44649F68BF} = {FB32239E-3E8D-4345-B0FA-E0041E2F9A29}
+		{D8E7AFA6-6FA7-4FE1-A6F3-808AE4EC55E8} = {B7888489-E7F9-43B6-B462-7F44649F68BF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BD76A559-CBB4-4242-AF46-12A788F3EC89}

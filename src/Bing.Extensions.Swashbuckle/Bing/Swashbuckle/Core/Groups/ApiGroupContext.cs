@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.OpenApi.Models;
 
@@ -191,6 +192,7 @@ namespace Bing.Swashbuckle.Core.Groups
             {
                 foreach (var apiVersion in apiGroup.ApiVersions)
                 {
+                    Debug.WriteLine($"Endpoints: [{apiVersion.Title}, {apiVersion.GetName()}]");
                     dict[apiVersion.Title] = $"{apiVersion.GetName()}/swagger.json";
                 }
             }

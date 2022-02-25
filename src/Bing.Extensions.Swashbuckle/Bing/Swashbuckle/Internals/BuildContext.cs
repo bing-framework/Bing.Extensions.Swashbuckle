@@ -106,6 +106,9 @@ namespace Bing.Swashbuckle.Internals
         /// <param name="context">API分组上下文</param>
         private void BuildSwaggerEndpoint(ApiGroupContext context)
         {
+            // TODO: 由于Swashbuckle多管闲事初始化Urls，导致初始化Endpoints v1 问题
+            // https://github.com/domaindrivendev/Swashbuckle.AspNetCore/blob/v6.2.3/src/Swashbuckle.AspNetCore.SwaggerUI/SwaggerUIBuilderExtensions.cs#L41
+            ExOptions.SwaggerUiOptions.ConfigObject.Urls = null;
             foreach (var endpoint in context.GetEndpoints())
                 ExOptions.SwaggerUiOptions.AddInfo(endpoint.Key, endpoint.Value);
         }
@@ -113,7 +116,7 @@ namespace Bing.Swashbuckle.Internals
         /// <summary>
         /// 构建Swagger入口选择
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="context">API分组上下文</param>
         private void BuildDocInclusionPredicate(ApiGroupContext context)
         {
             BuildDocInclusionPredicateByApiGroup();

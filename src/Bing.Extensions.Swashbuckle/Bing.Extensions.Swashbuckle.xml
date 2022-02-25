@@ -1279,7 +1279,7 @@
             <summary>
             构建Swagger入口选择
             </summary>
-            <param name="context"></param>
+            <param name="context">API分组上下文</param>
         </member>
         <member name="M:Bing.Swashbuckle.Internals.BuildContext.BuildDocInclusionPredicateByApiGroup">
             <summary>

@@ -54,7 +54,7 @@ namespace Bing.Samples.Api
                 o.AddSwaggerGenAction = config =>
                 {
                     //config.SwaggerDoc("v1", new Info() { Title = "Bing.Samples.Api", Version = "v1" });
-                    var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                    var basePath = AppContext.BaseDirectory;
                     var xmlPath = Path.Combine(basePath, "Bing.Samples.Api.xml");
                     config.IncludeXmlComments(xmlPath, true);
                     config.UseInlineDefinitionsForEnums();
