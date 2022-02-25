@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Bing.Samples.Common;
 using Bing.Swashbuckle;
 using Bing.Swashbuckle.Filters.Schemas;
 using Microsoft.AspNetCore.Builder;
@@ -39,59 +40,17 @@ namespace Bing.Samples.MultipleVersion
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            #region Swagger相关操作
+
             services.AddSwaggerEx(o =>
             {
-                o.ProjectName = "Bing.Samples.MultipleVersion 在线文档调试";
-                o.EnableCustomIndex = true;
-                o.RoutePrefix = "swagger";
-                o.EnableApiVersion = true;
-                o.AddSwaggerGenAction = config =>
-                {
-                    var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                    var xmlPath = Path.Combine(basePath, "Bing.Samples.MultipleVersion.xml");
-                    config.IncludeXmlComments(xmlPath, true);
-
-                    config.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
-                    {
-                        Type = SecuritySchemeType.ApiKey,
-                        Description = "Token令牌",
-                        Name = "Authorization",
-                        In = ParameterLocation.Header,
-                    });
-
-                    // 启用请求头过滤器。显示Swagger自定义请求头
-                    config.EnableRequestHeader();
-
-                    // 启用响应由过滤器。显示Swagger自定义响应头
-                    config.EnableResponseHeader();
-
-                    // 显示文件参数
-                    config.ShowFileParameter();
-
-                    // 显示枚举描述
-                    config.ShowEnumDescription();
-
-                    // 显示Url模式：首字母小写、首字母大写、全小写、全大写、默认
-                    config.ShowUrlMode();
-
-                    // 隐藏属性
-                    config.SchemaFilter<IgnorePropertySchemaFilter>();
-
-                    // 添加通用参数
-                    config.AddCommonParameter(new List<OpenApiParameter>()
-                    {
-                        new OpenApiParameter()
-                        {
-                            Name = "Test",
-                            In = ParameterLocation.Header,
-                            Schema = new OpenApiSchema() {Type = "string", Default = new OpenApiString("")}
-                        }
-                    });
-
-                    // 启用默认值
-                    config.EnableDefaultValue();
-                };
+                StartupConfig.ConfigureServicesByMultipleVersionApi(o);
             });
+
+            // 启用 JSON.NET
+            services.AddSwaggerGenNewtonsoftSupport();
+
+            #endregion
 
             services.AddApiVersioning(options =>
             {
@@ -120,18 +79,14 @@ namespace Bing.Samples.MultipleVersion
 
             app.UseAuthorization();
 
+            #region Swagger相关操作
+
             app.UseSwaggerEx(o =>
             {
-                o.UseSwaggerUIAction = config =>
-                {
-                    config.InjectJavascript("resources/jquery");
-                    config.InjectJavascript("resources/translator");
-                    config.InjectStylesheet("resources/swagger-common");
-
-                    // 使用默认SwaggerUI
-                    config.UseDefaultSwaggerUI();
-                };
+                StartupConfig.ConfigureByMultipleVersionApi(o);
             });
+
+            #endregion
 
             app.UseEndpoints(endpoints =>
             {
