@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Bing.Swashbuckle.Core.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -72,6 +74,11 @@ namespace Bing.Swashbuckle
         /// AddSwaggerGen 操作
         /// </summary>
         public Action<SwaggerGenOptions> AddSwaggerGenAction { get; set; }
+
+        /// <summary>
+        /// 全局响应包装函数
+        /// </summary>
+        public Action<ActionModel, Type, bool> GlobalResponseWrapperAction { get; set; }
 
         /// <summary>
         /// Swagger选项配置

@@ -1,5 +1,6 @@
 ﻿using System;
 using Bing.Swashbuckle.Internals;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Swashbuckle.AspNetCore.Swagger;
@@ -19,19 +20,12 @@ namespace Bing.Swashbuckle
         public static IServiceCollection AddSwaggerEx(this IServiceCollection services, Action<SwaggerExOptions> setupAction = null)
         {
             setupAction?.Invoke(BuildContext.Instance.ExOptions);
+            // 注入缓存
             if (BuildContext.Instance.ExOptions.EnableCached)
                 services.TryAddTransient<ISwaggerProvider, CachingSwaggerProvider>();
-            //if (BuildContext.Instance.ExOptions.EnableCached)
-            //{
-            //    services.AddSwaggerGen();
-            //    services.AddSwaggerCaching();
-            //    services.ConfigureSwaggerGen(o =>
-            //    {
-            //        BuildContext.Instance.ExOptions.InitSwaggerGenOptions(o);
-            //        BuildContext.Instance.Build();
-            //    });
-            //    return services;
-            //}
+            // 注入自定义应用模型
+            if (BuildContext.Instance.ExOptions.GlobalResponseWrapperAction != null)
+                services.TryAddEnumerable(ServiceDescriptor.Transient<IApplicationModelProvider, ProduceResponseTypeModelProvider>());
             services.AddSwaggerGen(o =>
             {
                 BuildContext.Instance.ExOptions.InitSwaggerGenOptions(o);

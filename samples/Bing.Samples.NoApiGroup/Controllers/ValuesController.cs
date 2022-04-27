@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bing.Samples.NoApiGroup.Controllers
@@ -11,31 +12,80 @@ namespace Bing.Samples.NoApiGroup.Controllers
     public class ValuesController : ControllerBase
     {
         /// <summary>
-        /// 获取列表
+        /// 获取列表【同步】
         /// </summary>
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        [HttpGet("getBySource")]
+        public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
         /// <summary>
-        /// 获取详情
+        /// 获取列表【同步】
+        /// </summary>
+        [HttpGet("getByActionResult")]
+        public ActionResult<IEnumerable<string>> GetByActionResult()
+        {
+            return new string[] { "value1", "value2" };
+        }
+
+        /// <summary>
+        /// 获取列表【异步】
+        /// </summary>
+        [HttpGet("getByActionResultAsync")]
+        public Task<ActionResult<IEnumerable<string>>> GetByActionResultAsync()
+        {
+            var result = new string[] { "value1", "value2" };
+            return Task.FromResult<ActionResult<IEnumerable<string>>>(result);
+        }
+
+        /// <summary>
+        /// 获取详情【同步】
         /// </summary>
         /// <param name="id">标识</param>
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [HttpGet("getBySource/{id}")]
+        public string Get(int id)
         {
             return "value";
         }
 
         /// <summary>
-        /// 新增
+        /// 获取详情【同步】
+        /// </summary>
+        /// <param name="id">标识</param>
+        [HttpGet("getByActionResult/{id}")]
+        public ActionResult<string> GetByActionResult(int id)
+        {
+            return "value";
+        }
+
+        /// <summary>
+        /// 获取详情【异步】
+        /// </summary>
+        /// <param name="id">标识</param>
+        [HttpGet("getByActionResultAsync/{id}")]
+        public Task<ActionResult<string>> GetAsync(int id)
+        {
+            return Task.FromResult<ActionResult<string>>("value");
+        }
+
+        /// <summary>
+        /// 新增【同步】
         /// </summary>
         /// <param name="value">值</param>
         [HttpPost]
         public void Post([FromBody] string value)
         {
+        }
+
+        /// <summary>
+        /// 新增【异步】
+        /// </summary>
+        /// <param name="value">值</param>
+        [HttpPost("postByAsync")]
+        public Task PostAsync([FromBody] string value)
+        {
+            return Task.CompletedTask;
         }
 
         /// <summary>
