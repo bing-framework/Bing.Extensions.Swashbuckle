@@ -24,6 +24,7 @@ Bing.Extensions.Swashbuckle是扩展Swashbuckle.AspNetCore一些常用操作，�
 - 支持控制器排序
 - 支持Token令牌存储
 - 支持控制器方法计数
+- 支持全局响应包装功能
 
 
 ## 依赖类库
