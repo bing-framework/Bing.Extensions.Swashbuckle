@@ -1,5 +1,6 @@
 ﻿using Bing.Samples.Api.Models;
 using Bing.Swashbuckle.Attributes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bing.Samples.Api.Controllers
@@ -20,6 +21,16 @@ namespace Bing.Samples.Api.Controllers
         public Result Upload([FromForm]UploadSample sample)
         {
             return Result.Success(sample.Name);
+        }
+
+        /// <summary>
+        /// 批量上传文件
+        /// </summary>
+        /// <param name="collection">文件集合</param>
+        [HttpPost("batchUpdate")]
+        public Result BatchUpload([FromForm] IFormFileCollection collection)
+        {
+            return Result.Success(collection.Count);
         }
 
         /// <summary>
