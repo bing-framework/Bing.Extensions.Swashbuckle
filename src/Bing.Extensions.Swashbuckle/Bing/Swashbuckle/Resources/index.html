@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <title>%(DocumentTitle)</title>
-    <link rel="stylesheet" type="text/css" href="./swagger-ui.css">
+    <!--<link rel="stylesheet" type="text/css" href="./swagger-ui.css">-->
+    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@4.14.0/swagger-ui.css" />
     <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
     <style>
@@ -41,8 +42,10 @@
         }
     </script>
 
-    <script src="./swagger-ui-bundle.js"></script>
-    <script src="./swagger-ui-standalone-preset.js"></script>
+    <!--<script src="./swagger-ui-bundle.js"></script>
+    <script src="./swagger-ui-standalone-preset.js"></script>-->
+    <script src="https://unpkg.com/swagger-ui-dist@4.14.0/swagger-ui-bundle.js" crossorigin></script>
+    <script src="https://unpkg.com/swagger-ui-dist@4.14.0/swagger-ui-standalone-preset.js" crossorigin></script>
     <script>
         window.onload = function () {
             var configObject = JSON.parse('%(ConfigObject)');
@@ -77,6 +80,7 @@
             configObject.presets = [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset];
             configObject.layout = "StandaloneLayout";
             configObject.plugins = [SwaggerUIBundle.plugins.DownloadUrl];
+            configObject.requestSnippetsEnabled = true;
             console.log('plugins', configObject.plugins);
 
             configObject.requestInterceptor = (request) => {
@@ -94,7 +98,7 @@
 
             // Begin Swagger UI call region
             const ui = SwaggerUIBundle(configObject);
-            
+
 
             // Apply OAuth config
             ui.initOAuth(oauthConfigObject);
