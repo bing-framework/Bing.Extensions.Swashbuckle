@@ -71,11 +71,13 @@
                 console.log('进入oauth2RedirectUrl');
                 configObject.oauth2RedirectUrl = window.location.href.replace("index.html", "oauth2-redirect.html").split('#')[0];
             }
-
+            console.log('plugins', configObject.plugins);
             // Apply mandatory parameters
             configObject.dom_id = "#swagger-ui";
             configObject.presets = [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset];
             configObject.layout = "StandaloneLayout";
+            configObject.plugins = [SwaggerUIBundle.plugins.DownloadUrl];
+            console.log('plugins', configObject.plugins);
 
             configObject.requestInterceptor = (request) => {
                 var csrfTokenCookie = getCookieValue('X-CSRF-TOKEN');
@@ -90,14 +92,17 @@
             // 初始化Token存储
             initTokenStorage(configObject);
 
-            // Build a system
+            // Begin Swagger UI call region
             const ui = SwaggerUIBundle(configObject);
-            window.ui = ui;
+            
 
             // Apply OAuth config
             ui.initOAuth(oauthConfigObject);
-            console.log('ui', ui);
             custom_translate(configObject);
+            console.log('ui', ui);
+
+            window.ui = ui;
+            // End Swagger UI call region
         }
 
         var getCookieValue = function (key) {

@@ -24,13 +24,18 @@ namespace Bing.Swashbuckle
         {
             options.DefaultModelExpandDepth(2);// 接口列表折叠配置
             options.DefaultModelRendering(ModelRendering.Example);// 控制首次呈现API时模型的显示方式（模型|示例）。
-            options.ShowExtensions();// 显示扩展信息
             options.DefaultModelsExpandDepth(-1);// 隐藏model
             options.DisplayOperationId();// 显示控制器接口方法名
             options.DisplayRequestDuration();// 显示请求持续时间（以毫秒为单位）
             options.DocExpansion(DocExpansion.None);// 文档显示方式：显示控制器
             options.EnableDeepLinking();// 启用深层连接，用于指定Url自动跳转到相应标签
             options.EnableFilter();// 启用过滤文本框
+            //options.MaxDisplayedTags(1);// 控制显示的最大接口数量。
+            options.ShowExtensions();// 显示扩展信息
+            options.ShowCommonExtensions();// 显示扩展信息（正则表达式、最小值长度、最大值长度、最小值、最大值）
+            options.EnableValidator();// 启用swagger-ui内置的验证器
+            //options.SupportedSubmitMethods();// 用于控制支持HTTP的提交方法
+            //options.EnableTryItOutByDefault();// 默认应用 TryItOut 操作
         }
 
         #endregion

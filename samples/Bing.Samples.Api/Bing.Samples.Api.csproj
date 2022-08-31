@@ -7,7 +7,7 @@
 	</PropertyGroup>
 
 	<!--保证引用顺序方可正确生成XML文件-->
-	<Import Project="../common.samples.props"/>
+	<Import Project="../common.samples.props" />
 
 	<ItemGroup>
 		<None Remove="Swagger\index.html" />
@@ -19,6 +19,11 @@
 
 	<ItemGroup>
 		<Folder Include="Models\Responses\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="Swashbuckle.AspNetCore.Annotations" Version="6.4.0" />
+	  <PackageReference Update="Swashbuckle.AspNetCore.Newtonsoft" Version="6.4.0" />
 	</ItemGroup>
 
 </Project>
