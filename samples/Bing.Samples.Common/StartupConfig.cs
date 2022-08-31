@@ -354,11 +354,11 @@ namespace Bing.Samples.Common
             options.ProjectName = "Bing.Sample.NoApiGroup 在线文档调试";
             options.EnableCustomIndex = true;
             options.RoutePrefix = "swagger";
-            options.ApiVersions.Add(new ApiVersion()
-            {
-                Description = "通用结果",
-                Version = "v1"
-            });
+            //options.ApiVersions.Add(new ApiVersion()
+            //{
+            //    Description = "通用结果",
+            //    Version = "v1"
+            //});
             options.AddSwaggerGenAction = config =>
             {
                 var basePath = AppContext.BaseDirectory;
@@ -414,6 +414,7 @@ namespace Bing.Samples.Common
         {
             options.UseSwaggerUIAction = config =>
             {
+                config.SwaggerEndpoint("v1/swagger.json", "v1");
                 config.InjectJavascript("resources/jquery");
                 config.InjectJavascript("resources/translator");
                 config.InjectStylesheet("resources/swagger-common");

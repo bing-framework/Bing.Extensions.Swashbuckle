@@ -281,6 +281,11 @@
             Api分组列表
             </summary>
         </member>
+        <member name="P:Bing.Swashbuckle.Core.Groups.ApiGroupContext.HasApiGroups">
+            <summary>
+            是否拥有API分组
+            </summary>
+        </member>
         <member name="M:Bing.Swashbuckle.Core.Groups.ApiGroupContext.AddGroup(System.String)">
             <summary>
             添加分组。仅添加分组，不添加版本

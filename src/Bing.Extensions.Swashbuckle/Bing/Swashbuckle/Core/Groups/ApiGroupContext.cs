@@ -17,6 +17,11 @@ namespace Bing.Swashbuckle.Core.Groups
         private IList<ApiGroupInfo> ApiGroups { get; set; } = new List<ApiGroupInfo>();
 
         /// <summary>
+        /// 是否拥有API分组
+        /// </summary>
+        public bool HasApiGroups => ApiGroups.Any();
+
+        /// <summary>
         /// 添加分组。仅添加分组，不添加版本
         /// </summary>
         /// <param name="name">名称</param>

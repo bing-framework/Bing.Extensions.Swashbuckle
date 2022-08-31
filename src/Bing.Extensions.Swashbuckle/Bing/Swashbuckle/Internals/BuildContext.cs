@@ -106,6 +106,8 @@ namespace Bing.Swashbuckle.Internals
         /// <param name="context">API分组上下文</param>
         private void BuildSwaggerEndpoint(ApiGroupContext context)
         {
+            if (!context.HasApiGroups)
+                return;
             // TODO: 由于Swashbuckle多管闲事初始化Urls，导致初始化Endpoints v1 问题
             // https://github.com/domaindrivendev/Swashbuckle.AspNetCore/blob/v6.2.3/src/Swashbuckle.AspNetCore.SwaggerUI/SwaggerUIBuilderExtensions.cs#L41
             ExOptions.SwaggerUiOptions.ConfigObject.Urls = null;

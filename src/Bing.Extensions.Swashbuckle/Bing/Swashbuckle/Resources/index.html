@@ -52,11 +52,13 @@
             console.log('oauthConfigObject', oauthConfigObject);
 
             // Workaround for https://github.com/swagger-api/swagger-ui/issues/5945
-            configObject.urls.forEach(function (item) {
-                if (item.url.startsWith("http") || item.url.startsWith("/"))
-                    return;
-                item.url = window.location.href.replace("index.html", item.url).split('#')[0];
-            });
+            if (configObject.urls != null) {
+                configObject.urls.forEach(function (item) {
+                    if (item.url.startsWith("http") || item.url.startsWith("/"))
+                        return;
+                    item.url = window.location.href.replace("index.html", item.url).split('#')[0];
+                });
+            }
 
             // If validatorUrl is not explicitly provided, disable the feature by setting to null
             // 如果没有显式提供validatorUrl，请通过设置为null禁用该功能
