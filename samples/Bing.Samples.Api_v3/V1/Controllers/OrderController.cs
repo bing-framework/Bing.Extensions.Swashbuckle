@@ -26,6 +26,7 @@ namespace Bing.Samples.Api.V1.Controllers
         /// 创建一个新的订单
         /// </summary>
         /// <param name="order">订单</param>
+        /// <remarks>看看有什么好的东西</remarks>
         [HttpPost]
         [MapToApiVersion("1.0")]
         [Produces("application/json")]
