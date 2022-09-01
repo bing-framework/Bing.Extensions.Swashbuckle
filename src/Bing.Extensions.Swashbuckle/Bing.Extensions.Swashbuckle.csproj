@@ -1,30 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../build/version.props" />
+	<Import Project="..\..\common.props" />
 	<PropertyGroup>
 		<TargetFrameworks>net6.0;net5.0;netcoreapp3.1;netstandard2.0</TargetFrameworks>
+		<AssemblyName>Bing.Extensions.Swashbuckle</AssemblyName>
+		<PackageId>Bing.Extensions.Swashbuckle</PackageId>
 		<Description>Bing.Extensions.Swashbuckle是扩展Swashbuckle.AspNetCore一些常用操作，便于使用以及过滤。</Description>
-		<RootNamespace />
 		<OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
-		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<OutputPath>$(MSBuildThisFileDirectory)/../../output/$(Configuration)/</OutputPath>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<DocumentationFile>$(AssemblyName).xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<DocumentationFile>$(AssemblyName).xml</DocumentationFile>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<Compile Remove="Attributes\**" />
-		<EmbeddedResource Remove="Attributes\**" />
-		<None Remove="Attributes\**" />
-	</ItemGroup>
+	<Import Project="dependency.props" />
 
 	<ItemGroup>
 		<None Remove="Bing\Swashbuckle\Resources\jquery.initialize.min.js" />
@@ -47,31 +31,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-		<PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.1.0" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.2.0" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
+		<Folder Include="Bing\Swashbuckle\Filters\RequestBody\" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Bing\Swashbuckle\Filters\RequestBody\" />
+	  <None Include="..\..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>

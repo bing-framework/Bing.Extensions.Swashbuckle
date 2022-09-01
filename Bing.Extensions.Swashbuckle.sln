@@ -3,12 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00-document", "00-document", "{B40C34AE-0520-4EAE-97C8-CE45A0F1E1F8}"
-	ProjectSection(SolutionItems) = preProject
-		build\pack.bat = build\pack.bat
-		README.md = README.md
-		build\version.props = build\version.props
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_SolutionItems", "{B40C34AE-0520-4EAE-97C8-CE45A0F1E1F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-src", "01-src", "{B2B65EE3-5CB3-48AC-B316-33E4E7AAF942}"
 EndProject
@@ -51,11 +46,44 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net6", "net6", "{B7888489-E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bing.Samples.Api_v6", "samples\Bing.Samples.Api_v6\Bing.Samples.Api_v6.csproj", "{D8E7AFA6-6FA7-4FE1-A6F3-808AE4EC55E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bing.Samples.ApiGroup_v5", "samples\Bing.Samples.ApiGroup_v5\Bing.Samples.ApiGroup_v5.csproj", "{C9DB6A25-C698-48BE-9CC4-AC4471D92421}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bing.Samples.ApiGroup_v5", "samples\Bing.Samples.ApiGroup_v5\Bing.Samples.ApiGroup_v5.csproj", "{C9DB6A25-C698-48BE-9CC4-AC4471D92421}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "base", "base", "{FCD2C42C-7E18-40A1-A584-221355ED103F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bing.Samples.Common", "samples\Bing.Samples.Common\Bing.Samples.Common.csproj", "{F0D1E683-D8CC-495E-8186-D6A923C7C83B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bing.Samples.Common", "samples\Bing.Samples.Common\Bing.Samples.Common.csproj", "{F0D1E683-D8CC-495E-8186-D6A923C7C83B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "asset", "asset", "{827D9332-CB29-4CD4-9448-8A7DABC40512}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{813CD548-7259-4954-A5CF-FB563BDBC2A3}"
+	ProjectSection(SolutionItems) = preProject
+		asset\props\misc.props = asset\props\misc.props
+		asset\props\package.props = asset\props\package.props
+		asset\props\sourcelink.env.props = asset\props\sourcelink.env.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{5533A2EA-E405-4D94-9A76-BD47F4D97575}"
+	ProjectSection(SolutionItems) = preProject
+		asset\images\icon.png = asset\images\icon.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution", "solution", "{504A88D0-B599-4A70-9982-3DC3284C0A41}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		common.props = common.props
+		LICENSE = LICENSE
+		version.props = version.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{3A8D449B-96E1-4E53-9917-1A9029D2DA3B}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{2F046422-876A-4960-8264-8CA74D27697D}"
+	ProjectSection(SolutionItems) = preProject
+		Publish.bat = Publish.bat
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -148,6 +176,12 @@ Global
 		{C9DB6A25-C698-48BE-9CC4-AC4471D92421} = {1BFBA44E-A1C3-4A02-A474-7A0C756AD424}
 		{FCD2C42C-7E18-40A1-A584-221355ED103F} = {FB32239E-3E8D-4345-B0FA-E0041E2F9A29}
 		{F0D1E683-D8CC-495E-8186-D6A923C7C83B} = {FCD2C42C-7E18-40A1-A584-221355ED103F}
+		{827D9332-CB29-4CD4-9448-8A7DABC40512} = {B40C34AE-0520-4EAE-97C8-CE45A0F1E1F8}
+		{813CD548-7259-4954-A5CF-FB563BDBC2A3} = {827D9332-CB29-4CD4-9448-8A7DABC40512}
+		{5533A2EA-E405-4D94-9A76-BD47F4D97575} = {827D9332-CB29-4CD4-9448-8A7DABC40512}
+		{504A88D0-B599-4A70-9982-3DC3284C0A41} = {B40C34AE-0520-4EAE-97C8-CE45A0F1E1F8}
+		{3A8D449B-96E1-4E53-9917-1A9029D2DA3B} = {B40C34AE-0520-4EAE-97C8-CE45A0F1E1F8}
+		{2F046422-876A-4960-8264-8CA74D27697D} = {B40C34AE-0520-4EAE-97C8-CE45A0F1E1F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BD76A559-CBB4-4242-AF46-12A788F3EC89}

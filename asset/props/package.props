@@ -1,0 +1,20 @@
+<Project>
+	<PropertyGroup Label="Package">
+		<Authors>简玄冰</Authors>
+		<Company>简玄冰</Company>
+		<Copyright>简玄冰</Copyright>
+		<RepositoryUrl>https://github.com/bing-framework/Bing.Extensions.Swashbuckle</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageProjectUrl>https://github.com/bing-framework/Bing.Extensions.Swashbuckle</PackageProjectUrl>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageTags>bing;dotnetcore;aspnetcore;swagger;swashbuckle</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<!--创建符号包-->
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
+</Project>
