@@ -1,9 +1,11 @@
 ﻿using System;
 using Bing.Swashbuckle.Internals;
+using Bing.Swashbuckle.SwaggerGen;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Bing.Swashbuckle
 {
@@ -19,6 +21,7 @@ namespace Bing.Swashbuckle
         /// <param name="setupAction">操作配置</param>
         public static IServiceCollection AddSwaggerEx(this IServiceCollection services, Action<SwaggerExOptions> setupAction = null)
         {
+            services.TryAddTransient<ISchemaGenerator, FixSchemaGenerator>();
             setupAction?.Invoke(BuildContext.Instance.ExOptions);
             // 注入缓存
             if (BuildContext.Instance.ExOptions.EnableCached)

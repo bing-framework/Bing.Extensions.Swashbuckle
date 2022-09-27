@@ -1,4 +1,5 @@
 ﻿using Bing.Samples.Api.Models;
+using Bing.Samples.Api.Models.Responses;
 using Bing.Swashbuckle.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ namespace Bing.Samples.Api.Controllers
         /// </summary>
         /// <param name="sample">上传信息</param>
         [HttpPost]
-        public Result Upload([FromForm]UploadSample sample)
+        public Result Upload([FromForm] UploadSample sample)
         {
             return Result.Success(sample.Name);
         }
@@ -40,7 +41,7 @@ namespace Bing.Samples.Api.Controllers
         /// <param name="pageSize">每页记录数</param>
         /// <param name="enumSample">枚举例子</param>
         [HttpGet]
-        public virtual Result GetDefaultValue([FromQuery] string q, [FromQuery] int page = 1, [FromQuery] int pageSize = 20, [FromQuery]EnumSample enumSample = EnumSample.Two)
+        public virtual Result GetDefaultValue([FromQuery] string q, [FromQuery] int page = 1, [FromQuery] int pageSize = 20, [FromQuery] EnumSample enumSample = EnumSample.Two)
         {
             return Result.Success(new
             {
@@ -59,5 +60,12 @@ namespace Bing.Samples.Api.Controllers
         {
             return Result.Success(sample);
         }
+
+        /// <summary>
+        /// 测试 枚举字典响应
+        /// </summary>
+        [HttpGet("TestEnumDictionaryResp")]
+        [ProducesResponseType(typeof(EnumDictionaryResponse), 200)]
+        public IActionResult TestEnumDictionaryResp() => new JsonResult(new EnumDictionaryResponse());
     }
 }

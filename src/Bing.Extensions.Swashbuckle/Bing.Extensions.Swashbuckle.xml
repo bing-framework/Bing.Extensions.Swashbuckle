@@ -1649,6 +1649,11 @@
             Swagger选项配置
             </summary>
         </member>
+        <member name="T:Bing.Swashbuckle.SwaggerGen.FixSchemaGenerator">
+            <summary>
+            热修复 架构生成器问题
+            </summary>
+        </member>
         <member name="T:Bing.Swashbuckle.TokenStorageParameter">
             <summary>
             令牌存储参数。用于拦截登录后存储令牌，解决刷新页面导致令牌丢失问题
