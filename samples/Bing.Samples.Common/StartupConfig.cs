@@ -42,7 +42,6 @@ namespace Bing.Samples.Common
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                 });
-
                 //config.OperationFilter<ApiVersionDefaultValueOperationFilter>();
 
                 // 启用请求头过滤器。显示Swagger自定义请求头

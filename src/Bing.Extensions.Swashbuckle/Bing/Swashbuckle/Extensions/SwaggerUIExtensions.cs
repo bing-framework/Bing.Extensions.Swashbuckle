@@ -70,6 +70,7 @@ namespace Bing.Swashbuckle
                 CacheType = cacheType,
                 SecurityDefinition = securityDefinition
             };
+            options.ConfigObject.PersistAuthorization = true;
         }
 
         #endregion

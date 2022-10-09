@@ -48,6 +48,35 @@
     <script src="https://unpkg.com/swagger-ui-dist@4.14.0/swagger-ui-standalone-preset.js" crossorigin></script>
     <!--<script src="https://unpkg.com/@asciidoctor/core@2.2.6/dist/browser/asciidoctor.js" crossorigin></script>-->
     <script>
+        /* Source: https://gist.github.com/lamberta/3768814
+         * Parse a string function definition and return a function object. Does not use eval.
+         * @param {string} str
+         * @return {function}
+         *
+         * Example:
+         *  var f = function (x, y) { return x * y; };
+         *  var g = parseFunction(f.toString());
+         *  g(33, 3); //=> 99
+         */
+        function parseFunction(str) {
+            if (!str) return void (0);
+
+            var fn_body_idx = str.indexOf('{'),
+                fn_body = str.substring(fn_body_idx + 1, str.lastIndexOf('}')),
+                fn_declare = str.substring(0, fn_body_idx),
+                fn_params = fn_declare.substring(fn_declare.indexOf('(') + 1, fn_declare.lastIndexOf(')')),
+                args = fn_params.split(',');
+
+            args.push(fn_body);
+
+            function Fn() {
+                return Function.apply(this, args);
+            }
+            Fn.prototype = Function.prototype;
+
+            return new Fn();
+        }
+
         window.onload = function () {
             var configObject = JSON.parse('%(ConfigObject)');
             var oauthConfigObject = JSON.parse('%(OAuthConfigObject)');
@@ -76,6 +105,7 @@
                 configObject.oauth2RedirectUrl = window.location.href.replace("index.html", "oauth2-redirect.html").split('#')[0];
             }
             console.log('plugins', configObject.plugins);
+
             // Apply mandatory parameters
             configObject.dom_id = "#swagger-ui";
             configObject.presets = [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset];
@@ -83,6 +113,13 @@
             configObject.plugins = [SwaggerUIBundle.plugins.DownloadUrl];
             configObject.requestSnippetsEnabled = true;
             console.log('plugins', configObject.plugins);
+
+            // Parse and add interceptor functions
+            var interceptors = JSON.parse('%(Interceptors)');
+            if (interceptors.RequestInterceptorFunction)
+                configObject.requestInterceptor = parseFunction(interceptors.RequestInterceptorFunction);
+            if (interceptors.ResponseInterceptorFunction)
+                configObject.responseInterceptor = parseFunction(interceptors.ResponseInterceptorFunction);
 
             configObject.requestInterceptor = (request) => {
                 var csrfTokenCookie = getCookieValue('X-CSRF-TOKEN');
@@ -93,20 +130,18 @@
                 return request;
             };
 
-
             // 初始化Token存储
             initTokenStorage(configObject);
 
             // Begin Swagger UI call region
             const ui = SwaggerUIBundle(configObject);
 
-
             // Apply OAuth config
             ui.initOAuth(oauthConfigObject);
             custom_translate(configObject);
-            console.log('ui', ui);
 
             window.ui = ui;
+
             // End Swagger UI call region
         }
 
@@ -157,48 +192,25 @@
                 ui.preauthorizeApiKey(configObject.token_storage.securityDefinition, result);
             };
             configObject.requestInterceptor = (req) => {
-                req.headers["Authorization"] = getTokenStorage(configObject);
+                var result = getTokenStorage(configObject);
+                if (result === undefined || result === null || result === "")
+                    return req;
+                req.headers["Authorization"] = result;
                 return req;
             };
-            addAuthorizeListener(configObject);
         }
 
         function getTokenStorage(configObject) {
+            if (!configObject.persistAuthorization)
+                return null;
+            var authorized = localStorage.getItem("authorized");
+            if (authorized === null)
+                return null;
+            var data = JSON.parse(authorized);
             const key = configObject.token_storage.securityDefinition;
-            if (configObject.token_storage.cacheType.toLowerCase() === "local")
-                return localStorage.getItem(key);
-            else
-                return sessionStorage.getItem(key);
-        }
-
-        function addAuthorizeListener(configObject) {
-            var authWrapper = document.querySelector(".scheme-container .auth-wrapper");
-            if (authWrapper === undefined || authWrapper === null) {
-                setTimeout(function () {
-                    addAuthorizeListener(configObject);
-                }, 1000);
-                return;
-            }
-            console.log("初始化存储 Token 监听处理");
-            authWrapper.addEventListener("click", function (e) {
-                if (e.type === "click" && e.srcElement.tagName === "BUTTON") {
-                    if (e.srcElement.innerText === "Authorize") {
-                        var el = document.querySelector(".auth-container .wrapper input");
-                        if (el === undefined || el === null)
-                            return;
-                        var result = el.value;
-                        if (configObject.token_storage.cacheType.toLowerCase() === "local")
-                            localStorage.setItem(configObject.token_storage.securityDefinition, result);
-                        else
-                            sessionStorage.setItem(configObject.token_storage.securityDefinition, result);
-                    } else if (e.srcElement.innerText === "Logout") {
-                        if (configObject.token_storage.cacheType.toLowerCase() === "local")
-                            localStorage.removeItem(configObject.token_storage.securityDefinition);
-                        else
-                            sessionStorage.removeItem(configObject.token_storage.securityDefinition);
-                    }
-                }
-            }, false);
+            if (!data[key])
+                return null;
+            return data[key].value;
         }
     </script>
 </body>
