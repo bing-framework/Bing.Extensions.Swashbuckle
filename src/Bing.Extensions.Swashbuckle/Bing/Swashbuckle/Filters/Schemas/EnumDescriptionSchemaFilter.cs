@@ -14,8 +14,10 @@ namespace Bing.Swashbuckle.Filters.Schemas
         /// </summary>
         public void Apply(OpenApiSchema schema, SchemaFilterContext context)
         {
-            if (context.Type.IsEnum)
-                schema.Description = $"{schema.Description}{Environment.NewLine}{FormatDescription(context.Type)}";
+            var type = context.Type;
+            if(!type.IsEnum)
+                return;
+            schema.Description = FormatDescription(schema.Description, type);
         }
     }
 }

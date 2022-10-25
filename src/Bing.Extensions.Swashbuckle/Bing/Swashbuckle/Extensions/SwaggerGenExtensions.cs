@@ -24,10 +24,10 @@ namespace Bing.Swashbuckle
         /// <param name="options">Swagger生成选项</param>
         public static void ShowEnumDescription(this SwaggerGenOptions options)
         {
-            if (!options.ParameterFilterDescriptors.Exists(x => x.Type == typeof(EnumDescriptionsParameterFilter)))
-                options.ParameterFilter<EnumDescriptionsParameterFilter>();
             if (!options.SchemaFilterDescriptors.Exists(x => x.Type == typeof(EnumDescriptionSchemaFilter)))
                 options.SchemaFilter<EnumDescriptionSchemaFilter>();
+            if (!options.ParameterFilterDescriptors.Exists(x => x.Type == typeof(EnumDescriptionsParameterFilter)))
+                options.ParameterFilter<EnumDescriptionsParameterFilter>();
         }
 
         #endregion

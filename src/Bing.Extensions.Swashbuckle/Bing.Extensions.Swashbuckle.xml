@@ -541,6 +541,13 @@
             </summary>
             <param name="type">枚举类型</param>
         </member>
+        <member name="M:Bing.Swashbuckle.EnumHandleBase.FormatDescription(System.String,System.Type)">
+            <summary>
+            格式化描述
+            </summary>
+            <param name="description">描述</param>
+            <param name="type">枚举类型</param>
+        </member>
         <member name="T:Bing.Swashbuckle.Extensions">
             <summary>
             服务扩展
@@ -1188,6 +1195,13 @@
             重写操作处理
             </summary>
         </member>
+        <member name="M:Bing.Swashbuckle.Filters.Parameters.EnumDescriptionsParameterFilter.SetDescription(Microsoft.OpenApi.Models.OpenApiParameter,System.Type)">
+            <summary>
+            设置API参数描述信息
+            </summary>
+            <param name="parameter">API参数</param>
+            <param name="type">类型</param>
+        </member>
         <member name="T:Bing.Swashbuckle.Filters.Schemas.EnumDescriptionSchemaFilter">
             <summary>
             枚举描述 过滤器。支持Body参数内容
@@ -1608,6 +1622,19 @@
             <summary>
             Api分组类型
             </summary>
+        </member>
+        <member name="P:Bing.Swashbuckle.SwaggerExOptions.EnumPrefix">
+            <summary>
+            枚举前缀
+            </summary>
+        </member>
+        <member name="P:Bing.Swashbuckle.SwaggerExOptions.EnumItemFormat">
+            <summary>
+            枚举项格式化
+            </summary>
+            <remarks>
+            0 : 值, 1 : 名称, 2 : 描述
+            </remarks>
         </member>
         <member name="P:Bing.Swashbuckle.SwaggerExOptions.SwaggerAuthorizations">
             <summary>

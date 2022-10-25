@@ -55,6 +55,19 @@ namespace Bing.Swashbuckle
         public Type ApiGroupType { get; set; }
 
         /// <summary>
+        /// 枚举前缀
+        /// </summary>
+        public string EnumPrefix { get; set; } = "<p>枚举值：</p>";
+
+        /// <summary>
+        /// 枚举项格式化
+        /// </summary>
+        /// <remarks>
+        /// 0 : 值, 1 : 名称, 2 : 描述
+        /// </remarks>
+        public string EnumItemFormat { get; set; }  = "<b>{0} - {1}</b>: {2}";
+
+        /// <summary>
         /// Swagger授权登录账号，未指定则不启用
         /// </summary>
         public List<SwaggerAuthorizationUser> SwaggerAuthorizations { get; set; } = new List<SwaggerAuthorizationUser>();
