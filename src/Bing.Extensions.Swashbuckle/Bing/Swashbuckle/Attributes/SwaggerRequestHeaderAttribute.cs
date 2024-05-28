@@ -35,7 +35,7 @@ public class SwaggerRequestHeaderAttribute : Attribute
     /// <param name="description">备注</param>
     public SwaggerRequestHeaderAttribute(string name, string description = null)
     {
-            Name = name;
-            Description = description;
-        }
+        Name = name;
+        Description = description;
+    }
 }

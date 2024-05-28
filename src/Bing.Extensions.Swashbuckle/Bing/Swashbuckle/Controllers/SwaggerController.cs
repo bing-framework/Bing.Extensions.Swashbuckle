@@ -8,6 +8,6 @@ namespace Bing.Swashbuckle.Controllers;
 /// </summary>
 [AllowAnonymous]
 [Route("api/swagger")]
-public class SwaggerController: Controller
+public class SwaggerController : Controller
 {
 }

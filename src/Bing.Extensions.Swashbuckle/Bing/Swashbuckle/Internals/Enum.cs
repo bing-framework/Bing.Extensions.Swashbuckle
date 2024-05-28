@@ -72,7 +72,7 @@ internal static class Enum
             return result;
         foreach (var field in type.GetFields())
         {
-            if(!field.FieldType.IsEnum)
+            if (!field.FieldType.IsEnum)
                 continue;
             var name = field.Name;
             var description = GetDescription(type, name);

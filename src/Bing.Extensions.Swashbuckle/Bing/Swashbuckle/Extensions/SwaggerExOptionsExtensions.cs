@@ -61,7 +61,7 @@ internal static class SwaggerExOptionsExtensions
         options.SwaggerUiOptions = swaggerUiOptions;
         swaggerUiOptions.RoutePrefix = options.RoutePrefix;
         swaggerUiOptions.DocumentTitle = options.ProjectName;
-        if(options.EnableCustomIndex)
+        if (options.EnableCustomIndex)
             swaggerUiOptions.UseCustomSwaggerIndex();
         if (options.EnableAuthorization())
         {

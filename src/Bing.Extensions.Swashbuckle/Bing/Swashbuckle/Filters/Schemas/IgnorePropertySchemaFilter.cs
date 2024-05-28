@@ -24,7 +24,7 @@ public class IgnorePropertySchemaFilter : ISchemaFilter
         {
             var propertyToRemove =
                 schema.Properties.Keys.SingleOrDefault(x => x.ToLower() == ignoreProperty.Name.ToLower());
-            if (propertyToRemove != null) 
+            if (propertyToRemove != null)
                 schema.Properties.Remove(propertyToRemove);
         }
     }

@@ -25,7 +25,7 @@ internal class UrlConvert
     /// <summary>
     /// 大写
     /// </summary>
-    public static string Upper(string key)=> string.Join("/", key.Split('/').Select(x => x.Contains("{") ? x : x.ToUpper()));
+    public static string Upper(string key) => string.Join("/", key.Split('/').Select(x => x.Contains("{") ? x : x.ToUpper()));
 
     /// <summary>
     /// 小写

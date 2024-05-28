@@ -15,12 +15,12 @@ public static class ApiDescriptionExtensions
     /// <param name="description">Api描述器</param>
     public static List<string> GetAreaName(this ApiDescription description)
     {
-            var areaName = description.ActionDescriptor.RouteValues["area"];
-            var controllerName = description.ActionDescriptor.RouteValues["controller"];
-            var areaList = new List<string>();
-            areaList.Add(controllerName);
-            if (!string.IsNullOrWhiteSpace(areaName))
-                description.RelativePath = $"{areaName}/{controllerName}/{description.RelativePath}";
-            return areaList;
-        }
+        var areaName = description.ActionDescriptor.RouteValues["area"];
+        var controllerName = description.ActionDescriptor.RouteValues["controller"];
+        var areaList = new List<string>();
+        areaList.Add(controllerName);
+        if (!string.IsNullOrWhiteSpace(areaName))
+            description.RelativePath = $"{areaName}/{controllerName}/{description.RelativePath}";
+        return areaList;
+    }
 }

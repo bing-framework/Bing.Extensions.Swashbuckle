@@ -227,39 +227,39 @@ internal class FixSchemaGenerator : ISchemaGenerator
             case DataType.Integer:
             case DataType.Number:
             case DataType.String:
-            {
-                schemaFactory = () => CreatePrimitiveSchema(dataContract);
-                returnAsReference = dataContract.UnderlyingType.IsEnum && !_generatorOptions.UseInlineDefinitionsForEnums;
-                break;
-            }
+                {
+                    schemaFactory = () => CreatePrimitiveSchema(dataContract);
+                    returnAsReference = dataContract.UnderlyingType.IsEnum && !_generatorOptions.UseInlineDefinitionsForEnums;
+                    break;
+                }
 
             case DataType.Array:
-            {
-                schemaFactory = () => CreateArraySchema(dataContract, schemaRepository);
-                returnAsReference = dataContract.UnderlyingType == dataContract.ArrayItemType;
-                break;
-            }
+                {
+                    schemaFactory = () => CreateArraySchema(dataContract, schemaRepository);
+                    returnAsReference = dataContract.UnderlyingType == dataContract.ArrayItemType;
+                    break;
+                }
 
             case DataType.Dictionary:
-            {
-                schemaFactory = () => CreateDictionarySchema(dataContract, schemaRepository);
-                returnAsReference = dataContract.UnderlyingType == dataContract.DictionaryValueType;
-                break;
-            }
+                {
+                    schemaFactory = () => CreateDictionarySchema(dataContract, schemaRepository);
+                    returnAsReference = dataContract.UnderlyingType == dataContract.DictionaryValueType;
+                    break;
+                }
 
             case DataType.Object:
-            {
-                schemaFactory = () => CreateObjectSchema(dataContract, schemaRepository);
-                returnAsReference = true;
-                break;
-            }
+                {
+                    schemaFactory = () => CreateObjectSchema(dataContract, schemaRepository);
+                    returnAsReference = true;
+                    break;
+                }
 
             default:
-            {
-                schemaFactory = () => new OpenApiSchema();
-                returnAsReference = false;
-                break;
-            }
+                {
+                    schemaFactory = () => new OpenApiSchema();
+                    returnAsReference = false;
+                    break;
+                }
         }
 
         return returnAsReference

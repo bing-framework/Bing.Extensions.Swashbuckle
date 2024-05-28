@@ -32,12 +32,12 @@ internal static class Reflection
     /// <param name="memberName">成员名称</param>
     public static string GetDescription(Type type, string memberName)
     {
-            if (type == null)
-                return string.Empty;
-            return string.IsNullOrWhiteSpace(memberName)
-                ? string.Empty
-                : GetDescription(type.GetTypeInfo().GetMember(memberName).FirstOrDefault());
-        }
+        if (type == null)
+            return string.Empty;
+        return string.IsNullOrWhiteSpace(memberName)
+            ? string.Empty
+            : GetDescription(type.GetTypeInfo().GetMember(memberName).FirstOrDefault());
+    }
 
     /// <summary>
     /// 获取类型成员描述，使用<see cref="DescriptionAttribute"/>设置描述
@@ -45,12 +45,12 @@ internal static class Reflection
     /// <param name="member">成员</param>
     public static string GetDescription(MemberInfo member)
     {
-            if (member == null)
-                return string.Empty;
-            return member.GetCustomAttribute<DescriptionAttribute>() is DescriptionAttribute attribute
-                ? attribute.Description
-                : member.Name;
-        }
+        if (member == null)
+            return string.Empty;
+        return member.GetCustomAttribute<DescriptionAttribute>() is DescriptionAttribute attribute
+            ? attribute.Description
+            : member.Name;
+    }
 
     #endregion
 }

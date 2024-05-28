@@ -18,12 +18,12 @@ public class SwaggerResponseHeaderAttribute : Attribute
     /// <param name="format">格式化</param>
     public SwaggerResponseHeaderAttribute(int statusCode, string name, string type, string description, string format = "")
     {
-            StatusCodes = new[] { statusCode };
-            Name = name;
-            Type = type;
-            Description = description;
-            Format = format;
-        }
+        StatusCodes = new[] { statusCode };
+        Name = name;
+        Type = type;
+        Description = description;
+        Format = format;
+    }
 
     /// <summary>
     /// 初始化一个<see cref="SwaggerResponseHeaderAttribute"/>类型的实例
@@ -36,12 +36,12 @@ public class SwaggerResponseHeaderAttribute : Attribute
     public SwaggerResponseHeaderAttribute(int[] statusCode, string name, string type, string description,
         string format = "")
     {
-            StatusCodes = statusCode;
-            Name = name;
-            Type = type;
-            Description = description;
-            Format = format;
-        }
+        StatusCodes = statusCode;
+        Name = name;
+        Type = type;
+        Description = description;
+        Format = format;
+    }
 
     /// <summary>
     /// 状态码

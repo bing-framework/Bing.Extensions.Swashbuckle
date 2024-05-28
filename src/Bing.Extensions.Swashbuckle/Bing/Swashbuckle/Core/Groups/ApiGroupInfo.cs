@@ -40,7 +40,7 @@ internal class ApiGroupInfo
     /// <param name="version">版本号</param>
     public void AddItem(string name, string version)
     {
-        if(string.IsNullOrEmpty(name))
+        if (string.IsNullOrEmpty(name))
             return;
         if (ApiVersions.Any(x => x.Name == name && x.Version == version))
             return;

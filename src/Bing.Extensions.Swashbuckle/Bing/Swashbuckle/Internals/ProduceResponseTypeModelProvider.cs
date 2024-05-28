@@ -24,8 +24,8 @@ public class ProduceResponseTypeModelProvider : IApplicationModelProvider
     /// </summary>
     public ProduceResponseTypeModelProvider()
     {
-            _options = BuildContext.Instance.ExOptions;
-        }
+        _options = BuildContext.Instance.ExOptions;
+    }
 
     /// <inheritdoc />
     public int Order => 3;
@@ -33,45 +33,45 @@ public class ProduceResponseTypeModelProvider : IApplicationModelProvider
     /// <inheritdoc />
     public void OnProvidersExecuting(ApplicationModelProviderContext context)
     {
-            foreach (var controller in context.Result.Controllers)
+        foreach (var controller in context.Result.Controllers)
+        {
+            foreach (var action in controller.Actions)
             {
-                foreach (var action in controller.Actions)
+                // 假设所有操作类型都是 Task<ActionResult<ReturnType>>
+                //Type returnType = null;
+
+                var actionMethodReturnType = action.ActionMethod.ReturnType;
+                var actualReturnType = default(Type);
+                if (actionMethodReturnType == typeof(Task) || actionMethodReturnType.BaseType == typeof(Task)) // 异步类型处理
                 {
-                    // 假设所有操作类型都是 Task<ActionResult<ReturnType>>
-                    //Type returnType = null;
-
-                    var actionMethodReturnType = action.ActionMethod.ReturnType;
-                    var actualReturnType = default(Type);
-                    if (actionMethodReturnType == typeof(Task) || actionMethodReturnType.BaseType == typeof(Task)) // 异步类型处理
+                    if ((actionMethodReturnType.GenericTypeArguments?.Length ?? 0) > 0)
                     {
-                        if ((actionMethodReturnType.GenericTypeArguments?.Length ?? 0) > 0)
+                        // 返回类型：Task<IActionResult<ReturnType>> 或者 Task<ActionResult<ReturnType>>
+                        var firstGenericType = actionMethodReturnType.GenericTypeArguments[0];
+                        if (firstGenericType != typeof(IActionResult))
                         {
-                            // 返回类型：Task<IActionResult<ReturnType>> 或者 Task<ActionResult<ReturnType>>
-                            var firstGenericType = actionMethodReturnType.GenericTypeArguments[0];
-                            if (firstGenericType != typeof(IActionResult))
-                            {
-                                actualReturnType = GetResultDataType(firstGenericType);
-                            }
-                        }
-                        else
-                        {
-                            // 处理Task
-                            actualReturnType = actionMethodReturnType;
+                            actualReturnType = GetResultDataType(firstGenericType);
                         }
                     }
-                    else if (actionMethodReturnType != typeof(IActionResult) && actionMethodReturnType != typeof(ActionResult)) // 同步类型处理
+                    else
                     {
-                        actualReturnType = GetResultDataType(actionMethodReturnType);
+                        // 处理Task
+                        actualReturnType = actionMethodReturnType;
                     }
+                }
+                else if (actionMethodReturnType != typeof(IActionResult) && actionMethodReturnType != typeof(ActionResult)) // 同步类型处理
+                {
+                    actualReturnType = GetResultDataType(actionMethodReturnType);
+                }
 
-                    if (actualReturnType != default)
-                    {
-                        var firstGenericType = actualReturnType;
-                        _options?.GlobalResponseWrapperAction(action, firstGenericType, IsVoid(firstGenericType));
-                    }
+                if (actualReturnType != default)
+                {
+                    var firstGenericType = actualReturnType;
+                    _options?.GlobalResponseWrapperAction(action, firstGenericType, IsVoid(firstGenericType));
                 }
             }
         }
+    }
 
     /// <summary>
     /// 获取结果数据类型
@@ -79,12 +79,12 @@ public class ProduceResponseTypeModelProvider : IApplicationModelProvider
     /// <param name="returnType">返回类型</param>
     private Type GetResultDataType(Type returnType)
     {
-            if (returnType == null)
-                throw new ArgumentNullException(nameof(returnType));
-            return returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(ActionResult<>)
-                ? returnType.GetGenericArguments()[0]
-                : returnType;
-        }
+        if (returnType == null)
+            throw new ArgumentNullException(nameof(returnType));
+        return returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(ActionResult<>)
+            ? returnType.GetGenericArguments()[0]
+            : returnType;
+    }
 
     /// <summary>
     /// 是否无结果返回
@@ -92,16 +92,16 @@ public class ProduceResponseTypeModelProvider : IApplicationModelProvider
     /// <param name="returnType">返回类型</param>
     private bool IsVoid(Type returnType)
     {
-            // 返回 void 类型
-            if (returnType == typeof(void))
-                return true;
-            if (returnType == typeof(Task))
-                return true;
-            return false;
-        }
+        // 返回 void 类型
+        if (returnType == typeof(void))
+            return true;
+        if (returnType == typeof(Task))
+            return true;
+        return false;
+    }
 
     /// <inheritdoc />
     public void OnProvidersExecuted(ApplicationModelProviderContext context)
     {
-        }
+    }
 }

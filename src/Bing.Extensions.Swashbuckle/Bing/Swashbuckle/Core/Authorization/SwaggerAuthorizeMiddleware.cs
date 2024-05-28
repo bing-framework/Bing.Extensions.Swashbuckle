@@ -71,7 +71,7 @@ internal class SwaggerAuthorizeMiddleware
                 }
 
                 context.Response.Cookies.Append(SWAGGER_AUTH_COOKIE, user.Token,
-                    new CookieOptions() {Expires = DateTimeOffset.Now.AddMonths(1)});
+                    new CookieOptions() { Expires = DateTimeOffset.Now.AddMonths(1) });
                 context.Response.Redirect($"/{_options.RoutePrefix}");
             }
         }

@@ -37,13 +37,13 @@ internal static class BuildContextExtensions
     /// <param name="context">构建上下文</param>
     public static List<ApiGroupInfo> GetApiGroups(this BuildContext context)
     {
-            if (!context.Items.ContainsKey(DocsMap))
-            {
-                var list = new List<ApiGroupInfo>();
-                context.SetApiGroups(list);
-            }
-            return context.GetItem<List<ApiGroupInfo>>(DocsMap);
+        if (!context.Items.ContainsKey(DocsMap))
+        {
+            var list = new List<ApiGroupInfo>();
+            context.SetApiGroups(list);
         }
+        return context.GetItem<List<ApiGroupInfo>>(DocsMap);
+    }
 
     /// <summary>
     /// 设置API分组
@@ -58,13 +58,13 @@ internal static class BuildContextExtensions
     /// <param name="context">构建上下文</param>
     public static IDictionary<string, string> GetUrlMaps(this BuildContext context)
     {
-            if (!context.Items.ContainsKey(UrlMap))
-            {
-                var dictionary = new Dictionary<string, string>();
-                context.SetUrlMaps(dictionary);
-            }
-            return context.GetItem<IDictionary<string, string>>(UrlMap);
+        if (!context.Items.ContainsKey(UrlMap))
+        {
+            var dictionary = new Dictionary<string, string>();
+            context.SetUrlMaps(dictionary);
         }
+        return context.GetItem<IDictionary<string, string>>(UrlMap);
+    }
 
     /// <summary>
     /// 设置地址映射字典
@@ -73,10 +73,10 @@ internal static class BuildContextExtensions
     /// <param name="dictionary">字典</param>
     public static void SetUrlMaps(this BuildContext context, IDictionary<string, string> dictionary)
     {
-            if (dictionary == null)
-                return;
-            context.SetItem(UrlMap, dictionary);
-        }
+        if (dictionary == null)
+            return;
+        context.SetItem(UrlMap, dictionary);
+    }
 
     /// <summary>
     /// 获取信息映射字典
@@ -84,14 +84,14 @@ internal static class BuildContextExtensions
     /// <param name="context">构建上下文</param>
     public static IDictionary<string, OpenApiInfo> GetInfoMaps(this BuildContext context)
     {
-            if (!context.Items.ContainsKey(InfoMap))
-            {
-                var dictionary = new Dictionary<string, OpenApiInfo>();
-                context.SetInfoMaps(dictionary);
-            }
-
-            return context.GetItem<IDictionary<string, OpenApiInfo>>(InfoMap);
+        if (!context.Items.ContainsKey(InfoMap))
+        {
+            var dictionary = new Dictionary<string, OpenApiInfo>();
+            context.SetInfoMaps(dictionary);
         }
+
+        return context.GetItem<IDictionary<string, OpenApiInfo>>(InfoMap);
+    }
 
     /// <summary>
     /// 设置信息映射字典
@@ -100,10 +100,10 @@ internal static class BuildContextExtensions
     /// <param name="dictionary">字典</param>
     public static void SetInfoMaps(this BuildContext context, IDictionary<string, OpenApiInfo> dictionary)
     {
-            if (dictionary == null)
-                return;
-            context.SetItem(InfoMap, dictionary);
-        }
+        if (dictionary == null)
+            return;
+        context.SetItem(InfoMap, dictionary);
+    }
 
     /// <summary>
     /// 获取API分组上下文
@@ -111,13 +111,13 @@ internal static class BuildContextExtensions
     /// <param name="context">构建上下文</param>
     public static ApiGroupContext GetApiGroupContext(this BuildContext context)
     {
-            if (!context.Items.ContainsKey(ApiGroupContext))
-            {
-                var builder = new ApiGroupContextBuilder();
-                context.SetApiGroupContext(builder.Build());
-            }
-            return context.GetItem<ApiGroupContext>(ApiGroupContext);
+        if (!context.Items.ContainsKey(ApiGroupContext))
+        {
+            var builder = new ApiGroupContextBuilder();
+            context.SetApiGroupContext(builder.Build());
         }
+        return context.GetItem<ApiGroupContext>(ApiGroupContext);
+    }
 
     /// <summary>
     /// 设置API分组上下文
@@ -126,8 +126,8 @@ internal static class BuildContextExtensions
     /// <param name="apiGroupContext">API分组上下文</param>
     public static void SetApiGroupContext(this BuildContext context, ApiGroupContext apiGroupContext)
     {
-            if (apiGroupContext == null)
-                return;
-            context.SetItem(ApiGroupContext, apiGroupContext);
-        }
+        if (apiGroupContext == null)
+            return;
+        context.SetItem(ApiGroupContext, apiGroupContext);
+    }
 }

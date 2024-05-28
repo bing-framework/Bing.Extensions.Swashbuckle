@@ -65,7 +65,7 @@ public class SwaggerExOptions
     /// <remarks>
     /// 0 : 值, 1 : 名称, 2 : 描述
     /// </remarks>
-    public string EnumItemFormat { get; set; }  = "<b>{0} - {1}</b>: {2}";
+    public string EnumItemFormat { get; set; } = "<b>{0} - {1}</b>: {2}";
 
     /// <summary>
     /// Swagger授权登录账号，未指定则不启用

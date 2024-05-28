@@ -24,11 +24,11 @@ public static class SwaggerGenExtensions
     /// <param name="options">Swagger生成选项</param>
     public static void ShowEnumDescription(this SwaggerGenOptions options)
     {
-            if (!options.SchemaFilterDescriptors.Exists(x => x.Type == typeof(EnumDescriptionSchemaFilter)))
-                options.SchemaFilter<EnumDescriptionSchemaFilter>();
-            if (!options.ParameterFilterDescriptors.Exists(x => x.Type == typeof(EnumDescriptionsParameterFilter)))
-                options.ParameterFilter<EnumDescriptionsParameterFilter>();
-        }
+        if (!options.SchemaFilterDescriptors.Exists(x => x.Type == typeof(EnumDescriptionSchemaFilter)))
+            options.SchemaFilter<EnumDescriptionSchemaFilter>();
+        if (!options.ParameterFilterDescriptors.Exists(x => x.Type == typeof(EnumDescriptionsParameterFilter)))
+            options.ParameterFilter<EnumDescriptionsParameterFilter>();
+    }
 
     #endregion
 
@@ -41,9 +41,9 @@ public static class SwaggerGenExtensions
     /// <param name="orderByDesc">是否降序排序</param>
     public static void OrderByController(this SwaggerGenOptions options, bool orderByDesc = false)
     {
-            if (!options.DocumentFilterDescriptors.Exists(x => x.Type == typeof(TagReOrderDocumentFilter)))
-                options.DocumentFilter<TagReOrderDocumentFilter>(orderByDesc);
-        }
+        if (!options.DocumentFilterDescriptors.Exists(x => x.Type == typeof(TagReOrderDocumentFilter)))
+            options.DocumentFilter<TagReOrderDocumentFilter>(orderByDesc);
+    }
 
     #endregion
 
@@ -55,9 +55,9 @@ public static class SwaggerGenExtensions
     /// <param name="options">Swagger生成选项</param>
     public static void ShowActionCount(this SwaggerGenOptions options)
     {
-            if (!options.DocumentFilterDescriptors.Exists(x => x.Type == typeof(AppendActionCountToTagSummaryDocumentFilter)))
-                options.DocumentFilter<AppendActionCountToTagSummaryDocumentFilter>();
-        }
+        if (!options.DocumentFilterDescriptors.Exists(x => x.Type == typeof(AppendActionCountToTagSummaryDocumentFilter)))
+            options.DocumentFilter<AppendActionCountToTagSummaryDocumentFilter>();
+    }
 
     #endregion
 
@@ -68,10 +68,10 @@ public static class SwaggerGenExtensions
     /// <param name="options">Swagger生成选项</param>
     public static void ShowFileParameter(this SwaggerGenOptions options)
     {
-            if (options.OperationFilterDescriptors.Exists(x => x.Type == typeof(FileParameterOperationFilter)))
-                return;
-            options.OperationFilter<FileParameterOperationFilter>();
-        }
+        if (options.OperationFilterDescriptors.Exists(x => x.Type == typeof(FileParameterOperationFilter)))
+            return;
+        options.OperationFilter<FileParameterOperationFilter>();
+    }
 
     /// <summary>
     /// 添加通用参数参数
@@ -80,10 +80,10 @@ public static class SwaggerGenExtensions
     /// <param name="parameters">参数列表</param>
     public static void AddCommonParameter(this SwaggerGenOptions options, IEnumerable<OpenApiParameter> parameters)
     {
-            if (options.OperationFilterDescriptors.Exists(x => x.Type == typeof(CommonParametersOperationFilter)))
-                return;
-            options.OperationFilter<CommonParametersOperationFilter>(parameters);
-        }
+        if (options.OperationFilterDescriptors.Exists(x => x.Type == typeof(CommonParametersOperationFilter)))
+            return;
+        options.OperationFilter<CommonParametersOperationFilter>(parameters);
+    }
 
     /// <summary>
     /// 显示Url模式
@@ -92,22 +92,22 @@ public static class SwaggerGenExtensions
     /// <param name="mode">显示Url模式</param>
     public static void ShowUrlMode(this SwaggerGenOptions options, UrlShowMode mode = UrlShowMode.FirstLowercase)
     {
-            switch (mode)
-            {
-                case UrlShowMode.FirstLowercase:
-                    options.AddDocumentFilter<FirstLowerUrlDocumentFilter>();
-                    break;
-                case UrlShowMode.AllLowercase:
-                    options.AddDocumentFilter<LowerUrlDocumentFilter>();
-                    break;
-                case UrlShowMode.FirstUppercase:
-                    options.AddDocumentFilter<FirstUpperUrlDocumentFilter>();
-                    break;
-                case UrlShowMode.AllUppercase:
-                    options.AddDocumentFilter<UpperUrlDocumentFilter>();
-                    break;
-            }
+        switch (mode)
+        {
+            case UrlShowMode.FirstLowercase:
+                options.AddDocumentFilter<FirstLowerUrlDocumentFilter>();
+                break;
+            case UrlShowMode.AllLowercase:
+                options.AddDocumentFilter<LowerUrlDocumentFilter>();
+                break;
+            case UrlShowMode.FirstUppercase:
+                options.AddDocumentFilter<FirstUpperUrlDocumentFilter>();
+                break;
+            case UrlShowMode.AllUppercase:
+                options.AddDocumentFilter<UpperUrlDocumentFilter>();
+                break;
         }
+    }
 
     /// <summary>
     /// 添加文档过滤器
@@ -119,10 +119,10 @@ public static class SwaggerGenExtensions
         params object[] arguments)
         where TDocumentFilter : IDocumentFilter
     {
-            if (options.DocumentFilterDescriptors.Exists(x => x.Type == typeof(TDocumentFilter)))
-                return;
-            options.DocumentFilter<TDocumentFilter>(arguments);
-        }
+        if (options.DocumentFilterDescriptors.Exists(x => x.Type == typeof(TDocumentFilter)))
+            return;
+        options.DocumentFilter<TDocumentFilter>(arguments);
+    }
 
     /// <summary>
     /// 添加操作过滤器
@@ -134,10 +134,10 @@ public static class SwaggerGenExtensions
         params object[] arguments)
         where TOperationFilter : IOperationFilter
     {
-            if (options.OperationFilterDescriptors.Exists(x => x.Type == typeof(TOperationFilter)))
-                return;
-            options.OperationFilter<TOperationFilter>(arguments);
-        }
+        if (options.OperationFilterDescriptors.Exists(x => x.Type == typeof(TOperationFilter)))
+            return;
+        options.OperationFilter<TOperationFilter>(arguments);
+    }
 
     /// <summary>
     /// 启用请求头过滤器
@@ -157,9 +157,9 @@ public static class SwaggerGenExtensions
     /// <param name="options">Swagger生成选项</param>
     public static void ShowAuthorizeInfo(this SwaggerGenOptions options)
     {
-            options.AddOperationFilter<SecurityRequirementsOperationFilter>();
-            options.AddOperationFilter<AppendAuthorizeToSummaryOperationFilter>();
-        }
+        options.AddOperationFilter<SecurityRequirementsOperationFilter>();
+        options.AddOperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+    }
 
     /// <summary>
     /// 启用默认值过滤器

@@ -14,9 +14,9 @@ internal class EnumDescriptionSchemaFilter : EnumHandleBase, ISchemaFilter
     /// </summary>
     public void Apply(OpenApiSchema schema, SchemaFilterContext context)
     {
-            var type = context.Type;
-            if(!type.IsEnum)
-                return;
-            schema.Description = FormatDescription(schema.Description, type);
-        }
+        var type = Nullable.GetUnderlyingType(context.Type) ?? context.Type;
+        if (!type.IsEnum)
+            return;
+        schema.Description = FormatDescription(schema.Description, type);
+    }
 }

@@ -5,7 +5,7 @@ namespace Bing.Swashbuckle.Attributes;
 /// <summary>
 /// Swagger：Api分组信息。用于显示在界面版本选择名称
 /// </summary>
-[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property| AttributeTargets.Enum)]
+[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Enum)]
 public class SwaggerApiGroupInfoAttribute : Attribute
 {
     /// <summary>
@@ -23,7 +23,7 @@ public class SwaggerApiGroupInfoAttribute : Attribute
     /// </summary>
     public SwaggerApiGroupInfoAttribute()
     {
-        }
+    }
 
     /// <summary>
     /// 初始化一个<see cref="SwaggerApiGroupInfoAttribute"/>类型的实例
@@ -32,7 +32,7 @@ public class SwaggerApiGroupInfoAttribute : Attribute
     /// <param name="description">描述</param>
     public SwaggerApiGroupInfoAttribute(string title, string description)
     {
-            Title = title;
-            Description = description;
-        }
+        Title = title;
+        Description = description;
+    }
 }

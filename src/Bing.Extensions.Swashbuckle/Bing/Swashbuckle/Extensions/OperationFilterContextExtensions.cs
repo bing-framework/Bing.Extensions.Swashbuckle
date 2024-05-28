@@ -16,7 +16,7 @@ internal static class OperationFilterContextExtensions
     /// </summary>
     /// <typeparam name="TAttribute">特性类型</typeparam>
     /// <param name="context">操作过滤器上下文</param>
-    public static IEnumerable<TAttribute> GetControllerAndActionAttributes<TAttribute>(this OperationFilterContext context) 
+    public static IEnumerable<TAttribute> GetControllerAndActionAttributes<TAttribute>(this OperationFilterContext context)
         where TAttribute : Attribute
     {
         var controllerAttributes = context.MethodInfo.DeclaringType.GetTypeInfo().GetCustomAttributes<TAttribute>();

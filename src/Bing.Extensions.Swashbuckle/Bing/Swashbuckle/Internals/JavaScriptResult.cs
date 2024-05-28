@@ -13,7 +13,7 @@ public class JavaScriptResult : ContentResult
     /// <param name="script">js</param>
     public JavaScriptResult(string script)
     {
-            this.Content = script;
-            this.ContentType = "application/javascript";
-        }
+        this.Content = script;
+        this.ContentType = "application/javascript";
+    }
 }

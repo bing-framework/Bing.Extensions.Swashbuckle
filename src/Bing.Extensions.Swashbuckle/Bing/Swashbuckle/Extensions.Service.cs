@@ -21,21 +21,21 @@ public static partial class Extensions
     /// <param name="setupAction">操作配置</param>
     public static IServiceCollection AddSwaggerEx(this IServiceCollection services, Action<SwaggerExOptions> setupAction = null)
     {
-            services.TryAddTransient<ISchemaGenerator, FixSchemaGenerator>();
-            setupAction?.Invoke(BuildContext.Instance.ExOptions);
-            // 注入缓存
-            if (BuildContext.Instance.ExOptions.EnableCached)
-                services.TryAddTransient<ISwaggerProvider, CachingSwaggerProvider>();
-            // 注入自定义应用模型
-            if (BuildContext.Instance.ExOptions.GlobalResponseWrapperAction != null)
-                services.TryAddEnumerable(ServiceDescriptor.Transient<IApplicationModelProvider, ProduceResponseTypeModelProvider>());
-            services.AddSwaggerGen(o =>
-            {
-                BuildContext.Instance.ExOptions.InitSwaggerGenOptions(o);
-                BuildContext.Instance.Build();
-            });
-            return services;
-        }
+        services.TryAddTransient<ISchemaGenerator, FixSchemaGenerator>();
+        setupAction?.Invoke(BuildContext.Instance.ExOptions);
+        // 注入缓存
+        if (BuildContext.Instance.ExOptions.EnableCached)
+            services.TryAddTransient<ISwaggerProvider, CachingSwaggerProvider>();
+        // 注入自定义应用模型
+        if (BuildContext.Instance.ExOptions.GlobalResponseWrapperAction != null)
+            services.TryAddEnumerable(ServiceDescriptor.Transient<IApplicationModelProvider, ProduceResponseTypeModelProvider>());
+        services.AddSwaggerGen(o =>
+        {
+            BuildContext.Instance.ExOptions.InitSwaggerGenOptions(o);
+            BuildContext.Instance.Build();
+        });
+        return services;
+    }
 
     /// <summary>
     /// 添加Swagger文档缓存。必须在 AddSwaggerGen() 方法之后使用。

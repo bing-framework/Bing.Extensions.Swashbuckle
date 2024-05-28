@@ -49,7 +49,7 @@ internal class BuildContext
     /// </summary>
     /// <typeparam name="TItem">类型</typeparam>
     /// <param name="key">键</param>
-    public TItem GetItem<TItem>(string key) => (TItem) Items[key];
+    public TItem GetItem<TItem>(string key) => (TItem)Items[key];
 
     /// <summary>
     /// 设置对象
@@ -131,9 +131,9 @@ internal class BuildContext
     /// </summary>
     private void BuildDocInclusionPredicateByApiGroup()
     {
-        if(ExOptions.EnableApiVersion)
+        if (ExOptions.EnableApiVersion)
             return;
-        if(!ExOptions.EnableApiGroup())
+        if (!ExOptions.EnableApiGroup())
             return;
         ExOptions.SwaggerGenOptions.DocInclusionPredicate((docName, apiDescription) =>
         {
@@ -143,7 +143,7 @@ internal class BuildContext
                     return false;
                 return string.IsNullOrWhiteSpace(apiDescription.GroupName);
             }
-                    
+
             foreach (var obj in apiDescription.ActionDescriptor.EndpointMetadata)
             {
                 if (!(obj is SwaggerApiGroupAttribute swaggerApiGroup))
@@ -172,16 +172,16 @@ internal class BuildContext
     /// </summary>
     private void BuildDocInclusionPredicateByApiVersionWithGroup()
     {
-        if(!ExOptions.EnableApiGroup())
+        if (!ExOptions.EnableApiGroup())
             return;
-        if(!ExOptions.EnableApiVersion)
+        if (!ExOptions.EnableApiVersion)
             return;
         ExOptions.SwaggerGenOptions.DocInclusionPredicate((docName, apiDescription) =>
         {
             // 无分组处理
             if (docName.StartsWith("NoGroup"))
             {
-                if(ExistsApiGroupAttribute(apiDescription.ActionDescriptor))
+                if (ExistsApiGroupAttribute(apiDescription.ActionDescriptor))
                     return false;
                 if (docName == $"NoGroup{apiDescription.GroupName}")
                     return true;

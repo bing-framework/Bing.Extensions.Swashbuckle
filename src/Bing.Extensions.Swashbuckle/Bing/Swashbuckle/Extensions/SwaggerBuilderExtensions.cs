@@ -18,19 +18,19 @@ public static class SwaggerBuilderExtensions
     /// <param name="setupAction">配置操作</param>
     public static IApplicationBuilder UseSwaggerEx(this IApplicationBuilder app, Action<SwaggerExOptions> setupAction = null)
     {
-            BuildContext.Instance.ServiceProvider = app.ApplicationServices;
-            // 初始化配置信息
-            setupAction?.Invoke(BuildContext.Instance.ExOptions);
-            if (BuildContext.Instance.ExOptions.EnableAuthorization())
-                app.UseMiddleware<SwaggerAuthorizeMiddleware>();
-            app.UseSwagger(o =>
-                {
-                    BuildContext.Instance.ExOptions.InitSwaggerOptions(o);
-                })
-                .UseSwaggerUI(o =>
-                {
-                    BuildContext.Instance.ExOptions.InitSwaggerUiOptions(o);
-                });
-            return app;
-        }
+        BuildContext.Instance.ServiceProvider = app.ApplicationServices;
+        // 初始化配置信息
+        setupAction?.Invoke(BuildContext.Instance.ExOptions);
+        if (BuildContext.Instance.ExOptions.EnableAuthorization())
+            app.UseMiddleware<SwaggerAuthorizeMiddleware>();
+        app.UseSwagger(o =>
+            {
+                BuildContext.Instance.ExOptions.InitSwaggerOptions(o);
+            })
+            .UseSwaggerUI(o =>
+            {
+                BuildContext.Instance.ExOptions.InitSwaggerUiOptions(o);
+            });
+        return app;
+    }
 }

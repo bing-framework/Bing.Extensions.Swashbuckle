@@ -8,7 +8,7 @@ namespace Bing.Swashbuckle.Filters.Documents;
 /// <summary>
 /// 控制器方法计数 文档过滤
 /// </summary>
-internal class AppendActionCountToTagSummaryDocumentFilter: IDocumentFilter
+internal class AppendActionCountToTagSummaryDocumentFilter : IDocumentFilter
 {
     /// <summary>
     /// 重写操作处理
@@ -21,7 +21,7 @@ internal class AppendActionCountToTagSummaryDocumentFilter: IDocumentFilter
         foreach (var path in swaggerDoc.Paths)
         {
             var possibleParameterizedOperations = path.Value.Operations.Select(x => x.Value);
-            possibleParameterizedOperations.Where(o=>o?.Tags!=null).ToList().ForEach(x =>
+            possibleParameterizedOperations.Where(o => o?.Tags != null).ToList().ForEach(x =>
             {
                 foreach (var tag in x.Tags)
                 {

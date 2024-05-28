@@ -131,13 +131,13 @@ internal class ApiGroupContext
     /// <param name="version">版本号</param>
     public void AddApiVersion(string name, string version)
     {
-            foreach (var apiGroup in ApiGroups)
-            {
-                if (!apiGroup.IsCustomGroup)
-                    continue;
-                apiGroup.AddItem(name,version);
-            }
+        foreach (var apiGroup in ApiGroups)
+        {
+            if (!apiGroup.IsCustomGroup)
+                continue;
+            apiGroup.AddItem(name, version);
         }
+    }
 
     /// <summary>
     /// 保存API分组
@@ -147,33 +147,33 @@ internal class ApiGroupContext
     /// <param name="initAction">初始化操作</param>
     private void SaveApiGroup(string name, Action<ApiGroupInfo> setupAction = null, Action<ApiGroupInfo> initAction = null)
     {
-            var exists = true;
-            var apiGroup = ApiGroups.FirstOrDefault(x => x.Name == name);
-            if (apiGroup == null)
-            {
-                apiGroup = new ApiGroupInfo();
-                initAction?.Invoke(apiGroup);
-                exists = false;
-            }
-            setupAction?.Invoke(apiGroup);
-            if(!exists)
-                ApiGroups.Add(apiGroup);
+        var exists = true;
+        var apiGroup = ApiGroups.FirstOrDefault(x => x.Name == name);
+        if (apiGroup == null)
+        {
+            apiGroup = new ApiGroupInfo();
+            initAction?.Invoke(apiGroup);
+            exists = false;
         }
+        setupAction?.Invoke(apiGroup);
+        if (!exists)
+            ApiGroups.Add(apiGroup);
+    }
 
     /// <summary>
     /// 获取信息列表
     /// </summary>
     public IDictionary<string, OpenApiInfo> GetInfos()
     {
-            var dict = new Dictionary<string, OpenApiInfo>();
-            foreach (var apiGroup in ApiGroups)
-            {
-                foreach (var apiVersion in apiGroup.ApiVersions)
-                    dict[apiVersion.GetName()] = CreateInfo(apiVersion);
-            }
-
-            return dict;
+        var dict = new Dictionary<string, OpenApiInfo>();
+        foreach (var apiGroup in ApiGroups)
+        {
+            foreach (var apiVersion in apiGroup.ApiVersions)
+                dict[apiVersion.GetName()] = CreateInfo(apiVersion);
         }
+
+        return dict;
+    }
 
     /// <summary>
     /// 创建信息
@@ -192,16 +192,16 @@ internal class ApiGroupContext
     /// </summary>
     public IDictionary<string, string> GetEndpoints()
     {
-            var dict = new Dictionary<string, string>();
-            foreach (var apiGroup in ApiGroups)
+        var dict = new Dictionary<string, string>();
+        foreach (var apiGroup in ApiGroups)
+        {
+            foreach (var apiVersion in apiGroup.ApiVersions)
             {
-                foreach (var apiVersion in apiGroup.ApiVersions)
-                {
-                    Debug.WriteLine($"Endpoints: [{apiVersion.Title}, {apiVersion.GetName()}]");
-                    dict[apiVersion.Title] = $"{apiVersion.GetName()}/swagger.json";
-                }
+                Debug.WriteLine($"Endpoints: [{apiVersion.Title}, {apiVersion.GetName()}]");
+                dict[apiVersion.Title] = $"{apiVersion.GetName()}/swagger.json";
             }
-
-            return dict;
         }
+
+        return dict;
+    }
 }

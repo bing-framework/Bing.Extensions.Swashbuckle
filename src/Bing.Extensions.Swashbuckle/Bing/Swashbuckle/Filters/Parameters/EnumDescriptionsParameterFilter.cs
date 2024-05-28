@@ -14,17 +14,17 @@ internal class EnumDescriptionsParameterFilter : EnumHandleBase, IParameterFilte
     /// </summary>
     public void Apply(OpenApiParameter parameter, ParameterFilterContext context)
     {
-            if (context.PropertyInfo != null)
-            {
-                var type = context.PropertyInfo?.PropertyType;
-                SetDescription(parameter,type);
-            }
-            else
-            {
-                var type = context.ParameterInfo?.ParameterType;
-                SetDescription(parameter, type);
-            }
+        if (context.PropertyInfo != null)
+        {
+            var type = context.PropertyInfo?.PropertyType;
+            SetDescription(parameter, type);
         }
+        else
+        {
+            var type = context.ParameterInfo?.ParameterType;
+            SetDescription(parameter, type);
+        }
+    }
 
     /// <summary>
     /// 设置API参数描述信息
@@ -33,9 +33,9 @@ internal class EnumDescriptionsParameterFilter : EnumHandleBase, IParameterFilte
     /// <param name="type">类型</param>
     private void SetDescription(OpenApiParameter parameter, Type type)
     {
-            if (type == null)
-                return;
-            if (type.IsEnum)
-                parameter.Description = FormatDescription(parameter.Description, type);
-        }
+        if (type == null)
+            return;
+        if (type.IsEnum)
+            parameter.Description = FormatDescription(parameter.Description, type);
+    }
 }

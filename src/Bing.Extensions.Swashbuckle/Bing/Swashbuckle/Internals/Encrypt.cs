@@ -26,12 +26,12 @@ internal static class Encrypt
     /// <param name="encoding">字符编码</param>
     public static string HmacSha256(string value, string key, Encoding encoding)
     {
-            if (string.IsNullOrWhiteSpace(value) || string.IsNullOrWhiteSpace(key))
-                return string.Empty;
-            var sha256 = new HMACSHA256(encoding.GetBytes(key));
-            var hash = sha256.ComputeHash(encoding.GetBytes(value));
-            return string.Join("", hash.ToList().Select(x => x.ToString("x2")).ToArray());
-        }
+        if (string.IsNullOrWhiteSpace(value) || string.IsNullOrWhiteSpace(key))
+            return string.Empty;
+        var sha256 = new HMACSHA256(encoding.GetBytes(key));
+        var hash = sha256.ComputeHash(encoding.GetBytes(value));
+        return string.Join("", hash.ToList().Select(x => x.ToString("x2")).ToArray());
+    }
 
     #endregion
 }

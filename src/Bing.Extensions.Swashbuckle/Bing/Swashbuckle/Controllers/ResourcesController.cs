@@ -57,7 +57,7 @@ public class ResourcesController : Controller
     {
         var result = new ContentResult
         {
-            Content = await Common.GetLanguageAsync(name), 
+            Content = await Common.GetLanguageAsync(name),
             ContentType = GetContentType("js")
         };
         return result;
