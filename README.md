@@ -1,14 +1,17 @@
 # Bing.Extensions.Swashbuckle
+
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://mit-license.org/)
 
 Bing.Extensions.Swashbuckle是扩展Swashbuckle.AspNetCore一些常用操作，便于使用以及过滤。
 
 ## Nuget
+
 |Nuget|版本号|说明|
 |---|---|---|
 |Bing.Extensions.Swashbuckle|[![NuGet Badge](https://buildstats.info/nuget/Bing.Extensions.Swashbuckle?includePreReleases=true)](https://www.nuget.org/packages/Bing.Extensions.Swashbuckle)|
 
 ## 功能
+
 - 支持多版本分组
 - 支持多API分组功能
 - 支持文件上传参数
@@ -18,20 +21,42 @@ Bing.Extensions.Swashbuckle是扩展Swashbuckle.AspNetCore一些常用操作，�
 - 支持安全请求
 - 支持显示授权信息
 - 支持自定义Url显示模式。首字母小写、首字母大写、全小写、全大写
-- 支持显示枚举描述
+- [支持显示枚举描述](#显示枚举描述)
 - 支持Swagger文档授权登录功能
 - 支持默认值设置
 - 支持控制器排序
 - 支持Token令牌存储
 - 支持控制器方法计数
-- 支持全局响应包装功能
-
+- 支持全局响应包装功能Bing.Extensions.Swashbuckle
 
 ## 依赖类库
+
 - [Swashbuckle.AspNetCore](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)
 
 ## 使用方式
-```c#
+
+### 显示枚举描述
+
+用于在请求实体与响应实体当中，显示枚举的描述信息，需要在枚举上面添加 `[Description("xxx")]` 特性，方可在文档中显示每个枚举的注释信息。
+
+```csharp
+
+public enum EnumSample
+{
+    [Description("老大")]
+    One = 1,
+    [Description("老二")]
+    Two = 2,
+    [Description("老三")]
+    Three = 3
+}
+
+// Startup.cs
+services.AddSwaggerGen(c =>
+{
+    ...
+    c.ShowEnumDescription();
+});
 
 ```
 
@@ -52,10 +77,12 @@ Bing.Extensions.Swashbuckle是扩展Swashbuckle.AspNetCore一些常用操作，�
 > 对于热心的同学，将会把你的名字放到**贡献者**名单中。
 
 ## 免责声明
+
 - 虽然我们对代码已经进行高度审查，并用于自己的项目中，但依然可能存在某些未知的BUG，如果你的生产系统蒙受损失，Bing 团队不会对此负责。
 - 出于成本的考虑，我们不会对已发布的API保持兼容，每当更新代码时，请注意该问题。
 
 ## 开源地址
+
 [https://github.com/bing-framework/Bing.Extensions.Swashbuckle](https://github.com/bing-framework/Bing.Extensions.Swashbuckle)
 
 ## License
