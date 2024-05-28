@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Bing.Swashbuckle.Filters.Schemas;
@@ -14,7 +13,7 @@ internal class EnumDescriptionSchemaFilter : EnumHandleBase, ISchemaFilter
     /// </summary>
     public void Apply(OpenApiSchema schema, SchemaFilterContext context)
     {
-        var type = Nullable.GetUnderlyingType(context.Type) ?? context.Type;
+        var type = context.Type;
         if (!type.IsEnum)
             return;
         schema.Description = FormatDescription(schema.Description, type);

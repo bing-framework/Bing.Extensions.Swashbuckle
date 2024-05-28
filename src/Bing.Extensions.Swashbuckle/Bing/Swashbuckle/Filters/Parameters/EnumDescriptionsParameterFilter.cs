@@ -35,6 +35,7 @@ internal class EnumDescriptionsParameterFilter : EnumHandleBase, IParameterFilte
     {
         if (type == null)
             return;
+        type = Nullable.GetUnderlyingType(type) ?? type;
         if (type.IsEnum)
             parameter.Description = FormatDescription(parameter.Description, type);
     }
