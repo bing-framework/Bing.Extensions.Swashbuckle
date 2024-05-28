@@ -2,20 +2,20 @@
 using Microsoft.AspNetCore.Http;
 
 // ReSharper disable once CheckNamespace
-namespace Bing.Swashbuckle
+namespace Bing.Swashbuckle;
+
+/// <summary>
+/// Swagger扩展
+/// </summary>
+public static partial class SwaggerExtensions
 {
     /// <summary>
-    /// Swagger扩展
+    /// 写入Swagger页面
     /// </summary>
-    public static partial class SwaggerExtensions
+    /// <param name="response">Http响应</param>
+    /// <param name="page">页面名称</param>
+    public static void WriteSwaggerPage(this HttpResponse response, string page)
     {
-        /// <summary>
-        /// 写入Swagger页面
-        /// </summary>
-        /// <param name="response">Http响应</param>
-        /// <param name="page">页面名称</param>
-        public static void WriteSwaggerPage(this HttpResponse response, string page)
-        {
             var currentAssembly = typeof(SwaggerExOptions).GetTypeInfo().Assembly;
             var stream = currentAssembly.GetManifestResourceStream($"{currentAssembly.GetName().Name}.Resources.{page}.html");
             if (stream == null)
@@ -26,5 +26,4 @@ namespace Bing.Swashbuckle
             response.StatusCode = StatusCodes.Status200OK;
             response.Body.Write(buffer, 0, buffer.Length);
         }
-    }
 }

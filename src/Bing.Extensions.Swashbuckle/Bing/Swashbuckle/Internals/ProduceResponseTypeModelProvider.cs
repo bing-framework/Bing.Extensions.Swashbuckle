@@ -7,32 +7,32 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Routing;
 
-namespace Bing.Swashbuckle.Internals
+namespace Bing.Swashbuckle.Internals;
+
+/// <summary>
+/// 产生响应类型模型提供程序
+/// </summary>
+public class ProduceResponseTypeModelProvider : IApplicationModelProvider
 {
     /// <summary>
-    /// 产生响应类型模型提供程序
+    /// SwaggerEx 选项配置
     /// </summary>
-    public class ProduceResponseTypeModelProvider : IApplicationModelProvider
-    {
-        /// <summary>
-        /// SwaggerEx 选项配置
-        /// </summary>
-        private readonly SwaggerExOptions _options;
+    private readonly SwaggerExOptions _options;
 
-        /// <summary>
-        /// 初始化一个<see cref="ProduceResponseTypeModelProvider"/>类型的实例
-        /// </summary>
-        public ProduceResponseTypeModelProvider()
-        {
+    /// <summary>
+    /// 初始化一个<see cref="ProduceResponseTypeModelProvider"/>类型的实例
+    /// </summary>
+    public ProduceResponseTypeModelProvider()
+    {
             _options = BuildContext.Instance.ExOptions;
         }
 
-        /// <inheritdoc />
-        public int Order => 3;
+    /// <inheritdoc />
+    public int Order => 3;
 
-        /// <inheritdoc />
-        public void OnProvidersExecuting(ApplicationModelProviderContext context)
-        {
+    /// <inheritdoc />
+    public void OnProvidersExecuting(ApplicationModelProviderContext context)
+    {
             foreach (var controller in context.Result.Controllers)
             {
                 foreach (var action in controller.Actions)
@@ -73,12 +73,12 @@ namespace Bing.Swashbuckle.Internals
             }
         }
 
-        /// <summary>
-        /// 获取结果数据类型
-        /// </summary>
-        /// <param name="returnType">返回类型</param>
-        private Type GetResultDataType(Type returnType)
-        {
+    /// <summary>
+    /// 获取结果数据类型
+    /// </summary>
+    /// <param name="returnType">返回类型</param>
+    private Type GetResultDataType(Type returnType)
+    {
             if (returnType == null)
                 throw new ArgumentNullException(nameof(returnType));
             return returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(ActionResult<>)
@@ -86,12 +86,12 @@ namespace Bing.Swashbuckle.Internals
                 : returnType;
         }
 
-        /// <summary>
-        /// 是否无结果返回
-        /// </summary>
-        /// <param name="returnType">返回类型</param>
-        private bool IsVoid(Type returnType)
-        {
+    /// <summary>
+    /// 是否无结果返回
+    /// </summary>
+    /// <param name="returnType">返回类型</param>
+    private bool IsVoid(Type returnType)
+    {
             // 返回 void 类型
             if (returnType == typeof(void))
                 return true;
@@ -100,9 +100,8 @@ namespace Bing.Swashbuckle.Internals
             return false;
         }
 
-        /// <inheritdoc />
-        public void OnProvidersExecuted(ApplicationModelProviderContext context)
-        {
+    /// <inheritdoc />
+    public void OnProvidersExecuted(ApplicationModelProviderContext context)
+    {
         }
-    }
 }

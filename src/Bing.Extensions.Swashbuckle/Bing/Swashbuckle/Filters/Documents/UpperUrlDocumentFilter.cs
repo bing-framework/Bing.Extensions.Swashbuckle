@@ -2,17 +2,16 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Bing.Swashbuckle.Filters.Documents
+namespace Bing.Swashbuckle.Filters.Documents;
+
+/// <summary>
+/// 大写Url 文档过滤器
+/// </summary>
+public class UpperUrlDocumentFilter : IDocumentFilter
 {
     /// <summary>
-    /// 大写Url 文档过滤器
+    /// 重写操作处理
     /// </summary>
-    public class UpperUrlDocumentFilter : IDocumentFilter
-    {
-        /// <summary>
-        /// 重写操作处理
-        /// </summary>
-        public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context) => swaggerDoc.Paths =
-            UrlConvert.ConvertKeys(swaggerDoc.Paths, UrlConvert.Upper);
-    }
+    public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context) => swaggerDoc.Paths =
+        UrlConvert.ConvertKeys(swaggerDoc.Paths, UrlConvert.Upper);
 }

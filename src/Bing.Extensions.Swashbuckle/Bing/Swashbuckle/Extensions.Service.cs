@@ -7,20 +7,20 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Bing.Swashbuckle
+namespace Bing.Swashbuckle;
+
+/// <summary>
+/// 服务扩展
+/// </summary>
+public static partial class Extensions
 {
     /// <summary>
-    /// 服务扩展
+    /// 注册Swagger扩展
     /// </summary>
-    public static partial class Extensions
+    /// <param name="services">服务集合</param>
+    /// <param name="setupAction">操作配置</param>
+    public static IServiceCollection AddSwaggerEx(this IServiceCollection services, Action<SwaggerExOptions> setupAction = null)
     {
-        /// <summary>
-        /// 注册Swagger扩展
-        /// </summary>
-        /// <param name="services">服务集合</param>
-        /// <param name="setupAction">操作配置</param>
-        public static IServiceCollection AddSwaggerEx(this IServiceCollection services, Action<SwaggerExOptions> setupAction = null)
-        {
             services.TryAddTransient<ISchemaGenerator, FixSchemaGenerator>();
             setupAction?.Invoke(BuildContext.Instance.ExOptions);
             // 注入缓存
@@ -37,10 +37,9 @@ namespace Bing.Swashbuckle
             return services;
         }
 
-        /// <summary>
-        /// 添加Swagger文档缓存。必须在 AddSwaggerGen() 方法之后使用。
-        /// </summary>
-        /// <param name="services">服务集合</param>
-        public static IServiceCollection AddSwaggerCaching(this IServiceCollection services) => services.Replace(ServiceDescriptor.Transient<ISwaggerProvider, CachingSwaggerProvider>());
-    }
+    /// <summary>
+    /// 添加Swagger文档缓存。必须在 AddSwaggerGen() 方法之后使用。
+    /// </summary>
+    /// <param name="services">服务集合</param>
+    public static IServiceCollection AddSwaggerCaching(this IServiceCollection services) => services.Replace(ServiceDescriptor.Transient<ISwaggerProvider, CachingSwaggerProvider>());
 }

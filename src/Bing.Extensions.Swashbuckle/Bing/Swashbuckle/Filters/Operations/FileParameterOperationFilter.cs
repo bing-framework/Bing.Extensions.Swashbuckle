@@ -6,33 +6,33 @@ using Bing.Swashbuckle.Attributes;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Bing.Swashbuckle.Filters.Operations
+namespace Bing.Swashbuckle.Filters.Operations;
+
+/// <summary>
+/// 添加文件参数 操作过滤器。支持<see cref="SwaggerUploadAttribute"/>特性
+/// </summary>
+public class FileParameterOperationFilter : IOperationFilter
 {
     /// <summary>
-    /// 添加文件参数 操作过滤器。支持<see cref="SwaggerUploadAttribute"/>特性
+    /// 重写操作处理
     /// </summary>
-    public class FileParameterOperationFilter : IOperationFilter
+    /// <param name="operation">当前操作</param>
+    /// <param name="context">操作过滤器上下文</param>
+    public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
-        /// <summary>
-        /// 重写操作处理
-        /// </summary>
-        /// <param name="operation">当前操作</param>
-        /// <param name="context">操作过滤器上下文</param>
-        public void Apply(OpenApiOperation operation, OperationFilterContext context)
-        {
             if (!context.ApiDescription.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase) &&
                 !context.ApiDescription.HttpMethod.Equals("PUT", StringComparison.OrdinalIgnoreCase))
                 return;
             UploadByAttribute(operation, context);
         }
 
-        /// <summary>
-        /// 通过特性进行上传
-        /// </summary>
-        /// <param name="operation">当前操作</param>
-        /// <param name="context">操作过滤器上下文</param>
-        private void UploadByAttribute(OpenApiOperation operation, OperationFilterContext context)
-        {
+    /// <summary>
+    /// 通过特性进行上传
+    /// </summary>
+    /// <param name="operation">当前操作</param>
+    /// <param name="context">操作过滤器上下文</param>
+    private void UploadByAttribute(OpenApiOperation operation, OperationFilterContext context)
+    {
             var swaggerUpload = context.MethodInfo.GetCustomAttributes<SwaggerUploadAttribute>().FirstOrDefault();
             if (swaggerUpload == null)
                 return;
@@ -61,5 +61,4 @@ namespace Bing.Swashbuckle.Filters.Operations
             uploadFileMediaType.Schema.Required.Add(swaggerUpload.FieldName);
             operation.RequestBody = requestBody;
         }
-    }
 }

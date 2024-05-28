@@ -4,20 +4,20 @@ using Bing.Swashbuckle.Internals;
 using Microsoft.AspNetCore.Builder;
 
 // ReSharper disable once CheckNamespace
-namespace Bing.Swashbuckle
+namespace Bing.Swashbuckle;
+
+/// <summary>
+/// Swagger构建器扩展
+/// </summary>
+public static class SwaggerBuilderExtensions
 {
     /// <summary>
-    /// Swagger构建器扩展
+    /// 启用SwaggerEx
     /// </summary>
-    public static class SwaggerBuilderExtensions
+    /// <param name="app">应用构建器</param>
+    /// <param name="setupAction">配置操作</param>
+    public static IApplicationBuilder UseSwaggerEx(this IApplicationBuilder app, Action<SwaggerExOptions> setupAction = null)
     {
-        /// <summary>
-        /// 启用SwaggerEx
-        /// </summary>
-        /// <param name="app">应用构建器</param>
-        /// <param name="setupAction">配置操作</param>
-        public static IApplicationBuilder UseSwaggerEx(this IApplicationBuilder app, Action<SwaggerExOptions> setupAction = null)
-        {
             BuildContext.Instance.ServiceProvider = app.ApplicationServices;
             // 初始化配置信息
             setupAction?.Invoke(BuildContext.Instance.ExOptions);
@@ -33,5 +33,4 @@ namespace Bing.Swashbuckle
                 });
             return app;
         }
-    }
 }

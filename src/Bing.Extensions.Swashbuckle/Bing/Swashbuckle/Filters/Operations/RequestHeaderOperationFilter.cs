@@ -5,18 +5,18 @@ using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Bing.Swashbuckle.Filters.Operations
+namespace Bing.Swashbuckle.Filters.Operations;
+
+/// <summary>
+/// 添加请求头 操作过滤器
+/// </summary>
+public class RequestHeaderOperationFilter : IOperationFilter
 {
     /// <summary>
-    /// 添加请求头 操作过滤器
+    /// 重写操作处理
     /// </summary>
-    public class RequestHeaderOperationFilter : IOperationFilter
+    public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
-        /// <summary>
-        /// 重写操作处理
-        /// </summary>
-        public void Apply(OpenApiOperation operation, OperationFilterContext context)
-        {
             var swaggerRequestHeaders = context.GetControllerAndActionAttributes<SwaggerRequestHeaderAttribute>().ToList();
             if (!swaggerRequestHeaders.Any())
                 return;
@@ -43,5 +43,4 @@ namespace Bing.Swashbuckle.Filters.Operations
 
             }
         }
-    }
 }

@@ -5,23 +5,23 @@ using Microsoft.AspNetCore.Builder;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 // ReSharper disable once CheckNamespace
-namespace Bing.Swashbuckle
-{
-    /// <summary>
-    /// SwaggerUI 扩展
-    /// </summary>
-    // ReSharper disable once InconsistentNaming
-    public static class SwaggerUIExtensions
-    {
-        #region UseDefaultUI(使用默认的UI)
+namespace Bing.Swashbuckle;
 
-        /// <summary>
-        /// 使用默认的UI
-        /// </summary>
-        /// <param name="options">SwaggerUI配置</param>
-        // ReSharper disable once InconsistentNaming
-        public static void UseDefaultSwaggerUI(this SwaggerUIOptions options)
-        {
+/// <summary>
+/// SwaggerUI 扩展
+/// </summary>
+// ReSharper disable once InconsistentNaming
+public static class SwaggerUIExtensions
+{
+    #region UseDefaultUI(使用默认的UI)
+
+    /// <summary>
+    /// 使用默认的UI
+    /// </summary>
+    /// <param name="options">SwaggerUI配置</param>
+    // ReSharper disable once InconsistentNaming
+    public static void UseDefaultSwaggerUI(this SwaggerUIOptions options)
+    {
             options.DefaultModelExpandDepth(2);// 接口列表折叠配置
             options.DefaultModelRendering(ModelRendering.Example);// 控制首次呈现API时模型的显示方式（模型|示例）。
             options.DefaultModelsExpandDepth(-1);// 隐藏model
@@ -38,33 +38,33 @@ namespace Bing.Swashbuckle
             //options.EnableTryItOutByDefault();// 默认应用 TryItOut 操作
         }
 
-        #endregion
+    #endregion
 
-        #region UseCustomIndex(使用自定义首页)
+    #region UseCustomIndex(使用自定义首页)
 
-        /// <summary>
-        /// 使用自定义首页
-        /// </summary>
-        /// <param name="options">SwaggerUI选项</param>
-        public static void UseCustomSwaggerIndex(this SwaggerUIOptions options)
-        {
+    /// <summary>
+    /// 使用自定义首页
+    /// </summary>
+    /// <param name="options">SwaggerUI选项</param>
+    public static void UseCustomSwaggerIndex(this SwaggerUIOptions options)
+    {
             var currentAssembly = typeof(SwaggerExOptions).GetTypeInfo().Assembly;
             options.IndexStream = () =>
                 currentAssembly.GetManifestResourceStream($"Bing.Swashbuckle.Resources.index.html");
         }
 
-        #endregion
+    #endregion
 
-        #region UseTokenStorage(使用令牌存储)
+    #region UseTokenStorage(使用令牌存储)
 
-        /// <summary>
-        /// 使用令牌存储。解决刷新页面导致令牌丢失问题，前提必须使用 <see cref="UseCustomSwaggerIndex"/> 方法
-        /// </summary>
-        /// <param name="options">SwaggerUI选项</param>
-        /// <param name="securityDefinition">授权定义。对应于 AddSecurityDefinition 中的 name</param>
-        /// <param name="cacheType">缓存类型</param>
-        public static void UseTokenStorage(this SwaggerUIOptions options, string securityDefinition, WebCacheType cacheType = WebCacheType.Session)
-        {
+    /// <summary>
+    /// 使用令牌存储。解决刷新页面导致令牌丢失问题，前提必须使用 <see cref="UseCustomSwaggerIndex"/> 方法
+    /// </summary>
+    /// <param name="options">SwaggerUI选项</param>
+    /// <param name="securityDefinition">授权定义。对应于 AddSecurityDefinition 中的 name</param>
+    /// <param name="cacheType">缓存类型</param>
+    public static void UseTokenStorage(this SwaggerUIOptions options, string securityDefinition, WebCacheType cacheType = WebCacheType.Session)
+    {
             options.ConfigObject.AdditionalItems["token_storage"] = new TokenStorageParameter
             {
                 CacheType = cacheType,
@@ -73,47 +73,47 @@ namespace Bing.Swashbuckle
             options.ConfigObject.PersistAuthorization = true;
         }
 
-        #endregion
+    #endregion
 
-        #region UseInternalResources(使用内部资源)
+    #region UseInternalResources(使用内部资源)
 
-        /// <summary>
-        /// 使用内部资源。
-        /// </summary>
-        /// <param name="options">SwaggerUI选项</param>
-        public static void UseInternalResources(this SwaggerUIOptions options)
-        {
+    /// <summary>
+    /// 使用内部资源。
+    /// </summary>
+    /// <param name="options">SwaggerUI选项</param>
+    public static void UseInternalResources(this SwaggerUIOptions options)
+    {
             options.InjectJavascript("resources?name=jquery-3.3.1.min.js");
             options.InjectJavascript("resources?name=jquery.initialize.min.js");
             //options.InjectJavascript("/swagger/resources?name=export.js");
             options.InjectStylesheet("resources?name=swagger-common.css");
         }
 
-        #endregion
+    #endregion
 
-        #region UseTranslate(使用翻译)
+    #region UseTranslate(使用翻译)
 
-        /// <summary>
-        /// 使用翻译。
-        /// </summary>
-        /// <param name="options">SwaggerUI选项</param>
-        /// <param name="language">语言</param>
-        public static void UseTranslate(this SwaggerUIOptions options, string language="zh-cn")
-        {
+    /// <summary>
+    /// 使用翻译。
+    /// </summary>
+    /// <param name="options">SwaggerUI选项</param>
+    /// <param name="language">语言</param>
+    public static void UseTranslate(this SwaggerUIOptions options, string language="zh-cn")
+    {
             options.InjectJavascript($"resources/getLanguage?name={language}");
             options.InjectJavascript("resources?name=translate.js");
         }
 
-        #endregion
+    #endregion
 
-        /// <summary>
-        /// 添加信息
-        /// </summary>
-        /// <param name="options">SwaggerUI选项配置</param>
-        /// <param name="name">名称</param>
-        /// <param name="url">地址</param>
-        internal static void AddInfo(this SwaggerUIOptions options, string name, string url)
-        {
+    /// <summary>
+    /// 添加信息
+    /// </summary>
+    /// <param name="options">SwaggerUI选项配置</param>
+    /// <param name="name">名称</param>
+    /// <param name="url">地址</param>
+    internal static void AddInfo(this SwaggerUIOptions options, string name, string url)
+    {
             if (options.ExistsApiVersion(name, url))
                 return;
             var urlMaps = BuildContext.Instance.GetUrlMaps();
@@ -121,17 +121,16 @@ namespace Bing.Swashbuckle
             options.SwaggerEndpoint(url, name);
         }
 
-        /// <summary>
-        /// 是否存在Api版本
-        /// </summary>
-        /// <param name="options">SwaggerUI选项</param>
-        /// <param name="name">名称</param>
-        /// <param name="url">地址</param>
-        internal static bool ExistsApiVersion(this SwaggerUIOptions options, string name, string url)
-        {
+    /// <summary>
+    /// 是否存在Api版本
+    /// </summary>
+    /// <param name="options">SwaggerUI选项</param>
+    /// <param name="name">名称</param>
+    /// <param name="url">地址</param>
+    internal static bool ExistsApiVersion(this SwaggerUIOptions options, string name, string url)
+    {
             if (options?.ConfigObject?.Urls == null)
                 return false;
             return options.ConfigObject.Urls.Any(x => x.Name == name || x.Url == url);
         }
-    }
 }

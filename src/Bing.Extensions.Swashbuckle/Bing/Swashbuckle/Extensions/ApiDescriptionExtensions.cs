@@ -2,19 +2,19 @@
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 // ReSharper disable once CheckNamespace
-namespace Bing.Swashbuckle
+namespace Bing.Swashbuckle;
+
+/// <summary>
+/// Api描述器(<see cref="ApiDescription"/>) 扩展
+/// </summary>
+public static class ApiDescriptionExtensions
 {
     /// <summary>
-    /// Api描述器(<see cref="ApiDescription"/>) 扩展
+    /// 获取区域名称列表
     /// </summary>
-    public static class ApiDescriptionExtensions
+    /// <param name="description">Api描述器</param>
+    public static List<string> GetAreaName(this ApiDescription description)
     {
-        /// <summary>
-        /// 获取区域名称列表
-        /// </summary>
-        /// <param name="description">Api描述器</param>
-        public static List<string> GetAreaName(this ApiDescription description)
-        {
             var areaName = description.ActionDescriptor.RouteValues["area"];
             var controllerName = description.ActionDescriptor.RouteValues["controller"];
             var areaList = new List<string>();
@@ -23,5 +23,4 @@ namespace Bing.Swashbuckle
                 description.RelativePath = $"{areaName}/{controllerName}/{description.RelativePath}";
             return areaList;
         }
-    }
 }

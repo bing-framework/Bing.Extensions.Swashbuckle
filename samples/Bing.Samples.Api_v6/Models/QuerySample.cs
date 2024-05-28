@@ -42,6 +42,12 @@ namespace Bing.Samples.Api.Models
         /// </summary>
         [DefaultValue(Models.EnumSample.Two)]
         public EnumSample EnumSample { get; set; }
+
+        /// <summary>
+        /// 可空枚举例子
+        /// </summary>
+        [DefaultValue(Models.EnumSample.Two)]
+        public EnumSample? NullableEnumSample { get; set; }
     }
 
     /// <summary>
