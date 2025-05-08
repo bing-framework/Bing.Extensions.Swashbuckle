@@ -9,6 +9,7 @@ builder.Services.AddSwaggerEx(o =>
 {
     StartupConfig.ConfigureServicesByApi(o);
 });
+
 builder.Services.AddApiVersioning(options =>
 {
     options.AssumeDefaultVersionWhenUnspecified = true;

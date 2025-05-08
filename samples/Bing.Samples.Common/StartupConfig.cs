@@ -25,7 +25,7 @@ namespace Bing.Samples.Common
         public static void ConfigureServicesByApi(SwaggerExOptions options)
         {
             options.ProjectName = "Bing.Sample.Api 在线文档调试";
-            options.EnableCustomIndex = true;
+            options.EnableCustomIndex = false;
             options.RoutePrefix = "swagger";
             options.EnableApiVersion = true;
             options.EnableCached = true;

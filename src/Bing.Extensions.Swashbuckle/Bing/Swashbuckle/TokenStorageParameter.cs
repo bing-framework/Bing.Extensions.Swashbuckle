@@ -1,4 +1,6 @@
-﻿namespace Bing.Swashbuckle;
+﻿using System;
+
+namespace Bing.Swashbuckle;
 
 /// <summary>
 /// 令牌存储参数。用于拦截登录后存储令牌，解决刷新页面导致令牌丢失问题
