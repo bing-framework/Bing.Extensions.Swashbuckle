@@ -49,8 +49,7 @@ public static class SwaggerUIExtensions
     public static void UseCustomSwaggerIndex(this SwaggerUIOptions options)
     {
         var currentAssembly = typeof(SwaggerExOptions).GetTypeInfo().Assembly;
-        options.IndexStream = () =>
-            currentAssembly.GetManifestResourceStream($"Bing.Swashbuckle.Resources.index.html");
+        options.IndexStream = () => currentAssembly.GetManifestResourceStream($"Bing.Swashbuckle.Resources.index.html");
     }
 
     #endregion
@@ -65,11 +64,8 @@ public static class SwaggerUIExtensions
     /// <param name="cacheType">缓存类型</param>
     public static void UseTokenStorage(this SwaggerUIOptions options, string securityDefinition, WebCacheType cacheType = WebCacheType.Session)
     {
-        options.ConfigObject.AdditionalItems["token_storage"] = new TokenStorageParameter
-        {
-            CacheType = cacheType,
-            SecurityDefinition = securityDefinition
-        };
+        options.ConfigObject.AdditionalItems["token_storage_cache_type"] = cacheType.ToString();
+        options.ConfigObject.AdditionalItems["token_storage_security_definition"] = securityDefinition;
         options.ConfigObject.PersistAuthorization = true;
     }
 
@@ -102,6 +98,24 @@ public static class SwaggerUIExtensions
     {
         options.InjectJavascript($"resources/getLanguage?name={language}");
         options.InjectJavascript("resources?name=translate.js");
+    }
+
+    #endregion
+
+    #region UseCdn(配置CDN)
+
+    /// <summary>
+    /// 配置CDN
+    /// </summary>
+    /// <param name="options">SwaggerUI选项</param>
+    /// <param name="cdnDomain">CDN域名</param>
+    /// <param name="version">Swagger UI 版本</param>
+    public static void UseCdn(this SwaggerUIOptions options, string cdnDomain = "https://unpkg.com", string version = "5.22.0")
+    {
+        var baseUrl = $"{cdnDomain.TrimEnd('/')}/swagger-ui-dist@{version}";
+        options.StylesPath = $"{baseUrl}/swagger-ui.css";
+        options.ScriptBundlePath = $"{baseUrl}/swagger-ui-bundle.js";
+        options.ScriptPresetsPath = $"{baseUrl}/swagger-ui-standalone-preset.js";
     }
 
     #endregion

@@ -1,12 +1,11 @@
 ﻿<!-- HTML for static distribution bundle build -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>%(DocumentTitle)</title>
-    <!--<link rel="stylesheet" type="text/css" href="./swagger-ui.css">-->
-    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@4.14.0/swagger-ui.css" />
+    <!--<link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.22.0/swagger-ui.css" />-->
+    <link rel="stylesheet" type="text/css" href="%(StylesPath)">
     <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
     <style>
@@ -32,32 +31,29 @@
 
 <body>
 
-    <div id="swagger-ui"></div>
+<div id="swagger-ui"></div>
+    <!--<script src="resources?name=index.js" charset="utf-8"></script>-->
 
-    <!-- Workaround for https://github.com/swagger-api/swagger-editor/issues/1371 -->
-    <script>
-        if (window.navigator.userAgent.indexOf("Edge") > -1) {
-            console.log("Removing native Edge fetch in favor of swagger-ui's polyfill");
-            window.fetch = undefined;
-        }
-    </script>
+    <script src="%(ScriptBundlePath)" charset="utf-8"></script>
+    <script src="%(ScriptPresetsPath)" charset="utf-8"></script>
+    <!--<script src="index.js" charset="utf-8"></script>-->
 
-    <!--<script src="./swagger-ui-bundle.js"></script>
-    <script src="./swagger-ui-standalone-preset.js"></script>-->
-    <script src="https://unpkg.com/swagger-ui-dist@4.14.0/swagger-ui-bundle.js" crossorigin></script>
-    <script src="https://unpkg.com/swagger-ui-dist@4.14.0/swagger-ui-standalone-preset.js" crossorigin></script>
+    <!--<script src="./swagger-ui-bundle.js"></script>-->
+    <!--<script src="./swagger-ui-standalone-preset.js"></script>-->
+    <!--<script src="https://unpkg.com/swagger-ui-dist@5.22.0/swagger-ui-bundle.js" crossorigin></script>-->
+    <!--<script src="https://unpkg.com/swagger-ui-dist@5.22.0/swagger-ui-standalone-preset.js" crossorigin></script>-->
     <!--<script src="https://unpkg.com/@asciidoctor/core@2.2.6/dist/browser/asciidoctor.js" crossorigin></script>-->
     <script>
         /* Source: https://gist.github.com/lamberta/3768814
-         * Parse a string function definition and return a function object. Does not use eval.
-         * @param {string} str
-         * @return {function}
-         *
-         * Example:
-         *  var f = function (x, y) { return x * y; };
-         *  var g = parseFunction(f.toString());
-         *  g(33, 3); //=> 99
-         */
+* Parse a string function definition and return a function object. Does not use eval.
+* @param {string} str
+* @return {function}
+*
+* Example:
+*  var f = function (x, y) { return x * y; };
+*  var g = parseFunction(f.toString());
+*  g(33, 3); //=> 99
+*/
         function parseFunction(str) {
             if (!str) return void (0);
 
@@ -85,25 +81,25 @@
             console.log('oauthConfigObject', oauthConfigObject);
 
             // Workaround for https://github.com/swagger-api/swagger-ui/issues/5945
-            if (configObject.urls != null) {
-                configObject.urls.forEach(function (item) {
-                    if (item.url.startsWith("http") || item.url.startsWith("/"))
-                        return;
-                    item.url = window.location.href.replace("index.html", item.url).split('#')[0];
-                });
-            }
+            configObject.urls.forEach(function (item) {
+                if (item.url.startsWith("http") || item.url.startsWith("/"))
+                    return;
+                item.url = window.location.href.replace("index.html", item.url).split('#')[0];
+            });
 
             // If validatorUrl is not explicitly provided, disable the feature by setting to null
             // 如果没有显式提供validatorUrl，请通过设置为null禁用该功能
             if (!configObject.hasOwnProperty("validatorUrl"))
-                configObject.validatorUrl = null;
+                configObject.validatorUrl = null
 
-            // Add Plugins
+            // If oauth2RedirectUrl isn't specified, use the built-in default
             // 如果未指定oauth2RedirectUrl，则使用内置默认值
             if (!configObject.hasOwnProperty("oauth2RedirectUrl")) {
                 console.log('进入oauth2RedirectUrl');
-                configObject.oauth2RedirectUrl = window.location.href.replace("index.html", "oauth2-redirect.html").split('#')[0];
+                // TODO: configObject.oauth2RedirectUrl = window.location.href.replace("index.html", "oauth2-redirect.html").split('#')[0];
+                configObject.oauth2RedirectUrl = (new URL("oauth2-redirect.html", window.location.href)).href;
             }
+
             console.log('plugins', configObject.plugins);
 
             // Apply mandatory parameters
@@ -130,22 +126,31 @@
                 return request;
             };
 
+            if (configObject.plugins) {
+                configObject.plugins = configObject.plugins.map(eval);
+            }
+
             // 初始化Token存储
             initTokenStorage(configObject);
 
             // Begin Swagger UI call region
+
             const ui = SwaggerUIBundle(configObject);
 
-            // Apply OAuth config
             ui.initOAuth(oauthConfigObject);
-            custom_translate(configObject);
-
-            window.ui = ui;
+            customTranslate(configObject);
 
             // End Swagger UI call region
+
+            window.ui = ui
         }
 
-        var getCookieValue = function (key) {
+        /**
+         * 获取Cookie值
+         * @param {string} key
+         * @returns
+         */
+        function getCookieValue(key) {
             var equalities = document.cookie.split('; ');
             for (var i = 0; i < equalities.length; i++) {
                 if (!equalities[i]) {
@@ -163,9 +168,13 @@
             }
 
             return null;
-        };
+        }
 
-        function custom_translate(configObject) {
+        /**
+         * 自定义翻译
+         * @param {any} configObject
+         */
+        function customTranslate(configObject) {
             window.swagger_config = configObject;
             //document.getElementsByTagName('span')[0].innerText =
             //    document.getElementsByTagName('span')[0].innerText.replace('swagger', '项目接口文档');
@@ -182,14 +191,19 @@
             }
         }
 
+        /**
+         * 初始化Token存储
+         * @param {any} configObject 配置对象
+         * @returns
+         */
         function initTokenStorage(configObject) {
-            if (!configObject.token_storage)
+            if (!configObject.token_storage_cache_type)
                 return;
             configObject.onComplete = () => {
                 var result = getTokenStorage(configObject);
                 if (result === undefined || result === null || result === "")
                     return;
-                ui.preauthorizeApiKey(configObject.token_storage.securityDefinition, result);
+                ui.preauthorizeApiKey(configObject.token_storage_security_definition, result);
             };
             configObject.requestInterceptor = (req) => {
                 var result = getTokenStorage(configObject);
@@ -200,6 +214,11 @@
             };
         }
 
+        /**
+         * 获取Token存储
+         * @param {any} configObject 配置对象
+         * @returns
+         */
         function getTokenStorage(configObject) {
             if (!configObject.persistAuthorization)
                 return null;
@@ -207,7 +226,7 @@
             if (authorized === null)
                 return null;
             var data = JSON.parse(authorized);
-            const key = configObject.token_storage.securityDefinition;
+            const key = configObject.token_storage_security_definition;
             if (!data[key])
                 return null;
             return data[key].value;
