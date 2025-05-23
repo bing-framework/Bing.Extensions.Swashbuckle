@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -19,11 +20,24 @@ internal static class OperationFilterContextExtensions
     public static IEnumerable<TAttribute> GetControllerAndActionAttributes<TAttribute>(this OperationFilterContext context)
         where TAttribute : Attribute
     {
-        var controllerAttributes = context.MethodInfo.DeclaringType.GetTypeInfo().GetCustomAttributes<TAttribute>();
-        var actionAttributes = context.MethodInfo.GetCustomAttributes<TAttribute>();
+        var result = new List<TAttribute>();
 
-        var result = new List<TAttribute>(controllerAttributes);
-        result.AddRange(actionAttributes);
-        return result;
+        if (context.MethodInfo != null)
+        {
+            var controllerAttributes = context.MethodInfo.DeclaringType?.GetTypeInfo().GetCustomAttributes<TAttribute>();
+            if (controllerAttributes != null)
+                result.AddRange(controllerAttributes);
+            var actionAttributes = context.MethodInfo.GetCustomAttributes<TAttribute>();
+            result.AddRange(actionAttributes);
+        }
+#if NETCOREAPP3_1_OR_GREATER
+        if (context.ApiDescription.ActionDescriptor.EndpointMetadata != null)
+        {
+            var endpointAttributes = context.ApiDescription.ActionDescriptor.EndpointMetadata.OfType<TAttribute>();
+            result.AddRange(endpointAttributes);
+        }
+#endif
+
+        return result.Distinct();
     }
 }
