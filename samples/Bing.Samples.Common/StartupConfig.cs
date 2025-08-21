@@ -62,6 +62,9 @@ namespace Bing.Samples.Common
                 // 控制器排序
                 config.OrderByController();
 
+                // 显示最后修改信息
+                config.ShowModifiedInfo();
+
                 // 显示Url模式：首字母小写、首字母大写、全小写、全大写、默认
                 config.ShowUrlMode();
 

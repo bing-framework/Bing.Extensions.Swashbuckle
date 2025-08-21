@@ -61,7 +61,6 @@ public static class SwaggerGenExtensions
 
     #endregion
 
-
     /// <summary>
     /// 显示文件参数
     /// </summary>
@@ -166,6 +165,17 @@ public static class SwaggerGenExtensions
     /// </summary>
     /// <param name="options">Swagger生成选项</param>
     public static void EnableDefaultValue(this SwaggerGenOptions options) => options.AddOperationFilter<DefaultValueOperationFilter>();
+
+    /// <summary>
+    /// 显示修改信息
+    /// </summary>
+    /// <param name="options">Swagger生成选项</param>
+    public static void ShowModifiedInfo(this SwaggerGenOptions options)
+    {
+        if(options.OperationFilterDescriptors.Exists(x=>x.Type==typeof(LastModifiedOperationFilter)))
+            return;
+        options.AddOperationFilter<LastModifiedOperationFilter>();
+    }
 
     ///// <summary>
     ///// 显示授权信息

@@ -16,7 +16,11 @@ namespace Bing.Samples.Api.Controllers
         /// 上传文件
         /// </summary>
         /// <param name="sample">上传信息</param>
+        /// <remarks>
+        /// 测试备注信息
+        /// </remarks>
         [HttpPost]
+        [ApiLastModified("2024-01-01","隔壁老汪")]
         public Result Upload([FromForm]UploadSample sample)
         {
             return Result.Success(sample.Name);
@@ -27,6 +31,7 @@ namespace Bing.Samples.Api.Controllers
         /// </summary>
         /// <param name="sample">查询</param>
         [HttpGet]
+        [ApiLastModified("2024-09-01", "隔壁老蟹")]
         public virtual Result Query([FromQuery] QuerySample sample)
         {
             return Result.Success(sample);
@@ -40,6 +45,7 @@ namespace Bing.Samples.Api.Controllers
         /// <param name="pageSize">每页记录数</param>
         /// <param name="enumSample">枚举例子</param>
         [HttpGet]
+        [ApiLastModified("2024-09-27")]
         public virtual Result GetDefaultValue([FromQuery] string q, [FromQuery] int page = 1, [FromQuery] int pageSize = 20, [FromQuery]EnumSample enumSample = EnumSample.Two)
         {
             return Result.Success(new
